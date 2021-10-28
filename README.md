@@ -4,11 +4,15 @@ Thanks to https://github.com/alexwidua/vue-socketio-heroku-starter
 
 Automatic deploy on https://vue3-socketio.herokuapp.com/ (free)
 
-- Vue 3
-- Socket.io 4
-- node 14
+- [Vue 3](https://v3.vuejs.org/)
+- [Socket.io 4](https://socket.io/)
+- [Vue socket.io-extended](https://github.com/probil/vue-socket.io-extended/tree/alpha) currently in alpha for vue 3
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/BrunoFL/vue3-socketio-heroku)
+
+## Prerequisites
+
+- node 10+ and npm
 
 ## Project setup
 ```
