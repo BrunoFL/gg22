@@ -1,5 +1,7 @@
 # vue3-socketio-heroku
 
+Automatic deploy on https://vue3-socketio.herokuapp.com/
+
 - node 14
 
 
