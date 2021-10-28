@@ -29,8 +29,8 @@ httpServer.listen(port, () => {
  *  Store connected clients etc.
  *  Do not use in production 🤪
  */
-var clients = []
-var counter = 0
+let clients = []
+let counter = 0
 
 io.on('connection', (socket) => {
 	/*
@@ -63,8 +63,8 @@ io.on('connection', (socket) => {
 	// again refer to https://socket.io/docs/emit-cheatsheet/
 	socket.on('disconnecting', () => {
 		// Remove the disconnected client from the client list
-		clients = clients.filter((client) => {
-			return client.id != socket.id
+		clients = clients.filter(client => {
+			return client.id !== socket.id
 		})
 		// Emit the updated client list to all connected clients *EXCEPT* sender.
 		socket.broadcast.emit('update_clients', clients)
