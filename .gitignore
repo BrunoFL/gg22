@@ -1,5 +1,5 @@
 .DS_Store
-vue3-socketio-heroku/node_modules
+./node_modules
 /dist
 
 
