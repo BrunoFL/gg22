@@ -1,10 +1,12 @@
 # vue3-socketio-heroku
 
-Automatic deploy on https://vue3-socketio.herokuapp.com/
+Automatic deploy on [https://vue3-socketio.herokuapp.com/]()
 
+- Vue 3
+- Socket.io 4
 - node 14
 
-
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/BrunoFL/vue3-socketio-heroku)
 ## Project setup
 ```
 npm install
@@ -24,6 +26,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

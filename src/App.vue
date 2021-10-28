@@ -1,17 +1,19 @@
 <template>
-  <div>
+  <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <Counter/>
+    <ClientList />
   </div>
 </template>
 
 <script>
 import Counter from './components/Counter'
+import ClientList from './components/ClientList'
 
 export default {
   name: 'App',
   components: {
-    Counter
+    Counter, ClientList
   },
   sockets: {
     connect() {
