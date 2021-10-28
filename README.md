@@ -2,7 +2,7 @@
 
 Thanks to https://github.com/alexwidua/vue-socketio-heroku-starter
 
-Automatic deploy on https://vue3-socketio.herokuapp.com/
+Automatic deploy on https://vue3-socketio.herokuapp.com/ (free)
 
 - Vue 3
 - Socket.io 4
