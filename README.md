@@ -12,7 +12,7 @@ Automatic deploy on https://vue3-socketio.herokuapp.com/ (free)
 
 ## Prerequisites
 
-- node 10+ and npm
+- node 10+ (14) and npm
 
 ## Project setup
 ```
