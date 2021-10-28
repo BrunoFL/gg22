@@ -1,0 +1,14 @@
+{
+	"name": "vue3-socketio-heroku",
+	"description": "Vue 3 socket io",
+	"repository": "https://github.com/BrunoFL/vue3-socketio-heroku",
+	"keywords": ["vue3", "node", "socket.io", "socketio"],
+	"buildpacks": [
+		{
+			"url": "heroku/nodejs"
+		},
+		{
+			"url": "https://github.com/heroku/heroku-buildpack-static"
+		}
+	]
+}
