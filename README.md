@@ -23,7 +23,10 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+node ./server.js
 ```
+
+**You need to start client and server together**
 
 ### Compiles and minifies for production
 ```
