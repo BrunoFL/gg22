@@ -21,19 +21,22 @@
 
     <!-- BLOC GET LOBBIES-->
     <div v-if="clickGetLobbies" id="getLobbies">
-      <b-list-group class="mx-auto" style="width: 50%;" id="listLobbies" v-for="lobby of lobbies" :key="lobby.name">
-        <b-list-group-item class="listSize">
-          {{lobby.name}}
-          <b-badge variant="primary" pill>2</b-badge>
+      <b-list-group class="mx-auto" style="width: 33%;" id="listLobbies" v-for="lobby of listLobbies" :key="lobby.id">
+        <b-list-group-item href="#" v-on:click="selectLobby(lobby)" class="listSize">
+          {{lobby.id}}
+          <b-badge variant="primary" pill>{{lobby.players.length}}</b-badge>
         </b-list-group-item>
       </b-list-group>
+      <b-button v-if="isLobbySelected" variant="success">Rejoindre le lobby</b-button>
     </div>
 
-    <!-- BLOC JOIN LOBBIES -->
     <div v-if="clickJoinLobby" id="joinLobby">
       <h1>{{nameLobby}}</h1>
+
     </div>
   </div>
+
+  <!-- BLOC JOIN LOBBIES -->
 </template>
 
 <script>
@@ -46,7 +49,9 @@ export default {
       clickGetLobbies : false,
       clickCreateLobby: false,
       nameLobby: '',
-      lobbies: [{name:'komtuve'},{name: 'komtulsan'}]
+      listLobbies: [{'id': 'plok', 'players':[{'id': 'id', 'name': 'Ducon'}, {'id': 'id2', 'name': 'Michel'}, {'id': 'id3', 'name': 'Brésil'}]}],
+      selectedLobby: '',
+      isLobbySelected: false
     }
   },
   methods: {
@@ -64,9 +69,19 @@ export default {
       this.clickGetLobbies = true
       this.$emit('swapScreen','join')
     },
-    joinLobby(nameLobby){
-      this.$socket.client.emit('joinLobby',nameLobby)
+    joinLobby(nameLobby) {
+      this.$socket.client.emit('joinLobby', nameLobby)
       this.clickJoinLobby = true
+    },
+    selectLobby(lobby) {
+      this.selectedLobby = lobby
+      this.isLobbySelected = true
+    },
+    sockets: {
+      listLobbies(lobbies) {
+        console.log(lobbies)
+        this.listLobbies = lobbies
+      }
     }
   }
 }

@@ -1,15 +1,15 @@
-import {Player} from "./Player.js";
+import {Player} from "./Player.mjs";
 
 export class Lobby {
     /**
-     * @type {Emitter} 
+     * @type {Emitter}
      */
     io
     players
     id
 
     /**
-     * @param {Emitter} io 
+     * @param {Emitter} io
      */
     constructor(io) {
         this.io = io
