@@ -5,7 +5,7 @@
     <!-- SCREEN CHOICE -->
     <div v-if="!isClicked"  id="firstScreen">
       <b-button v-on:click="createLobby()">Create lobby</b-button>
-      <b-button v-on:click="joinLobby()">Join lobby</b-button>
+      <b-button v-on:click="getLobbies()">Join lobby</b-button>
     </div>
 
     <!-- BLOC CREATE LOBBY-->
@@ -46,9 +46,9 @@ export default {
       this.clickCreateLobby = true
       this.$emit('swapScreen','create')
     },
-    joinLobby() {
+    getLobbies() {
       //TODO : JOIN LOBBY
-      this.$socket.client.emit('joinLobby')
+      this.$socket.client.emit('getLobbies')
       this.isClicked = true
       this.clickJoinLobby = true
       this.$emit('swapScreen','join')
