@@ -34,7 +34,7 @@ export class Lobby {
     join(player) {
         this.players.push(player)
         this.notifyLobbyUpdate(player)
-        player.socket.on('listGames', this.encodeGames())
+        player.socket.on('listGames', () => this.encodeGames())
         player.join(this)
         console.log(`player ${player} connected`)
     }
