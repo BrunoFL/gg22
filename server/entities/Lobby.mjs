@@ -1,4 +1,5 @@
-import { GameServer } from "./GameServer.mjs";
+import {GameServer} from './GameServer.mjs'
+import {Enclume} from './games/Enclume.mjs'
 
 export class Lobby {
     /**
@@ -12,8 +13,8 @@ export class Lobby {
 
     /**
      * @param {Emitter} io
-     * @param {GameServer} server 
-     * @param {string} name 
+     * @param {GameServer} server
+     * @param {string} name
      */
     constructor(io, server, name) {
         this.io = io
@@ -32,22 +33,22 @@ export class Lobby {
 
     join(player) {
         this.players.push(player)
-        this.notifyPlayerChange(player)
+        this.notifyLobbyUpdate(player)
         player.socket.on('listGames', this.encodeGames())
         player.join(this)
         console.log(`player ${player} connected`)
     }
 
     leave(player) {
-        this.players = this.players.filter(p => p != player)
-        this.notifyPlayerChange(player)
+        this.players = this.players.filter(p => p !== player)
+        this.notifyLobbyUpdate(player)
         if (this.players.length === 0) {
             this.destroy()
         }
     }
 
     notifyLobbyUpdate() {
-        const encodedLobby = this.encode();
+        const encodedLobby = this.encode()
         this.players.forEach(player => player.emit('updateLobby', encodedLobby))
     }
 
