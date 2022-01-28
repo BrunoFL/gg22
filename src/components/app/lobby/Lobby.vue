@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import Obstacle from '../../games/Obstacle.vue'
+//import Obstacle from '../../games/Obstacle.vue'
 export default {
-  components: { Obstacle },
+  //components: { Obstacle },
   name: "Lobby",
   data(){
     return {
