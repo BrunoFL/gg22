@@ -35,6 +35,16 @@ export class GameServer {
                 console.log('bip boup')
                 socket.emit('listLobbies', this.encodeLobbies())
             })
+
+            socket.on('joinLobby', lobbyName =>{
+                if (!player.lobby){
+                    for(const lobby of this.lobbies){
+                        if (lobbyName === lobby.id){
+                            lobbyName.join(player)
+                        }
+                    }
+                }
+            })
         })
     }
 
