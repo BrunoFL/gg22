@@ -62,6 +62,11 @@ export default {
       isLobbySelected: false
     }
   },
+  watch: {
+    playerName: function (val) {
+      this.$socket.client.emit('updateName', val)
+    }
+  },
   methods: {
     initLobby() {
       //TODO : CREATE LOBBY
