@@ -28,9 +28,9 @@
 
     <!-- BLOC GET LOBBIES-->
     <div v-if="clickGetLobbies" id="getLobbies">
-      <b-list-group class="mx-auto" style="width: 33%;" id="listLobbies" v-for="lobby of listLobbies" :key="lobby.id">
+      <b-list-group class="mx-auto" style="width: 33%;" id="listLobbies" v-for="lobby of lobbies" :key="lobby.id">
         <b-list-group-item href="#" v-on:click="selectLobby(lobby)" class="listSize">
-          {{lobby.id}}
+          {{lobby.name}}
           <b-badge variant="primary" pill>{{lobby.players.length}}</b-badge>
         </b-list-group-item>
       </b-list-group>
@@ -39,7 +39,9 @@
 
     <div v-if="clickJoinLobby" id="joinLobby">
       <h1>{{nameLobby}}</h1>
+      <b-list-group >
 
+      </b-list-group>
     </div>
   </div>
 
@@ -57,7 +59,8 @@ export default {
       clickCreateLobby: false,
       nameLobby: '',
       playerName: '',
-      listLobbies: [{'id': 'plok', 'players':[{'id': 'id', 'name': 'Ducon'}, {'id': 'id2', 'name': 'Michel'}, {'id': 'id3', 'name': 'Brésil'}]}],
+      lobbies: '',
+      lobby: '',
       selectedLobby: '',
       isLobbySelected: false
     }
@@ -83,12 +86,15 @@ export default {
     selectLobby(lobby) {
       this.selectedLobby = lobby
       this.isLobbySelected = true
+    }
+  },
+  sockets: {
+    listLobbies(lobbies) {
+      console.log('boup bip')
+      this.lobbies = lobbies
     },
-    sockets: {
-      listLobbies(lobbies) {
-        console.log(lobbies)
-        this.listLobbies = lobbies
-      }
+    updateLobby(lobby) {
+      this.lobby = lobby
     }
   }
 }
