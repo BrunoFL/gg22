@@ -2,6 +2,13 @@
   <div id="mainLobby">
     <h1 class="display-1">NOM DU JEU</h1>
 
+    <!-- PLAYER NAME CHOICE -->
+    <div id="choiceName">
+      <b-input-group class="mx-auto" style="width: 33%;" prepend="Nom du joueur">
+        <b-form-input type="text" name="playerName" id="playerName" v-model="playerName"></b-form-input>
+      </b-input-group>
+    </div>
+
     <!-- SCREEN CHOICE -->
     <div v-if="!isClicked"  id="firstScreen">
       <b-button v-on:click="createLobby()">Create lobby</b-button>
@@ -49,6 +56,7 @@ export default {
       clickGetLobbies : false,
       clickCreateLobby: false,
       nameLobby: '',
+      playerName: '',
       listLobbies: [{'id': 'plok', 'players':[{'id': 'id', 'name': 'Ducon'}, {'id': 'id2', 'name': 'Michel'}, {'id': 'id3', 'name': 'Brésil'}]}],
       selectedLobby: '',
       isLobbySelected: false
