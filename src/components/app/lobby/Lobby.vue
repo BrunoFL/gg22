@@ -20,9 +20,12 @@
 
     <!-- BLOC JOIN LOBBY-->
     <div v-if="clickJoinLobby" id="joinLobby">
-      <div v-for="lobby of lobbies" :key="lobby.name">
-        <p>{{lobby.name}}</p>
-      </div>
+      <b-list-group class="mx-auto" style="width: 50%;" id="listLobbies" v-for="lobby of lobbies" :key="lobby.name">
+        <b-list-group-item class="listSize">
+          {{lobby.name}}
+          <b-badge variant="primary" pill>2</b-badge>
+        </b-list-group-item>
+      </b-list-group>
     </div>
   </div>
 </template>
@@ -58,5 +61,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
