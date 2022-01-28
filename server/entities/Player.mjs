@@ -43,7 +43,13 @@ export class Player {
                 this.lobby.leave(this)
             }
         })
+
         this.socket.on('getLobby', () => {
+            this.emit('updateLobby', this.lobby.encode())
+        })
+
+        this.socket.on('updateName', name => {
+            this.name = name
             this.emit('updateLobby', this.lobby.encode())
         })
     }
