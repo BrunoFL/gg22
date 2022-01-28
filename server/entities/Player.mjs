@@ -50,7 +50,9 @@ export class Player {
 
         this.socket.on('updateName', name => {
             this.name = name
-            this.emit('updateLobby', this.lobby.encode())
+            if (this.lobby){
+                this.emit('updateLobby', this.lobby.encode())
+            }
         })
     }
 
