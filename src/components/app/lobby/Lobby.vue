@@ -1,6 +1,6 @@
 <template>
   <div id="mainLobby">
-    <h1>NOM DU JEU</h1>
+    <h1 class="display-1">NOM DU JEU</h1>
 
     <!-- SCREEN CHOICE -->
     <div v-if="!isClicked"  id="firstScreen">
@@ -9,23 +9,29 @@
     </div>
 
     <!-- BLOC CREATE LOBBY-->
-    <div v-if="clickCreateLobby" id="createLobby">
+    <div v-if="clickCreateLobby && !clickJoinLobby" id="createLobby">
       <b-input-group size="lg" prepend="Nom du lobby">
-        <b-form-input></b-form-input>
+        <b-form-input type="text" name="nameLobby" id="nameLobby" v-model="nameLobby"></b-form-input>
         <b-input-group-append>
-          <b-button variant="outline-success">Créer la partie</b-button>
+          <b-button v-on:click="joinLobby(nameLobby)" type="submit" value="Submit" variant="outline-success" >Créer la partie</b-button>
         </b-input-group-append>
       </b-input-group>
+      {{nameLobby}}
     </div>
 
-    <!-- BLOC JOIN LOBBY-->
-    <div v-if="clickJoinLobby" id="joinLobby">
+    <!-- BLOC GET LOBBIES-->
+    <div v-if="clickGetLobbies" id="getLobbies">
       <b-list-group class="mx-auto" style="width: 50%;" id="listLobbies" v-for="lobby of lobbies" :key="lobby.name">
         <b-list-group-item class="listSize">
           {{lobby.name}}
           <b-badge variant="primary" pill>2</b-badge>
         </b-list-group-item>
       </b-list-group>
+    </div>
+
+    <!-- BLOC JOIN LOBBIES -->
+    <div v-if="clickJoinLobby" id="joinLobby">
+      <h1>{{nameLobby}}</h1>
     </div>
   </div>
 </template>
@@ -37,7 +43,9 @@ export default {
     return {
       isClicked: false,
       clickJoinLobby: false,
+      clickGetLobbies : false,
       clickCreateLobby: false,
+      nameLobby: '',
       lobbies: [{name:'komtuve'},{name: 'komtulsan'}]
     }
   },
@@ -53,8 +61,12 @@ export default {
       //TODO : JOIN LOBBY
       this.$socket.client.emit('getLobbies')
       this.isClicked = true
-      this.clickJoinLobby = true
+      this.clickGetLobbies = true
       this.$emit('swapScreen','join')
+    },
+    joinLobby(nameLobby){
+      this.$socket.client.emit('joinLobby',nameLobby)
+      this.clickJoinLobby = true
     }
   }
 }

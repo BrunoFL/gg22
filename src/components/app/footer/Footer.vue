@@ -1,13 +1,19 @@
 <template>
-$END$
+  <footer class="mx-auto">
+    Made in Global Game Jam 2022 @ Besançon - Credits : Bruno Follet, Thibaud Jeannin, Christopher Petitjean, Nathan Piranda, Marie Smolinski
+  </footer>
 </template>
 
 <script>
 export default {
-name: "Footer.vue"
+  name: "Footer.vue"
 }
 </script>
 
 <style scoped>
-
+footer{
+  position:absolute;
+  width: 99%;
+  bottom:0;
+}
 </style>
