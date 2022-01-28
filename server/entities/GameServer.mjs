@@ -32,6 +32,7 @@ export class GameServer {
             })
 
             socket.on('getLobbies', () => {
+                console.log('bip boup')
                 socket.emit('listLobbies', this.encodeLobbies())
             })
 
