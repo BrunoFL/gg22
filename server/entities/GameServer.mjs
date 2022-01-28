@@ -1,10 +1,10 @@
-import { Lobby } from "./Lobby.js";
-import { Player } from './Player.js';
+import { Lobby } from "./Lobby.mjs";
+import { Player } from './Player.mjs';
 
 export class GameServer {
 
     /**
-     * @type {Emitter} 
+     * @type {Emitter}
      */
     io
     /**
@@ -13,7 +13,7 @@ export class GameServer {
     lobbies
 
     /**
-     * @param {Emitter} io 
+     * @param {Emitter} io
      */
     constructor(io) {
         this.io = io

@@ -23,7 +23,7 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
-node ./server.js
+node ./server.mjs
 ```
 
 **You need to start client and server together**

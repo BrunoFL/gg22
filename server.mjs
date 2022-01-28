@@ -7,7 +7,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 
 import { createServer } from "http";
-import { GameServer } from "./server/entities/GameServer.js";
+import { GameServer } from "./server/entities/GameServer.mjs";
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
