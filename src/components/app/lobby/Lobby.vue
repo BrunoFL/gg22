@@ -4,7 +4,7 @@
 
     <!-- SCREEN CHOICE -->
     <div v-if="!isClicked"  id="firstScreen">
-      <b-button v-on:click="createLobby()">Create lobby</b-button>
+      <b-button v-on:click="initLobby()">Create lobby</b-button>
       <b-button v-on:click="getLobbies()">Join lobby</b-button>
     </div>
 
@@ -13,7 +13,7 @@
       <b-input-group size="lg" prepend="Nom du lobby">
         <b-form-input type="text" name="nameLobby" id="nameLobby" v-model="nameLobby"></b-form-input>
         <b-input-group-append>
-          <b-button v-on:click="joinLobby(nameLobby)" type="submit" value="Submit" variant="outline-success" >Créer la partie</b-button>
+          <b-button v-on:click="createLobby(nameLobby)" type="submit" value="Submit" variant="outline-success" >Créer la partie</b-button>
         </b-input-group-append>
       </b-input-group>
       {{nameLobby}}
@@ -55,9 +55,8 @@ export default {
     }
   },
   methods: {
-    createLobby() {
+    initLobby() {
       //TODO : CREATE LOBBY
-      this.$socket.client.emit('createLobby')
       this.isClicked = true
       this.clickCreateLobby = true
       this.$emit('swapScreen','create')
@@ -69,8 +68,8 @@ export default {
       this.clickGetLobbies = true
       this.$emit('swapScreen','join')
     },
-    joinLobby(nameLobby) {
-      this.$socket.client.emit('joinLobby', nameLobby)
+    createLobby(nameLobby) {
+      this.$socket.client.emit('createLobby', nameLobby)
       this.clickJoinLobby = true
     },
     selectLobby(lobby) {
