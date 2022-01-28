@@ -38,7 +38,7 @@ export class Player {
 
     listen() {
         this.socket.on('disconnecting', () => {
-            console.log(`player ${this.name} disconnected`);
+            console.log(`player ${this.name} disconnected`)
             if (this.lobby != null) {
                 this.lobby.leave(this)
             }

@@ -1,5 +1,4 @@
 import { GameServer } from "./GameServer.mjs";
-import { Player } from "./Player.mjs";
 
 export class Lobby {
     /**
@@ -22,13 +21,13 @@ export class Lobby {
         this.name = name
         this.players = []
         this.games = new Map()
-        this.games.set('Enclume', Enclume)
+        this.games.set('Enclume', new Enclume(this))
         this.listen()
         this.id = Math.random()
     }
 
     listen() {
-        
+
     }
 
     join(player) {
@@ -36,7 +35,7 @@ export class Lobby {
         this.notifyPlayerChange(player)
         player.socket.on('listGames', this.encodeGames())
         player.join(this)
-        console.log(`player ${player} connected`);
+        console.log(`player ${player} connected`)
     }
 
     leave(player) {
