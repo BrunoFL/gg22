@@ -34,6 +34,11 @@ export class GameServer {
             socket.on('getLobbies', () => {
                 socket.emit('listLobbies', this.encodeLobbies())
             })
+
+            socket.on('interactWithCharacter', () => {
+                console.log("bien recu")
+                socket.emit('updateCharacterPos', this.updateCharacterPos())
+            })
         })
     }
 
@@ -44,5 +49,9 @@ export class GameServer {
 
     encodeLobbies() {
         return this.lobbies.map(l => l.encode())
+    }
+
+    updateCharacterPos() {
+        return {"pos_x": 3, "pos_y": 5}
     }
 }

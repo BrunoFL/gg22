@@ -1,8 +1,8 @@
 <template>
     <div id="obstacleGame">
         <h1>DOR - Dual Obstacle Run</h1>
-        <div class="gameWindow">
-            <img src="../../assets/perso.jpeg">
+        <div class="gameWindow" v-on:click="interact()">
+            <img id="perso" src="../../assets/perso.jpeg">
         </div>
     </div>
 </template>
@@ -21,6 +21,7 @@ export default {
      * Depending on the direction that was assigned to you, moves the character.
      */
     interact() {
+      console.log("prout")
       this.$socket.client.emit('interactWithCharacter')
     }
   },
@@ -28,14 +29,21 @@ export default {
     /*
      * 👂 Listen to socket events emitted from the socket server
      */
-    update_character_position(x, y) {
-      this.pos_x = x;
-      this.pos_y = y;
+    updateCharacterPos(pos) {
+      this.pos_x = pos.pos_x;
+      this.pos_y = pos.pos_y;
+      console.log(this.pos_x, this.pos_y)
     }
   }
 }
 </script>
 
 <style scoped>
+.gameWindow {
 
+}
+
+#perso {
+
+}
 </style>
