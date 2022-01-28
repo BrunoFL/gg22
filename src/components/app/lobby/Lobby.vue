@@ -39,8 +39,10 @@
 
     <div v-if="clickJoinLobby" id="joinLobby">
       <h1>{{nameLobby}}</h1>
-      <b-list-group >
-
+      <b-list-group v-for="player of lobby.players" :key="player.id">
+        <b-list-group-item>
+          {{player.name}}
+        </b-list-group-item>
       </b-list-group>
     </div>
   </div>
