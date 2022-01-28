@@ -24,8 +24,9 @@ export class GameServer {
     listen() {
         this.io.on('connection', socket => {
             const player = new Player(Math.random(), socket, socket.id)
-            socket.on('createLobby', create => {
-                const lobby = new Lobby(this.io);
+            socket.on('createLobby', lobbyName => {
+                console.log(`create lobby ${lobbyName}`);
+                const lobby = new Lobby(this.io, this, lobbyName);
                 this.lobbies.push(lobby)
                 lobby.join(player)
             })
@@ -38,6 +39,7 @@ export class GameServer {
 
     destroyLobby(lobby) {
         this.lobbies = this.lobbies.filter(l => l.id != lobby.id)
+        this.io.emit('listLobbies', this.encodeLobbies())
     }
 
     encodeLobbies() {

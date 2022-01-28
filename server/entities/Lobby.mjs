@@ -1,4 +1,5 @@
-import {Player} from "./Player.mjs";
+import { GameServer } from "./GameServer.mjs";
+import { Player } from "./Player.mjs";
 
 export class Lobby {
     /**
@@ -7,27 +8,33 @@ export class Lobby {
     io
     players
     id
+    name
+    games
 
     /**
      * @param {Emitter} io
+     * @param {GameServer} server 
+     * @param {string} name 
      */
-    constructor(io) {
+    constructor(io, server, name) {
         this.io = io
+        this.server = server
+        this.name = name
         this.players = []
+        this.games = new Map()
+        this.games.set('Enclume', Enclume)
         this.listen()
         this.id = Math.random()
     }
 
     listen() {
-        this.io.on('connection', socket => {
-            const player = new Player(Math.random(), socket, socket.id)
-            this.join(player)
-        })
+        
     }
 
     join(player) {
         this.players.push(player)
         this.notifyPlayerChange(player)
+        player.socket.on('listGames', this.encodeGames())
         player.join(this)
         console.log(`player ${player} connected`);
     }
@@ -40,19 +47,25 @@ export class Lobby {
         }
     }
 
-    notifyPlayerChange(player) {
-        this.io.emit('updateClients', this.encodePlayers())
+    notifyLobbyUpdate() {
+        const encodedLobby = this.encode();
+        this.players.forEach(player => player.emit('updateLobby', encodedLobby))
+    }
+
+    encode() {
+        return {
+            'id': this.id,
+            'name': this.name,
+            'players': this.encodePlayers()
+        }
     }
 
     encodePlayers() {
         return this.players.map(p => p.encode())
     }
 
-    encode() {
-        return {
-            'id': this.id,
-            'players': this.encodePlayers()
-        }
+    encodeGames() {
+        return Array.from(this.games.keys())
     }
 
     destroy() {
