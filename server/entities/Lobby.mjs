@@ -1,6 +1,6 @@
-import {GameServer} from './GameServer.mjs'
 import {Enclume} from './games/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
+import {GameManager} from './GameManager.mjs'
 
 export class Lobby {
     /**
@@ -31,6 +31,10 @@ export class Lobby {
      * @type {boolean}
      */
     isOpen
+    /**
+     * @type {GameManager}
+     */
+    game
 
     /**
      * @param {Emitter} io
@@ -47,6 +51,7 @@ export class Lobby {
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
+        this.game = new GameManager(this)
     }
 
     /**
@@ -63,7 +68,7 @@ export class Lobby {
             this.players.push(player)
             this.notifyLobbyUpdate(player)
             player.socket.on('askListGames', () => {
-                this.emitPlayers('listGames', this.encodeGames())
+                this.listGames()
             })
             player.join(this)
         }
@@ -96,7 +101,7 @@ export class Lobby {
         this.admin.socket.on('startGame', gameName => {
             const game = this.games.get(gameName)
             if (game) {
-                game.start()
+                this.game.runGame(game)
             }
         })
     }
@@ -155,5 +160,9 @@ export class Lobby {
 
     closeLobby() {
         this.isOpen = false
+    }
+
+    listGames(){
+        this.emitPlayers('listGames', this.encodeGames())
     }
 }

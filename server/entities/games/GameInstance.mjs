@@ -1,17 +1,33 @@
 export class GameInstance {
-    start() {
+    /**
+     * @param {Function} endRulesclb
+     */
+    rules(endRulesclb) {
 
     }
 
-    startGame() {
+    initGame() {
 
     }
 
-    endGame() {
+    /**
+     * @param {Function} endStartGameClb
+     */
+    startGame(endStartGameClb) {
 
     }
 
-    leaderBoard() {
+    /**
+     * @param {Function} endEndGameClb
+     */
+    endGame(endEndGameClb) {
+
+    }
+
+    /**
+     * @param {function} endLeaderBoardCLb
+     */
+    leaderBoard(endLeaderBoardCLb) {
 
     }
 }
