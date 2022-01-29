@@ -25,6 +25,7 @@ export default {
       isInGamesList: false,
       isInAnvilGame: false,
       isInObstacleRun: false,
+      isInHundredMetersClic: false,
       listGames: [],
       actualGame: '',
     }
@@ -51,7 +52,9 @@ export default {
           case 'Enclume':
             this.isInAnvilGame = true
             break;
-        
+          case '100 mètre clic':
+            this.isInHundredMetersClic = true
+            break;
           default:
             break;
         }
