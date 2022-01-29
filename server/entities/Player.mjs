@@ -49,6 +49,7 @@ export class Player {
         return {
             'id': this.id,
             'name': this.name,
+            'socketId': this.socket.id,
             'score': this.score,
             'isAdmin': this.isAdmin
         }
