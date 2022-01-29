@@ -2,7 +2,8 @@ import {Enclume} from './games/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
 import {HundredMetersClick} from './games/HundredMetersClick.mjs'
-import { ObstacleRun } from './games/ObstacleRun.mjs'
+import {ObstacleRun} from './games/ObstacleRun.mjs'
+import {TugWar} from './games/TugWar.js'
 
 export class Lobby {
     /**
@@ -52,6 +53,7 @@ export class Lobby {
         this.games.set(Enclume.name(), new Enclume(this))
         this.games.set(HundredMetersClick.name(), new HundredMetersClick(this))
         this.games.set(ObstacleRun.name(), new ObstacleRun(this))
+        this.games.set(TugWar.name(), new TugWar(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
@@ -75,7 +77,7 @@ export class Lobby {
                 this.listGames()
             })
             player.join(this)
-            this.startGame("Course d\'obstacle")
+            this.startGame('Course d\'obstacle')
         }
     }
 
