@@ -64,36 +64,63 @@ export class TugWar extends GameInstance {
     }
 
     startGame(endStartGameClb) {
-        this.updateGame()
+        this.onceTouchTeamA()
+        this.onceTouchTeamB()
+        this.lobby.emitPlayers('tugStart', null)
         setTimeout(() => {
             endStartGameClb()
         }, 30_000)
     }
 
-    onceTouch() {
-        this.removeTouchs()
+    onceTouchTeamA(endStartGameClb) {
         for (const player of this.teamA) {
-            player.socket.on('touch', time => {
+            player.socket.once('touch', time => {
                 this.touchsA.push(time)
-            })
-        }
-        for (const player of this.teamB) {
-            player.socket.on('touch', time => {
-                this.touchsA.push(time)
+                if (this.touchsA.length === this.teamA.length) {
+                    const etendue = this.getEtendue(this.touchsA)
+                    this.center -= etendue
+                    this.lobby.emitPlayers('tug', this.center)
+                    if (this.center <= -30) {
+                        endStartGameClb()
+                    } else {
+                        this.onceTouchTeamA(endStartGameClb)
+                    }
+                }
             })
         }
     }
 
-    updateGame() {
-        if (!this.isEnded) {
-            this.onceTouch()
-            setTimeout(() => {
-
-                this.touchsA = []
-                this.touchsB = []
-                this.updateGame()
-            }, 1000)
+    onceTouchTeamB(endStartGameClb) {
+        for (const player of this.teamB) {
+            player.socket.once('touch', time => {
+                this.touchsB.push(time)
+                if (this.touchsB.length === this.teamB.length) {
+                    const etendue = this.getEtendue(this.touchsB)
+                    this.center += etendue
+                    this.lobby.emitPlayers('tug', this.center)
+                    if (this.center >= 30) {
+                        endStartGameClb()
+                    } else {
+                        this.onceTouchTeamB(endStartGameClb)
+                    }
+                }
+            })
         }
+    }
+
+    getEtendue(values) {
+        let min = values[0]
+        let max = values[0]
+        for (const val of values) {
+            if (val < min) {
+                min = val
+            }
+            if (val > max) {
+                max = val
+            }
+        }
+        const etendue = 30 - (max - min) / 1000
+        return Math.max(etendue, 0)
     }
 
     removeTouchs() {
