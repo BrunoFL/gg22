@@ -27,9 +27,9 @@ export class Enclume extends GameInstance {
     }
 
     /**
-     * @param {function} endRulesclb
+     * @param {function} endRulesClb
      */
-    rules(endRulesclb) {
+    rules(endRulesClb) {
         this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete. À vous de l\'arreter au plus tard pour un maximum de points !')
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
@@ -44,7 +44,7 @@ export class Enclume extends GameInstance {
      */
     startGame(endStartGameClb) {
         this.lobby.emitPlayers('startEnclume', this.seconds)
-        setTimeout(() => endStartGameClb(), this.seconds + 2000)
+        setTimeout(() => endStartGameClb(), this.seconds * 1000 + 2000)
         for (const player of this.lobby.players) {
             player.socket.on('touch', delta => {
                 player.socket.off('touch')

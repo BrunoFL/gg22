@@ -1,8 +1,8 @@
 export class GameInstance {
     /**
-     * @param {Function} endRulesclb
+     * @param {Function} endRulesClb
      */
-    rules(endRulesclb) {
+    rules(endRulesClb) {
 
     }
 

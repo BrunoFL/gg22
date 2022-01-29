@@ -1,6 +1,7 @@
 import {Enclume} from './games/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
+import {HundredMetersClick} from './games/HundredMetersClick.mjs'
 
 export class Lobby {
     /**
@@ -48,6 +49,7 @@ export class Lobby {
         this.players = []
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
+        this.games.set('100 mètre clic', new HundredMetersClick(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
