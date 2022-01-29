@@ -1,4 +1,5 @@
 import {GameInstance} from './GameInstance.mjs'
+import { GameResult, IndividualGameResult } from './GameResult.mjs'
 
 export class HundredMetersClick extends GameInstance {
     /**
@@ -9,12 +10,15 @@ export class HundredMetersClick extends GameInstance {
      * @type {Map}
      */
     meters
+    /**
+     * @type {Boolean}
+     */
+    isEnded
 
     constructor(lobby) {
         super()
         this.lobby = lobby
     }
-
 
     rules(endRulesClb) {
         this.lobby.emitPlayers('rules', 'Dans le cent metre clic, le premier à cliquer 100 fois gagne !')
@@ -25,33 +29,54 @@ export class HundredMetersClick extends GameInstance {
         this.meters = new Map()
         for (const player of this.lobby.players) {
             this.meters.set(player.id, 0)
-            player.socket('touch', () => {
-                const value = this.meters.get(player.id)
-                this.meters.set(player.id, value + 1)
-                if (value === 99) {
-
-                }
-            })
         }
+        this.isEnded = false
     }
 
     startGame(endStartGameClb) {
         for (const player of this.lobby.players) {
             player.socket('touch', () => {
                 const value = this.meters.get(player.id)
-                this.meters.set(player.id, value + 1)
                 if (value === 99) {
-
+                    player.socket.removeAllListeners('touch')
+                    this.offTouch()
+                    endStartGameClb()
+                }
+                if (value < 100) {
+                    this.meters.set(player.id, value + 1)
+                    this.lobby.emitPlayers('100meters', this.encodeMeters())
                 }
             })
         }
+        setTimeout(() => {
+            endStartGameClb()
+        }, 10_000)
     }
 
     endGame(endEndGameClb) {
-        super.endGame(endEndGameClb)
+        if (!this.isEnded) {
+            this.offTouch()
+            endEndGameClb()
+        }
+    }
+
+    offTouch() {
+        for (const player of this.lobby.players) {
+            player.socket.removeAllListeners('touch')
+        }
     }
 
     leaderBoard(endLeaderBoardCLb) {
-        super.leaderBoard(endLeaderBoardCLb)
+        const gameResults = new GameResult(this.meters.forEach((meters, player) => new IndividualGameResult(player, meters)))
+        this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        setTimeout(() => endLeaderBoardCLb(), 3000)
+    }
+
+    encodeMeters() {
+        const res = []
+        for (const [key, value] of this.meters) {
+            res.push({'id': key, 'meter': value})
+        }
+        return res
     }
 }

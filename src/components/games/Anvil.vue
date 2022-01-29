@@ -1,9 +1,9 @@
 <template>
   <div v-on:click="stopAnvil()">
+    <p>{{rules}}</p>
     <div id="gameAnvil">
       <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
-      <p>{{rules}}</p>
-      <p>{{touchTime}}</p>
+      <p>{{delta}}</p>
     </div>
     <div id="character">
       <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
@@ -17,21 +17,32 @@ export default {
   data(){
     return {
       rules: '',
-      fallDuration: '4s',
-      anvilState: 'running',
-      touchTime: ''
+      fallDuration: '',
+      duration: 0,
+      anvilState: 'paused',
+      startTime: new Date().getTime(),
+      touchTime: '',
+      delta: ''
     }
   },
   methods: {
     stopAnvil(){
       this.anvilState = 'paused'
       this.touchTime = new Date().getTime()
+      this.delta = (this.touchTime + (this.duration * 1000) - this.startTime)
+      this.$socket.client.emit('touch',this.delta)
     }
   },
   sockets: {
     rules(rules){
       console.log('rules')
       this.rules = rules;
+    },
+    startEnclume(duration){
+      this.duration = duration
+      this.fallDuration = this.duration+'s'
+      this.anvilState = 'running'
+      console.log(this.anvilState)
     }
   }
 }
