@@ -1,7 +1,6 @@
-import {Touch} from './Touch.mjs'
-import {PointScore} from '../PointScore.mjs'
-import {GameInstance} from './GameInstance.mjs'
-
+import { Touch } from './Touch.mjs'
+import { GameInstance } from './GameInstance.mjs'
+import { GameResult, IndividualGameResult } from './GameResult.mjs'
 export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
@@ -87,18 +86,13 @@ export class Enclume extends GameInstance {
                 this.touchs.push(new Touch(player, -Infinity))
             }
         }
-        const touchsSorted = this.touchs.sort((touchA, touchB) => touchB.delta - touchA.delta)
-        const leaderBoard = []
-        let position = 1
-        for (const touch of touchsSorted) {
-            if (touch.delta >= 0) {
-                leaderBoard.push(PointScore.pointsFor(touch.player, position))
-            } else {
-                leaderBoard.push(PointScore.pointsForNonFinisher(touch.player, position))
-            }
-            position++
-        }
-        this.lobby.emitPlayers('leaderBoardGame', leaderBoard.map(p => p.encode()))
+
+        const gameResults = new GameResult(
+            this.touchs.map(touch => {
+                new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0)
+            })
+        )
+        this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
 }
