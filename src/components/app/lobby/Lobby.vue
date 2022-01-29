@@ -1,7 +1,6 @@
 <template>
   <div id="mainLobby">
     <h1 class="display-1">DUEL 3000</h1>
-    <!--<Obstacle></Obstacle>-->
 
     <!-- PLAYER NAME CHOICE -->
     <div id="choiceName">
@@ -54,9 +53,7 @@
 </template>
 
 <script>
-//import Obstacle from '../../games/Obstacle.vue'
 export default {
-//  components: { Obstacle },
   name: "Lobby",
   data(){
     return {

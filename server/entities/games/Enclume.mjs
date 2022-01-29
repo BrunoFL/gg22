@@ -1,7 +1,6 @@
-import {Touch} from './Touch.mjs'
-import {PointScore} from '../PointScore.mjs'
-import {GameInstance} from './GameInstance.mjs'
-
+import { Touch } from './Touch.mjs'
+import { GameInstance } from './GameInstance.mjs'
+import { GameResult, IndividualGameResult } from './GameResult.mjs'
 export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
@@ -19,6 +18,13 @@ export class Enclume extends GameInstance {
     constructor(lobby) {
         super()
         this.lobby = lobby
+    }
+
+    /**
+     * @return {string}
+     */
+    static name() {
+        return 'Enclume'
     }
 
     initGame() {
@@ -46,10 +52,10 @@ export class Enclume extends GameInstance {
         this.lobby.emitPlayers('startEnclume', this.seconds)
         setTimeout(() => endStartGameClb(), this.seconds * 1000 + 2000)
         for (const player of this.lobby.players) {
-            player.socket.on('touch', delta => {
-                player.socket.off('touch')
+            player.socket.once('touch', delta => {
+                player.socket.removeAllListeners('touch')
                 const touch = new Touch(player, delta)
-                this.lobby.emitPlayers('playerTouch', touch)
+                this.lobby.emitPlayers('playerTouch', touch.encode())
                 this.touchs.push(touch)
             })
         }
@@ -60,7 +66,7 @@ export class Enclume extends GameInstance {
      */
     endGame(endEndGameClb) {
         for (const player of this.lobby.players) {
-            player.socket.off('touch')
+            player.socket.removeAllListeners('touch')
         }
         setTimeout(() => endEndGameClb(), 3000)
     }
@@ -80,18 +86,11 @@ export class Enclume extends GameInstance {
                 this.touchs.push(new Touch(player, -Infinity))
             }
         }
-        const touchsSorted = this.touchs.sort((touchA, touchB) => touchB.delta - touchA.delta)
-        const leaderBoard = []
-        let position = 1
-        for (const touch of touchsSorted) {
-            if (touch.delta >= 0) {
-                leaderBoard.push(PointScore.pointsFor(touch.player, position))
-            } else {
-                leaderBoard.push(PointScore.pointsForNonFinisher(touch.player, position))
-            }
-            position++
-        }
-        this.lobby.emitPlayers('leaderBoardGame', leaderBoard.map(p => p.encode()))
+
+        const gameResults = new GameResult(
+            this.touchs.map(touch => new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0))
+        )
+        this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
 }
