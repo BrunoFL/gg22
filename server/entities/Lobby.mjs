@@ -75,7 +75,6 @@ export class Lobby {
                 this.listGames()
             })
             player.join(this)
-            this.startGame("Course d\'obstacle")
         }
     }
 

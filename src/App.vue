@@ -51,7 +51,9 @@ export default {
           case 'Enclume':
             this.isInAnvilGame = true
             break;
-        
+          case 'Course d\'obstacle':
+            this.isInObstacleRun = true
+            break;
           default:
             break;
         }
