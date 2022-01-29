@@ -10,11 +10,16 @@ export class Player {
      * @type {number}
      */
     score
+    /**
+     * @type {boolean}
+     */
+    isAdmin
 
     constructor(id, socket, name) {
-        this.id = id
+        this.id = '' + Math.floor(Math.random() * 1_000_000)
         this.socket = socket
         this.name = name
+        this.isAdmin = false
         this.resetScore()
         this.listen()
     }
@@ -32,7 +37,8 @@ export class Player {
         return {
             'id': this.id,
             'name': this.name,
-            'score': this.score
+            'score': this.score,
+            'isAdmin': this.isAdmin
         }
     }
 
@@ -50,13 +56,21 @@ export class Player {
 
         this.socket.on('updateName', name => {
             this.name = name
-            if (this.lobby){
+            if (this.lobby) {
                 this.emit('updateLobby', this.lobby.encode())
             }
         })
     }
 
+    leave(){
+        this.isAdmin = false
+    }
+
     emit(event, content) {
         this.socket.emit(event, content)
+    }
+
+    setAdmin(isAdmin) {
+        this.isAdmin = isAdmin
     }
 }

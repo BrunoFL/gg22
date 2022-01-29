@@ -1,7 +1,7 @@
 <template>
   <div id="mainLobby">
-    <h1 class="display-1">NOM DU JEU</h1>
-    <!-- <Obstacle></Obstacle> -->
+    <h1 class="display-1">DUEL 3000</h1>
+    <!--<Obstacle></Obstacle>-->
 
     <!-- PLAYER NAME CHOICE -->
     <div id="choiceName">
@@ -28,20 +28,21 @@
     </div>
 
     <!-- BLOC GET LOBBIES-->
-    <div v-if="clickGetLobbies" id="getLobbies">
-      <b-list-group class="mx-auto" style="width: 33%;" id="listLobbies" v-for="lobby of lobbies" :key="lobby.id">
-        <b-list-group-item href="#" v-on:click="selectLobby(lobby)" class="listSize">
+    <div v-if="clickGetLobbies && !clickJoinLobby" id="getLobbies">
+      <b-list-group class="mx-auto" style="width: 33%;" id="listLobbies">
+        <b-list-group-item v-for="lobby of lobbies" :key="lobby.id" href="#" v-on:click="selectLobby(lobby)" class="listSize">
           {{lobby.name}}
           <b-badge variant="primary" pill>{{lobby.players.length}}</b-badge>
         </b-list-group-item>
       </b-list-group>
-      <b-button v-if="isLobbySelected" variant="success">Rejoindre le lobby</b-button>
+      <b-button v-if="isLobbySelected" v-on:click="joinLobby(selectedLobby.id)" variant="success">Rejoindre le lobby</b-button>
     </div>
 
+    <!-- BLOC JOIN LOBBY -->
     <div v-if="clickJoinLobby" id="joinLobby">
       <h1>{{nameLobby}}</h1>
-      <b-list-group v-for="player of lobby.players" :key="player.id">
-        <b-list-group-item>
+      <b-list-group class="mx-auto" style="width: 33%;">
+        <b-list-group-item v-for="player of lobby.players" :key="player.id">
           {{player.name}}
         </b-list-group-item>
       </b-list-group>
@@ -96,6 +97,10 @@ export default {
     selectLobby(lobby) {
       this.selectedLobby = lobby
       this.isLobbySelected = true
+    },
+    joinLobby(nameLobby){
+      this.$socket.client.emit('joinLobby',nameLobby)
+      this.clickJoinLobby = true
     }
   },
   sockets: {

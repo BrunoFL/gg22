@@ -1,8 +1,7 @@
-import { Lobby } from "./Lobby.mjs";
-import { Player } from './Player.mjs';
+import {Lobby} from './Lobby.mjs'
+import {Player} from './Player.mjs'
 
 export class GameServer {
-
     /**
      * @type {Emitter}
      */
@@ -25,26 +24,30 @@ export class GameServer {
         this.io.on('connection', socket => {
             const player = new Player(Math.random(), socket, socket.id)
             socket.on('createLobby', lobbyName => {
-                console.log(`create lobby ${lobbyName}`);
-                const lobby = new Lobby(this.io, this, lobbyName);
+                console.log(`create lobby ${lobbyName}`)
+                const lobby = new Lobby(this.io, this, lobbyName)
                 this.lobbies.push(lobby)
                 lobby.join(player)
             })
 
             socket.on('getLobbies', () => {
-                console.log('bip boup')
                 socket.emit('listLobbies', this.encodeLobbies())
             })
 
-            socket.on('interactWithCharacter', () => {
-                console.log("bien recu")
-                socket.emit('updateCharacterPos', this.updateCharacterPos())
+            socket.on('joinLobby', lobbyId => {
+                if (!player.lobby) {
+                    for (const lobby of this.lobbies) {
+                        if (lobbyId === lobby.id) {
+                            lobby.join(player)
+                        }
+                    }
+                }
             })
         })
     }
 
     destroyLobby(lobby) {
-        this.lobbies = this.lobbies.filter(l => l.id != lobby.id)
+        this.lobbies = this.lobbies.filter(l => l.id !== lobby.id)
         this.io.emit('listLobbies', this.encodeLobbies())
     }
 
@@ -53,6 +56,6 @@ export class GameServer {
     }
 
     updateCharacterPos() {
-        return {"pos_x": 3, "pos_y": 5}
+        return {'pos_x': 3, 'pos_y': 5}
     }
 }
