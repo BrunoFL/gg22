@@ -58,6 +58,9 @@ export default {
           case '100 mètre clic':
             this.isInHundredMetersClic = true
             break;
+          case 'Course d\'obstacle':
+            this.isInObstacleRun = true
+            break;
           default:
             break;
         }
