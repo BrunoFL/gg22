@@ -3,7 +3,7 @@ import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
 import {HundredMetersClick} from './games/HundredMetersClick.mjs'
 import {ObstacleRun} from './games/ObstacleRun.mjs'
-import {TugWar} from './games/TugWar.js'
+import {TugWar} from './games/TugWar.mjs'
 
 export class Lobby {
     /**
