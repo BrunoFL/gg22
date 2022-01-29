@@ -1,4 +1,4 @@
-import { PointScoringSystem } from "../PointScore.mjs"
+import { PointScoringSystem } from "../PointScoringSystem.mjs"
 
 export class IndividualGameResult {
 
