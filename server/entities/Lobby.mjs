@@ -44,7 +44,7 @@ export class Lobby {
     }
 
     join(player) {
-        console.log(`player ${player} joined ${this.name}`)
+        console.log(`player ${player.name} joined ${this.name}`)
         player.setAdmin(false)
         if (!this.admin) {
             this.admin = player
@@ -57,9 +57,9 @@ export class Lobby {
     }
 
     leave(player) {
-        console.log(`player ${player} leave ${this.name}`)
+        console.log(`player ${player.name} leave ${this.name}`)
         player.socket.off('listGames')
-        player.setAdmin(false)
+        player.leave()
         this.players = this.players.filter(p => p.id !== player.id)
         if (this.players.length === 0) {
             this.destroy()
@@ -73,14 +73,16 @@ export class Lobby {
 
     notifyLobbyUpdate() {
         const encodedLobby = this.encode()
-        this.players.forEach(player => player.emit('updateLobby', encodedLobby))
+        for (const player of this.players) {
+            player.emit('updateLobby', encodedLobby)
+        }
     }
 
     encode() {
         return {
             'id': this.id,
             'name': this.name,
-            'admin': this.admin,
+            'admin': this.admin.encode(),
             'players': this.encodePlayers()
         }
     }

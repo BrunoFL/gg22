@@ -62,6 +62,10 @@ export class Player {
         })
     }
 
+    leave(){
+        this.isAdmin = false
+    }
+
     emit(event, content) {
         this.socket.emit(event, content)
     }
