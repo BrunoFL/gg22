@@ -3,7 +3,6 @@
     <p>{{rules}}</p>
     <div id="gameAnvil">
       <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
-      <p>{{delta}}</p>
     </div>
     <div id="character">
       <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
@@ -20,16 +19,17 @@ export default {
       fallDuration: '',
       duration: 0,
       anvilState: 'paused',
-      startTime: new Date().getTime(),
+      startTime: '',
       touchTime: '',
-      delta: ''
+      delta: '',
+      alertPlayer: ''
     }
   },
   methods: {
     stopAnvil(){
       this.anvilState = 'paused'
       this.touchTime = new Date().getTime()
-      this.delta = (this.touchTime + (this.duration * 1000) - this.startTime)
+      this.delta = (this.startTime + (this.duration * 1000) - this.touchTime)
       this.$socket.client.emit('touch',this.delta)
     }
   },
@@ -39,10 +39,14 @@ export default {
       this.rules = rules;
     },
     startEnclume(duration){
+      this.startTime = new Date().getTime()
       this.duration = duration
       this.fallDuration = this.duration+'s'
       this.anvilState = 'running'
       console.log(this.anvilState)
+    },
+    playerTouch(data){
+      this.alertPlayer = data
     }
   }
 }
@@ -54,6 +58,14 @@ export default {
     position: relative;
     animation-duration: v-bind(fallDuration);
     animation-play-state: v-bind(anvilState);
+  }
+
+  #character{
+    position: relative;
+    top: 200px;
+  }
+  #characterIMG{
+    width: 150px;
   }
 
   #anvil{
