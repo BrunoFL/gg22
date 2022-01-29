@@ -44,6 +44,12 @@ export class GameServer {
                     }
                 }
             })
+
+            socket.on('joinById', id => {
+                for (const lobby of this.lobbies) {
+                    lobby.joinById(id)
+                }
+            })
         })
     }
 

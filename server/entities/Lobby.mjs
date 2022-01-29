@@ -38,6 +38,10 @@ export class Lobby {
      * @type {GameManager}
      */
     gameManager
+    /**
+     * @type {Player[]}
+     */
+    disconnected
 
     /**
      * @param {Emitter} io
@@ -95,6 +99,7 @@ export class Lobby {
             const newAdmin = this.players[0]
             this.setAdmin(newAdmin)
             this.notifyLobbyUpdate()
+            this.disconnected.push(player)
         }
     }
 
@@ -175,5 +180,21 @@ export class Lobby {
 
     listGames() {
         this.emitPlayers('listGames', this.encodeGames())
+    }
+
+    joinById(id, socket) {
+        if (this.isOpen) {
+            const disconnected = []
+            for (const player of this.disconnected) {
+                if (player.id === id) {
+                    player.reconnect(socket)
+                    this.notifyLobbyUpdate()
+                } else {
+                    disconnected.push(this.disconnected)
+                }
+            }
+            this.disconnected = disconnected
+        }
+        return null
     }
 }
