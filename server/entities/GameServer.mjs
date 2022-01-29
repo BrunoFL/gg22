@@ -76,8 +76,4 @@ export class GameServer {
     encodeLobbies() {
         return this.lobbies.map(l => l.encode())
     }
-
-    updateCharacterPos() {
-        return {'pos_x': 3, 'pos_y': 5}
-    }
 }
