@@ -3,6 +3,7 @@
     <Lobby v-if="isInLobby" @swapScreen="swapScreen()"></Lobby>
     <Games v-if="isInGamesList" @swapToGames="swapToGames()"></Games>
     <Anvil v-if="isInAnvilGame"></Anvil>
+    <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
 </template>
@@ -11,22 +12,25 @@
 import Lobby from "@/components/app/lobby/Lobby";
 import Games from "@/components/app/games/Games";
 import Footer from "@/components/app/footer/Footer";
-import Anvil from "@/components/games/Anvil"
+import Anvil from "@/components/games/Anvil";
+import Obstacle from "@/components/games/Obstacle";
 
 export default {
   name: 'App',
     data(){
     return {
-      isInLobby: true,
+      isInLobby: false,//true,
       isInGamesList: false,
-      isInAnvilGame: false
+      isInAnvilGame: false,
+      isInObstacleRun: true//false
     }
   },
   components: {
     Lobby,
     Games,
     Footer,
-    Anvil
+    Anvil,
+    Obstacle
   },
   methods: {
     swapScreen() {
