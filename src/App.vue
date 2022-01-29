@@ -4,6 +4,7 @@
     <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame"></Anvil>
     <GameRanking v-if="false"></GameRanking>
+    <HundredMetersClick v-if="isInHundredMetersClic"></HundredMetersClick>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
@@ -16,6 +17,7 @@ import GameRanking from "@/components/app/ranking/GameRanking";
 import Footer from "@/components/app/footer/Footer";
 import Anvil from "@/components/games/Anvil";
 import Obstacle from "@/components/games/Obstacle";
+import HundredMetersClick from "@/components/games/HundredMetersClick";
 
 export default {
   name: 'App',
@@ -31,6 +33,7 @@ export default {
     }
   },
   components: {
+    HundredMetersClick,
     Lobby,
     Games,
     GameRanking,
@@ -45,7 +48,7 @@ export default {
         this.listGames = listGames
     },    
     swapToGames(event) {
-        this.isInLobby = false,
+        this.isInLobby = false
         this.isInGamesList = false
         
         switch (event) {
