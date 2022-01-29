@@ -1,18 +1,27 @@
 <template>
   <div class="container-fluid" id="app">
-    <Lobby></Lobby>
+    <Lobby v-if="isInLobby"></Lobby>
+    <Games v-if="isInGamesList"></Games>
     <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Lobby from "@/components/app/lobby/Lobby";
+import Games from "@/components/app/games/Games";
 import Footer from "@/components/app/footer/Footer";
 
 export default {
   name: 'App',
+    data(){
+    return {
+      isInLobby: true,
+      isInGamesList: false
+    }
+  },
   components: {
     Lobby,
+    Games,
     Footer
   },
   sockets: {
