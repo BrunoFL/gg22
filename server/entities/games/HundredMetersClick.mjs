@@ -40,6 +40,7 @@ export class HundredMetersClick extends GameInstance {
         for (const player of this.lobby.players) {
             this.meters.set(player.id, 0)
         }
+        this.lobby.emitPlayers('updateRun', this.encodeMeters())
         this.isEnded = false
     }
 
@@ -54,23 +55,20 @@ export class HundredMetersClick extends GameInstance {
             player.socket.on('touch', () => {
                 const value = this.meters.get(player.id)
                 this.meters.set(player.id, value + 1)
-                if (value === 99) {
-                    player.socket.removeAllListeners('touch')
-                    this.offTouch()
-                    this.meters.set(player.id, value + 1)
-                    endStartGameClb()
-                }
                 if (value < 100) {
-                    if (cpt % 5 === 0){
+                    if (cpt % 5 === 0) {
                         this.lobby.emitPlayers('updateRun', this.encodeMeters())
                     }
+                } else {
+                    this.offTouch()
+                    endStartGameClb()
                 }
                 cpt++
             })
         }
         setTimeout(() => {
             endStartGameClb()
-        }, 20_000)
+        }, 30_000)
     }
 
     /**
@@ -79,8 +77,10 @@ export class HundredMetersClick extends GameInstance {
     endGame(endEndGameClb) {
         if (!this.isEnded) {
             this.offTouch()
+            this.lobby.emitPlayers('updateRun', this.encodeMeters())
             endEndGameClb()
         }
+        this.isEnded = true
     }
 
     offTouch() {
@@ -93,6 +93,7 @@ export class HundredMetersClick extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
+        console.log('plok')
         const result = []
         for (const [player, meter] of this.meters.entries()) {
             const objPlayer = this.lobby.getPlayerById(player)
