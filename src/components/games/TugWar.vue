@@ -4,16 +4,7 @@
     <div id="rules">
       {{rulesRun}}
     </div>
-    <div class="group row align-items-start" v-for="player of run" :key="player.id">
-      <div class="row">
-        <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
-      </div>
-      <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
-    </div>
-    <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
-      RUN
-    </b-button>
-    {{run}}
+    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
   </div>
   <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
 </div>
@@ -23,14 +14,11 @@
 import GameRanking from "@/components/app/ranking/GameRanking";
 
 export default {
-  name: "HundredMetersClick",
+  name: "TugWar",
   data(){
     return{
-      value: 0,
-      max: 100,
       rulesRun: '',
       clients: [],
-      run: '',
       isRankingOpen: false,
       rankingList: []
     }
@@ -40,21 +28,18 @@ export default {
   },
   methods: {
     increment(){
-      this.$socket.client.emit("touch")
-    },
-    isMyId(id){
-      return id === this.$socket.client.id;
+      this.$socket.client.emit("touch", Date.getTime())
     },
     swapScreen(event) {
       this.$emit('swapScreen', event)
     }
   },
   sockets: {
-    updateRun(data){
-      data.sort((a, b) => {
-        return b.meter - a.meter;
-      });
-      this.run = data;
+    tugStart(){
+
+    },    
+    tugEnd(){
+
     },
     rules(rules){
       this.rulesRun = rules
