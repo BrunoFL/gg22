@@ -64,8 +64,8 @@ export class Lobby {
             const newAdmin = this.players[0]
             this.admin = newAdmin
             newAdmin.setAdmin(true)
+            this.notifyLobbyUpdate()
         }
-        this.notifyLobbyUpdate()
     }
 
     notifyLobbyUpdate() {
