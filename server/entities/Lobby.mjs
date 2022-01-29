@@ -40,12 +40,15 @@ export class Lobby {
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
         this.id = '' + Math.floor(Math.random() * 1_000_000)
+        this.admin = null
     }
 
     join(player) {
         console.log(`player ${player} joined ${this.name}`)
+        player.setAdmin(false)
         if (!this.admin) {
             this.admin = player
+            player.setAdmin(true)
         }
         this.players.push(player)
         this.notifyLobbyUpdate(player)
