@@ -1,6 +1,5 @@
-import { Touch } from './Touch.mjs'
-import { PointScore } from '../PointScore.mjs'
 import {Touch} from './Touch.mjs'
+import {PointScore} from '../PointScore.mjs'
 import {GameInstance} from './GameInstance.mjs'
 
 export class Enclume extends GameInstance {
