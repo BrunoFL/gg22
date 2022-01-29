@@ -34,7 +34,7 @@ export class Enclume extends GameInstance {
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
             setTimeout(() => {
-                endRulesclb()
+                endRulesClb()
             }, 2000)
         }, 5000)
     }
