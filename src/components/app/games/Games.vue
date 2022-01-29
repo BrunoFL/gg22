@@ -18,7 +18,7 @@
 export default {
   name: "Games",
   props: {
-    listGames: String,
+    listGames: Array,
   },
   data(){
     return {

@@ -1,16 +1,21 @@
 <template>
-  <div v-on:click="stopAnvil()">
-    <p>{{rules}}</p>
-    <div id="gameAnvil">
-      <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
+  <div id="anvilContainer">
+    <div v-if="!isRankingOpen" v-on:click="stopAnvil()">
+      <p>{{rules}}</p>
+      <div id="gameAnvil">
+        <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
+      </div>
+      <div id="character">
+        <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
+      </div>
     </div>
-    <div id="character">
-      <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
-    </div>
+    <GameRanking v-if="isRankingOpen" :rankingList="rankingList"></GameRanking>
   </div>
 </template>
 
 <script>
+import GameRanking from "@/components/app/ranking/GameRanking";
+
 export default {
   name: "Anvil",
   data(){
@@ -22,8 +27,13 @@ export default {
       startTime: '',
       touchTime: '',
       delta: '',
-      alertPlayer: ''
+      alertPlayer: '',
+      isRankingOpen: false,
+      rankingList: []
     }
+  },
+  components: {
+    GameRanking,
   },
   methods: {
     stopAnvil(){
@@ -47,6 +57,10 @@ export default {
     },
     playerTouch(data){
       this.alertPlayer = data
+    },
+    leaderBoardGame(event) {
+      this.isRankingOpen = true
+      this.rankingList = event
     }
   }
 }
