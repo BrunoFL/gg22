@@ -45,9 +45,16 @@ export default {
     },    
     swapToGames(event) {
         this.isInLobby = false,
-        this.isInGamesList = false,
-        this.isInAnvilGame = true
-        this.actualGame = event
+        this.isInGamesList = false
+        
+        switch (event) {
+          case 'Enclume':
+            this.isInAnvilGame = true
+            break;
+        
+          default:
+            break;
+        }
     }
   },
   sockets: {
