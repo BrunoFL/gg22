@@ -130,9 +130,12 @@ export class TugWar extends GameInstance {
     }
 
     endGame(endEndGameClb) {
-        this.isEnded = true
-        this.removeTouchs()
-        endEndGameClb()
+        if (!this.isEnded) {
+            this.lobby.emitPlayers('tugEnd', null)
+            this.isEnded = true
+            this.removeTouchs()
+            endEndGameClb()
+        }
     }
 
     leaderBoard(endLeaderBoardCLb) {
