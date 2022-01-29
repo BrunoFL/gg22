@@ -176,4 +176,8 @@ export class Lobby {
     listGames() {
         this.emitPlayers('listGames', this.encodeGames())
     }
+
+    getPlayerById(id){
+      return  this.players.find(p => p.id === id)
+    }
 }
