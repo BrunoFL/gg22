@@ -4,14 +4,17 @@
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
       <div class="group row align-items-start" v-for="player of run" :key="player.id">
         <div class="row">
-          <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
+          <span class="col-1" style="font-size: 125%" v-if="isMyId(player.player.socketId)">
+            {{ player.player.name }}
+          </span>
         </div>
-        <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
+        <b-progress style="height: 25px; font-size: 125%" :value="player.meter" :max="max" show-progress
+                    animated></b-progress>
       </div>
-      <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
+      <b-button variant="outline-primary" size="lg" class="w-75 m-5" v-on:click="increment">
         RUN
       </b-button>
-      {{ run }}
+      <!--      {{ run }}-->
     </div>
     <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
