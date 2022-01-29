@@ -47,7 +47,7 @@ export class Enclume extends GameInstance {
         setTimeout(() => endStartGameClb(), this.seconds * 1000 + 2000)
         for (const player of this.lobby.players) {
             player.socket.on('touch', delta => {
-                player.socket.off('touch')
+                player.socket.removeAllListeners('touch')
                 const touch = new Touch(player, delta)
                 this.lobby.emitPlayers('playerTouch', touch)
                 this.touchs.push(touch)
@@ -60,7 +60,7 @@ export class Enclume extends GameInstance {
      */
     endGame(endEndGameClb) {
         for (const player of this.lobby.players) {
-            player.socket.off('touch')
+            player.socket.removeAllListeners('touch')
         }
         setTimeout(() => endEndGameClb(), 3000)
     }

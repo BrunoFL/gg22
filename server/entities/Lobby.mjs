@@ -81,8 +81,8 @@ export class Lobby {
      */
     leave(player) {
         console.log(`player ${player.name} leave ${this.name}`)
-        player.socket.off('listGames')
-        player.socket.off('startGame')
+        player.socket.removeAllListeners('listGames')
+        player.socket.removeAllListeners('startGame')
         player.leave()
         this.players = this.players.filter(p => p.id !== player.id)
         if (this.players.length === 0) {
