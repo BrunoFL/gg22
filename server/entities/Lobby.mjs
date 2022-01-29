@@ -62,7 +62,9 @@ export class Lobby {
             }
             this.players.push(player)
             this.notifyLobbyUpdate(player)
-            player.socket.on('listGames', () => this.encodeGames())
+            player.socket.on('askListGames', () => {
+                this.emitPlayers('listGames', this.encodeGames())
+            })
             player.join(this)
         }
     }
