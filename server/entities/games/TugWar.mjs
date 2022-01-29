@@ -1,3 +1,5 @@
+import { Team } from '../Team.mjs'
+import { TeamGameResult, TeamGameResults } from '../TeamGameResults.mjs'
 import {GameInstance} from './GameInstance.mjs'
 
 export class TugWar extends GameInstance {
@@ -6,11 +8,11 @@ export class TugWar extends GameInstance {
      */
     lobby
     /**
-     * @type {Player[]}
+     * @type {Team}
      */
     teamA
     /**
-     * @type {Player[]}
+     * @type {Team}
      */
     teamB
     /**
@@ -49,11 +51,13 @@ export class TugWar extends GameInstance {
 
     initGame() {
         let cpt = 0
+        this.teamA = new Team('Team A')
+        this.teamB = new Team('Team B')
         for (const player of this.lobby.players) {
             if (cpt % 2 === 0) {
-                this.teamA.push(player)
+                this.teamA.addPlayer(player)
             } else {
-                this.teamB.push(player)
+                this.teamB.addPlayer(player)
             }
             cpt++
         }
@@ -73,10 +77,10 @@ export class TugWar extends GameInstance {
     }
 
     onceTouchTeamA(endStartGameClb) {
-        for (const player of this.teamA) {
+        for (const player of this.teamA.players) {
             player.socket.once('touch', time => {
                 this.touchsA.push(time)
-                if (this.touchsA.length === this.teamA.length) {
+                if (this.touchsA.length === this.teamA.players.length) {
                     const etendue = this.getEtendue(this.touchsA)
                     this.center -= etendue
                     this.lobby.emitPlayers('tug', this.center)
@@ -91,10 +95,10 @@ export class TugWar extends GameInstance {
     }
 
     onceTouchTeamB(endStartGameClb) {
-        for (const player of this.teamB) {
+        for (const player of this.teamB.players) {
             player.socket.once('touch', time => {
                 this.touchsB.push(time)
-                if (this.touchsB.length === this.teamB.length) {
+                if (this.touchsB.length === this.teamB.players.length) {
                     const etendue = this.getEtendue(this.touchsB)
                     this.center += etendue
                     this.lobby.emitPlayers('tug', this.center)
@@ -139,6 +143,11 @@ export class TugWar extends GameInstance {
     }
 
     leaderBoard(endLeaderBoardCLb) {
+        new TeamGameResults([
+            new TeamGameResult(this.teamA, this.center < 0),
+            new TeamGameResult(this.teamB, this.center > 0)
+        ])
+
         super.leaderBoard(endLeaderBoardCLb)
     }
 }
