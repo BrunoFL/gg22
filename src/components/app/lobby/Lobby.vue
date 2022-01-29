@@ -46,6 +46,7 @@
           {{player.name}}
         </b-list-group-item>
       </b-list-group>
+      <b-button v-if="isAdmin()" v-on:click="goToGamesList()" variant="success">Lancer la partie !</b-button>
     </div>
   </div>
 
@@ -68,12 +69,17 @@ export default {
       lobbies: '',
       lobby: '',
       selectedLobby: '',
-      isLobbySelected: false
+      isLobbySelected: false,
+      adminName: ''
     }
   },
   watch: {
     playerName: function (val) {
       this.$socket.client.emit('updateName', val)
+    },    
+    lobby: function (val) {
+      let playerAdmin = val.player.find(a => a.admin == true)
+      this.adminName = playerAdmin.name
     }
   },
   methods: {
@@ -101,6 +107,9 @@ export default {
     joinLobby(nameLobby){
       this.$socket.client.emit('joinLobby',nameLobby)
       this.clickJoinLobby = true
+    },
+    isAdmin(){
+      return this.adminName == this.playerName
     }
   },
   sockets: {
