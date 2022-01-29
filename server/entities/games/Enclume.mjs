@@ -1,7 +1,8 @@
 import {Touch} from './Touch.mjs'
 import {Classement} from './Classement.mjs'
+import {GameInstance} from './GameInstance.mjs'
 
-export class Enclume {
+export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
      */
@@ -16,6 +17,7 @@ export class Enclume {
     touchs
 
     constructor(lobby) {
+        super()
         this.lobby = lobby
     }
 
@@ -27,19 +29,6 @@ export class Enclume {
                 this.timer()
             }, 2000)
         }, 5000)
-    }
-
-    timer() {
-        this.lobby.emitPlayers('rules', '3')
-        setTimeout(() => {
-            this.lobby.emitPlayers('rules', '2')
-            setTimeout(() => {
-                this.lobby.emitPlayers('rules', '1')
-                setTimeout(() => {
-                    this.startGame()
-                }, 1000)
-            }, 1000)
-        }, 1000)
     }
 
     startGame() {
@@ -60,10 +49,10 @@ export class Enclume {
         for (const player of this.lobby.players) {
             player.socket.off('touch')
         }
-        setTimeout(() => this.showResults(), 3000)
+        setTimeout(() => this.leaderBoard(), 3000)
     }
 
-    showResults() {
+    leaderBoard() {
         for (const player of this.lobby.players) {
             let isPresent = false
             for (const touch of this.touchs) {

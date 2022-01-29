@@ -1,6 +1,6 @@
 import {GameServer} from './GameServer.mjs'
 import {Enclume} from './games/Enclume.mjs'
-import { UUIDGenerator } from '../utils/UUIDGenerator.mjs'
+import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 
 export class Lobby {
     /**
@@ -27,6 +27,10 @@ export class Lobby {
      * @type {Player}
      */
     admin
+    /**
+     * @type {boolean}
+     */
+    isOpen
 
     /**
      * @param {Emitter} io
@@ -42,21 +46,30 @@ export class Lobby {
         this.games.set('Enclume', new Enclume(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
+        this.isOpen = true
     }
 
+    /**
+     * @param {Player} player
+     */
     join(player) {
-        console.log(`player ${player.name} joined ${this.name}`)
-        player.setAdmin(false)
-        if (!this.admin) {
-            this.admin = player
-            this.setAdmin(player)
+        if (this.isOpen) {
+            console.log(`player ${player.name} joined ${this.name}`)
+            player.setAdmin(false)
+            if (!this.admin) {
+                this.admin = player
+                this.setAdmin(player)
+            }
+            this.players.push(player)
+            this.notifyLobbyUpdate(player)
+            player.socket.on('listGames', () => this.encodeGames())
+            player.join(this)
         }
-        this.players.push(player)
-        this.notifyLobbyUpdate(player)
-        player.socket.on('listGames', () => this.encodeGames())
-        player.join(this)
     }
 
+    /**
+     * @param {Player} player
+     */
     leave(player) {
         console.log(`player ${player.name} leave ${this.name}`)
         player.socket.off('listGames')
@@ -72,6 +85,9 @@ export class Lobby {
         }
     }
 
+    /**
+     * @param {Player} player
+     */
     setAdmin(player) {
         this.admin = player
         player.setAdmin(true)
@@ -90,25 +106,39 @@ export class Lobby {
         }
     }
 
+    /**
+     * @param {string} event
+     * @param {*} value
+     */
     emitPlayers(event, value) {
         for (const player of this.players) {
             player.emit(event, value)
         }
     }
 
+    /**
+     * @return {object}
+     */
     encode() {
         return {
             'id': this.id,
             'name': this.name,
             'admin': this.admin.encode(),
-            'players': this.encodePlayers()
+            'players': this.encodePlayers(),
+            'isOpen': this.isOpen
         }
     }
 
+    /**
+     * @return {object[]}
+     */
     encodePlayers() {
         return this.players.map(p => p.encode())
     }
 
+    /**
+     * @return {string[]}
+     */
     encodeGames() {
         return Array.from(this.games.keys())
     }
@@ -119,5 +149,9 @@ export class Lobby {
             this.leave(player)
         }
         this.server.destroyLobby(this)
+    }
+
+    closeLobby() {
+        this.isOpen = false
     }
 }
