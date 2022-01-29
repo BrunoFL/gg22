@@ -1,4 +1,4 @@
-import {GameInstance} from './GameInstance.mjs'
+import { GameInstance } from './GameInstance.mjs'
 import { GameResult, IndividualGameResult } from './GameResult.mjs'
 
 export class HundredMetersClick extends GameInstance {
@@ -86,7 +86,9 @@ export class HundredMetersClick extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
-        const gameResults = new GameResult(this.meters.forEach((meters, player) => new IndividualGameResult(player, meters)))
+        const gameResults = new GameResult(
+            this.meters.map((meters, player) => new IndividualGameResult(player, meters))
+        )
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
@@ -97,7 +99,7 @@ export class HundredMetersClick extends GameInstance {
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
-            res.push({'id': key, 'meter': value})
+            res.push({ 'id': key, 'meter': value })
         }
         return res
     }

@@ -87,9 +87,9 @@ export class Enclume extends GameInstance {
             }
         }
 
-
-        const individualGameResult = this.touchs.map(touch => new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0))
-        const gameResults = new GameResult(individualGameResult)
+        const gameResults = new GameResult(
+            this.touchs.map(touch => new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0))
+        )
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
