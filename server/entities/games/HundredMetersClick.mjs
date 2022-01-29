@@ -59,7 +59,7 @@ export class HundredMetersClick extends GameInstance {
                 }
                 if (value < 100) {
                     this.meters.set(player.id, value + 1)
-                    this.lobby.emitPlayers('100meters', this.encodeMeters())
+                    this.lobby.emitPlayers('updateRun', this.encodeMeters())
                 }
             })
         }
