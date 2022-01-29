@@ -150,7 +150,7 @@ export class Lobby {
      */
     encodePlayers() {
         return this.players
-            .sort((p1, p2) => p1.score - p2.score)
+            .sort((p1, p2) => p2.score - p1.score)
             .map(p => p.encode())
     }
 
