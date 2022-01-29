@@ -78,8 +78,8 @@ export default {
       this.$socket.client.emit('updateName', val)
     },    
     lobby: function (val) {
-      let playerAdmin = val.player.find(a => a.admin == true)
-      this.adminName = playerAdmin.name
+      let playerAdmin = val.players.filter(function(player) { return player.isAdmin === true; });
+      this.adminName = playerAdmin[0].name
     }
   },
   methods: {
@@ -87,14 +87,12 @@ export default {
       //TODO : CREATE LOBBY
       this.isClicked = true
       this.clickCreateLobby = true
-      this.$emit('swapScreen','create')
     },
     getLobbies() {
       //TODO : JOIN LOBBY
       this.$socket.client.emit('getLobbies')
       this.isClicked = true
       this.clickGetLobbies = true
-      this.$emit('swapScreen','join')
     },
     createLobby(nameLobby) {
       this.$socket.client.emit('createLobby', nameLobby)
@@ -110,6 +108,9 @@ export default {
     },
     isAdmin(){
       return this.adminName == this.playerName
+    },
+    goToGamesList() {
+      this.$emit('swapScreen')
     }
   },
   sockets: {
