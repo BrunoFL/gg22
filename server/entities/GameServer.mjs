@@ -44,6 +44,12 @@ export class GameServer {
                     }
                 }
             })
+
+            socket.on('joinById', id => {
+                for (const lobby of this.lobbies) {
+                    lobby.joinById(id)
+                }
+            })
         })
     }
 
@@ -69,9 +75,5 @@ export class GameServer {
      */
     encodeLobbies() {
         return this.lobbies.map(l => l.encode())
-    }
-
-    updateCharacterPos() {
-        return {'pos_x': 3, 'pos_y': 5}
     }
 }

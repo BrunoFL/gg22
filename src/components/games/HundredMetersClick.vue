@@ -1,22 +1,17 @@
 <template>
 <div id="race" class="row justify-content-center gap-3">
+  <div id="rules">
+    {{rulesRun}}
+  </div>
+  <div class="group row align-items-start" v-for="player of run" :key="player.id">
+    <div class="row">
+      <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
+    </div>
+    <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
+  </div>
   <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
     RUN
   </b-button>
-  <div class="group row align-items-lg-start" v-for="client in clients" :key="client.id">
-    <div class="row">
-      <span class="col-1">You : </span>
-      <div class="col-11 progress p-0">
-        <div  class="progress-bar progress-bar-animated progress-bar-striped"
-              role="progressbar"
-              aria-valuenow="1"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              v-bind:style="valueBar(client.value)">
-        </div>
-      </div>
-    </div>
-  </div>
   {{run}}
 </div>
 </template>
@@ -27,6 +22,8 @@ export default {
   data(){
     return{
       value: 0,
+      max: 100,
+      rulesRun: '',
       clients: [],
       run: ''
     }
@@ -35,13 +32,20 @@ export default {
     increment(){
       this.$socket.client.emit("touch")
     },
-    valueBar(value){
-      return "width: " + value + "%;";
+    isMyId(id){
+      return id === this.$socket.client.id;
     }
+
   },
   sockets: {
     updateRun(data){
+      data.sort((a, b) => {
+        return b.meter - a.meter;
+      });
       this.run = data;
+    },
+    rules(rules){
+      this.rulesRun = rules
     }
   }
 }

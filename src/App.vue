@@ -50,7 +50,6 @@ export default {
     swapToGames(event) {
         this.isInLobby = false
         this.isInGamesList = false
-        
         switch (event) {
           case 'Enclume':
             this.isInAnvilGame = true

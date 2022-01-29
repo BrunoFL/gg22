@@ -37,13 +37,16 @@ export class Enclume extends GameInstance {
      * @param {function} endRulesClb
      */
     rules(endRulesClb) {
-        this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete. À vous de l\'arreter au plus tard pour un maximum de points !')
+        this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete.')
         setTimeout(() => {
-            this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
+            this.lobby.emitPlayers('rules', 'À vous de l\'arrêter au plus tard pour un maximum de points !')
             setTimeout(() => {
-                endRulesClb()
+                this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
+                setTimeout(() => {
+                    endRulesClb()
+                }, 2000)
             }, 2000)
-        }, 5000)
+        }, 2000)
     }
 
     /**

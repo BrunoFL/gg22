@@ -40,6 +40,7 @@ export class HundredMetersClick extends GameInstance {
         for (const player of this.lobby.players) {
             this.meters.set(player.id, 0)
         }
+        this.lobby.emitPlayers('updateRun', this.encodeMeters())
         this.isEnded = false
     }
 
@@ -50,22 +51,24 @@ export class HundredMetersClick extends GameInstance {
         for (const player of this.lobby.players) {
             this.lobby.emitPlayers('rules', 'C\'est parti')
             this.lobby.emitPlayers('startRun', null)
+            let cpt = 0
             player.socket.on('touch', () => {
                 const value = this.meters.get(player.id)
-                if (value === 99) {
-                    player.socket.removeAllListeners('touch')
+                this.meters.set(player.id, value + 1)
+                if (value < 100) {
+                    if (cpt % 5 === 0) {
+                        this.lobby.emitPlayers('updateRun', this.encodeMeters())
+                    }
+                } else {
                     this.offTouch()
                     endStartGameClb()
                 }
-                if (value < 100) {
-                    this.meters.set(player.id, value + 1)
-                    this.lobby.emitPlayers('updateRun', this.encodeMeters())
-                }
+                cpt++
             })
         }
         setTimeout(() => {
             endStartGameClb()
-        }, 10_000)
+        }, 30_000)
     }
 
     /**
@@ -74,8 +77,10 @@ export class HundredMetersClick extends GameInstance {
     endGame(endEndGameClb) {
         if (!this.isEnded) {
             this.offTouch()
+            this.lobby.emitPlayers('updateRun', this.encodeMeters())
             endEndGameClb()
         }
+        this.isEnded = true
     }
 
     offTouch() {
@@ -88,9 +93,13 @@ export class HundredMetersClick extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
-        const gameResults = new GameResult(
-            this.meters.map((meters, player) => new IndividualGameResult(player, meters))
-        )
+        console.log('plok')
+        const result = []
+        for (const [player, meter] of this.meters.entries()) {
+            const objPlayer = this.lobby.getPlayerById(player)
+            result.push(new IndividualGameResult(objPlayer, meter))
+        }
+        const gameResults = new GameResult(result)
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
@@ -101,7 +110,7 @@ export class HundredMetersClick extends GameInstance {
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
-            res.push({'id': key, 'meter': value})
+            res.push({'player': this.lobby.getPlayerById(key).encode(), 'meter': value})
         }
         return res
     }
