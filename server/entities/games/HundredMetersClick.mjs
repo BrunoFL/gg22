@@ -53,13 +53,14 @@ export class HundredMetersClick extends GameInstance {
             let cpt = 0
             player.socket.on('touch', () => {
                 const value = this.meters.get(player.id)
+                this.meters.set(player.id, value + 1)
                 if (value === 99) {
                     player.socket.removeAllListeners('touch')
                     this.offTouch()
+                    this.meters.set(player.id, value + 1)
                     endStartGameClb()
                 }
                 if (value < 100) {
-                    this.meters.set(player.id, value + 1)
                     if (cpt % 5 === 0){
                         this.lobby.emitPlayers('updateRun', this.encodeMeters())
                     }
