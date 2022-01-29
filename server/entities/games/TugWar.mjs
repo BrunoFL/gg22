@@ -68,8 +68,8 @@ export class TugWar extends GameInstance {
     }
 
     startGame(endStartGameClb) {
-        this.onceTouchTeamA()
-        this.onceTouchTeamB()
+        this.onceTouchTeamA(endStartGameClb)
+        this.onceTouchTeamB(endStartGameClb)
         this.lobby.emitPlayers('tugStart', null)
         setTimeout(() => {
             endStartGameClb()
