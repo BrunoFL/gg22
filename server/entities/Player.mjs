@@ -62,7 +62,7 @@ export class Player {
         })
     }
 
-    leave(){
+    leave() {
         this.isAdmin = false
     }
 
@@ -72,5 +72,9 @@ export class Player {
 
     setAdmin(isAdmin) {
         this.isAdmin = isAdmin
+    }
+
+    addScore(score) {
+        this.score += score
     }
 }

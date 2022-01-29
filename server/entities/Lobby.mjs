@@ -48,7 +48,7 @@ export class Lobby {
         player.setAdmin(false)
         if (!this.admin) {
             this.admin = player
-            player.setAdmin(true)
+            this.setAdmin(player)
         }
         this.players.push(player)
         this.notifyLobbyUpdate(player)
@@ -59,22 +59,39 @@ export class Lobby {
     leave(player) {
         console.log(`player ${player.name} leave ${this.name}`)
         player.socket.off('listGames')
+        player.socket.off('startGame')
         player.leave()
         this.players = this.players.filter(p => p.id !== player.id)
         if (this.players.length === 0) {
             this.destroy()
         } else if (this.admin.id === player.id) {
             const newAdmin = this.players[0]
-            this.admin = newAdmin
-            newAdmin.setAdmin(true)
+            this.setAdmin(newAdmin)
             this.notifyLobbyUpdate()
         }
+    }
+
+    setAdmin(player) {
+        this.admin = player
+        player.setAdmin(true)
+        this.admin.socket.on('startGame', gameName => {
+            const game = this.games.get(gameName)
+            if (game) {
+                game.start()
+            }
+        })
     }
 
     notifyLobbyUpdate() {
         const encodedLobby = this.encode()
         for (const player of this.players) {
             player.emit('updateLobby', encodedLobby)
+        }
+    }
+
+    emitPlayers(event, value) {
+        for (const player of this.players) {
+            player.emit(event, value)
         }
     }
 
