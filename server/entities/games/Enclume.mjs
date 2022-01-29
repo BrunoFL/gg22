@@ -30,7 +30,7 @@ export class Enclume extends GameInstance {
 
     initGame() {
         this.touchs = []
-        this.seconds = Math.floor(Math.random() * 7) + 3
+        this.seconds = Math.floor(Math.random() * 3) + 3
     }
 
     /**
