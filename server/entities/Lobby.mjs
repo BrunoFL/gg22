@@ -34,7 +34,7 @@ export class Lobby {
     /**
      * @type {GameManager}
      */
-    game
+    gameManager
 
     /**
      * @param {Emitter} io
@@ -51,7 +51,7 @@ export class Lobby {
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
-        this.game = new GameManager(this)
+        this.gameManager = new GameManager(this)
     }
 
     /**
@@ -101,7 +101,7 @@ export class Lobby {
         this.admin.socket.on('startGame', gameName => {
             const game = this.games.get(gameName)
             if (game) {
-                this.game.runGame(game)
+                this.gameManager.runGame(game)
             }
         })
     }
