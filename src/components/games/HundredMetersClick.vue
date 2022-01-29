@@ -3,7 +3,10 @@
   <div id="rules">
     {{rulesRun}}
   </div>
-  <div v-for="player of run" :key="player.id">
+  <div class="group row align-items-start" v-for="player of run" :key="player.id">
+    <div class="row">
+      <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
+    </div>
     <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
   </div>
   <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
@@ -29,12 +32,16 @@ export default {
     increment(){
       this.$socket.client.emit("touch")
     },
-    valueBar(value){
-      return "width: " + value + "%;";
+    isMyId(id){
+      return id === this.$socket.client.id;
     }
+
   },
   sockets: {
     updateRun(data){
+      data.sort((a, b) => {
+        return b.meter - a.meter;
+      });
       this.run = data;
     },
     rules(rules){
