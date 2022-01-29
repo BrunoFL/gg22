@@ -1,6 +1,7 @@
-import { Touch } from './Touch.mjs'
-import { GameInstance } from './GameInstance.mjs'
-import { GameResult, IndividualGameResult } from './GameResult.mjs'
+import {Touch} from './Touch.mjs'
+import {GameInstance} from './GameInstance.mjs'
+import {GameResult, IndividualGameResult} from './GameResult.mjs'
+
 export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
@@ -92,5 +93,9 @@ export class Enclume extends GameInstance {
         )
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
+    }
+
+    encode() {
+        return Enclume.name()
     }
 }
