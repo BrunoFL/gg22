@@ -103,7 +103,7 @@ export default {
       this.isLobbySelected = true
     },
     joinLobby(nameLobby){
-      this.$socket.client.emit('joinLobby',nameLobby)
+      this.$socket.client.emit('joinLobby', nameLobby)
       this.clickJoinLobby = true
     },
     isAdmin(){
@@ -111,6 +111,7 @@ export default {
     },
     goToGamesList() {
       this.$emit('swapScreen')
+      this.$socket.client.emit('askListGames')
     }
   },
   sockets: {
