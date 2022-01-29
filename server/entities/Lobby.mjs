@@ -6,10 +6,26 @@ export class Lobby {
      * @type {Emitter}
      */
     io
+    /**
+     * @type {Player[]}
+     */
     players
+    /**
+     * @type {string}
+     */
     id
+    /**
+     * @type {string}
+     */
     name
+    /**
+     * @type {Map}
+     */
     games
+    /**
+     * @type {Player}
+     */
+    admin
 
     /**
      * @param {Emitter} io
@@ -23,11 +39,14 @@ export class Lobby {
         this.players = []
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
-        this.id = Math.random()
+        this.id = '' + Math.floor(Math.random() * 1_000_000)
     }
 
     join(player) {
         console.log(`player ${player} joined ${this.name}`)
+        if (!this.admin) {
+            this.admin = player
+        }
         this.players.push(player)
         this.notifyLobbyUpdate(player)
         player.socket.on('listGames', () => this.encodeGames())
@@ -36,12 +55,17 @@ export class Lobby {
 
     leave(player) {
         console.log(`player ${player} leave ${this.name}`)
-        player.off('listGames')
-        this.players = this.players.filter(p => p !== player)
-        this.notifyLobbyUpdate(player)
+        player.socket.off('listGames')
+        player.setAdmin(false)
+        this.players = this.players.filter(p => p.id !== player.id)
         if (this.players.length === 0) {
             this.destroy()
+        } else if (this.admin.id === player.id) {
+            const newAdmin = this.players[0]
+            this.admin = newAdmin
+            newAdmin.setAdmin(true)
         }
+        this.notifyLobbyUpdate()
     }
 
     notifyLobbyUpdate() {
@@ -53,6 +77,7 @@ export class Lobby {
         return {
             'id': this.id,
             'name': this.name,
+            'admin': this.admin,
             'players': this.encodePlayers()
         }
     }
@@ -67,7 +92,7 @@ export class Lobby {
 
     destroy() {
         console.log(`Destroy lobby ${this.name}`)
-        for(const player of this.players){
+        for (const player of this.players) {
             this.leave(player)
         }
         this.server.destroyLobby(this)
