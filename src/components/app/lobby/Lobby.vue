@@ -53,7 +53,7 @@
     <!-- BLOC JOIN LOBBY -->
     <div v-if="clickJoinLobby" id="joinLobby" class="m-5">
       <h2>Lobby • {{ nameLobby }} •
-        <b-badge variant="primary" pill>{{ lobby.players.length }}</b-badge>
+        <b-badge  v-if="lobby && lobby.players" variant="primary" pill>{{ lobby.players.length }}</b-badge>
       </h2>
       <b-list-group class="mx-auto" style="width: 45%;">
         <b-list-group-item v-for="player of lobby.players" :key="player.id">{{ player.name }}</b-list-group-item>
