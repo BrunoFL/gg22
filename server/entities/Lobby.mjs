@@ -62,6 +62,7 @@ export class Lobby {
         this.admin = null
         this.isOpen = true
         this.gameManager = new GameManager(this)
+        this.disconnected = []
     }
 
     /**
