@@ -11,7 +11,7 @@
 import Lobby from "@/components/app/lobby/Lobby";
 import Games from "@/components/app/games/Games";
 import Footer from "@/components/app/footer/Footer";
-import Anvil from "@/components/app/games/Anvil"
+import Anvil from "@/components/games/Anvil"
 
 export default {
   name: 'App',
