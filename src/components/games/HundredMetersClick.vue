@@ -1,22 +1,27 @@
 <template>
-<div id="race" class="row justify-content-center gap-3">
-  <div id="rules">
-    {{rulesRun}}
-  </div>
-  <div class="group row align-items-start" v-for="player of run" :key="player.id">
-    <div class="row">
-      <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
+<div>
+  <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
+    <div id="rules">
+      {{rulesRun}}
     </div>
-    <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
+    <div class="group row align-items-start" v-for="player of run" :key="player.id">
+      <div class="row">
+        <span class="col-1" v-if="isMyId(player.player.socketId)">YOU</span>
+      </div>
+      <b-progress :value="player.meter" :max="max" show-progress animated></b-progress>
+    </div>
+    <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
+      RUN
+    </b-button>
+    {{run}}
   </div>
-  <b-button type="button" class="btn btn-outline-primary" v-on:click="increment">
-    RUN
-  </b-button>
-  {{run}}
+  <GameRanking v-if="isRankingOpen" :rankingList="rankingList"></GameRanking>
 </div>
 </template>
 
 <script>
+import GameRanking from "@/components/app/ranking/GameRanking";
+
 export default {
   name: "HundredMetersClick",
   data(){
@@ -25,8 +30,13 @@ export default {
       max: 100,
       rulesRun: '',
       clients: [],
-      run: ''
+      run: '',
+      isRankingOpen: false,
+      rankingList: []
     }
+  },
+  components: {
+    GameRanking,
   },
   methods: {
     increment(){
@@ -35,7 +45,6 @@ export default {
     isMyId(id){
       return id === this.$socket.client.id;
     }
-
   },
   sockets: {
     updateRun(data){
@@ -46,6 +55,10 @@ export default {
     },
     rules(rules){
       this.rulesRun = rules
+    },
+    leaderBoardGame(event) {
+      this.isRankingOpen = true
+      this.rankingList = event
     }
   }
 }

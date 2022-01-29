@@ -1,7 +1,7 @@
 <template>
   <div id="playerRankingList">
     <!-- BLOC GAMES LIST -->
-    <div id="displayWinners">
+    <div v-if="displayWinners" id="displayWinners">
       <h1>Gagnant</h1>
       <b-row>
         <b-col cols="12" class="mt-3">
@@ -23,6 +23,14 @@
         </b-list-group-item>
       </b-list-group>
     </div>
+    <div v-if="displayGeneral" id="displayGeneral">
+      <h1>Classement général</h1>
+      <b-list-group class="mx-auto" style="width: 33%;">
+        <b-list-group-item variant="secondary" v-for="player of generalRank" :key="player">
+          {{player.name}}
+        </b-list-group-item>
+      </b-list-group>
+    </div>
   </div>
 </template>
 
@@ -38,7 +46,10 @@ export default {
       first: '',
       second: '',
       third: '',
-      otherRanking: []
+      displayWinners: true,
+      displayGeneral: false,
+      otherRanking: [],
+      generalRank: []
     }
   },
   watch: { 
@@ -74,6 +85,14 @@ export default {
     }
   },
   sockets: {
+    leaderBoardGeneral(event) {
+      this.generalRank = event
+      this.displayWinners = false
+      this.displayGeneral = true
+    },
+    listGames(listGames) {
+        this.$emit('swapScreen', listGames)
+    }
   }
 }
 </script>

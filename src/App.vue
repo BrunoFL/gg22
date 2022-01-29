@@ -2,7 +2,7 @@
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby" @swapScreen="event => swapScreen(event)"></Lobby>
     <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
-    <Anvil v-if="isInAnvilGame"></Anvil>
+    <Anvil v-if="isInAnvilGame"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <HundredMetersClick v-if="isInHundredMetersClic"></HundredMetersClick>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
@@ -44,6 +44,11 @@ export default {
   methods: {
     swapScreen(listGames) {
         this.isInLobby = false,
+        this.isInGamesList = true
+        this.listGames = listGames
+    },    
+    swapScreenFromAnvil(listGames) {
+        this.isInAnvilGame = false,
         this.isInGamesList = true
         this.listGames = listGames
     },    
