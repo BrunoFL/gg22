@@ -109,7 +109,7 @@ export default {
       this.clickJoinLobby = true
     },
     isAdmin(){
-      return this.adminName == this.playerName
+      return this.adminName === this.playerName
     }
   },
   sockets: {

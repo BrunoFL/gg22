@@ -20,7 +20,7 @@ export class Enclume {
     }
 
     start() {
-        this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete. À vous de l\'arreter au plus tard pour un maximum de points !')
+        this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tête. À vous de l\'arrêter au plus tard pour un maximum de points !')
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
             setTimeout(() => {

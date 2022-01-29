@@ -2,6 +2,7 @@
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby"></Lobby>
     <Games v-if="isInGamesList"></Games>
+    <Anvil></Anvil>
     <Footer></Footer>
   </div>
 </template>
@@ -10,6 +11,7 @@
 import Lobby from "@/components/app/lobby/Lobby";
 import Games from "@/components/app/games/Games";
 import Footer from "@/components/app/footer/Footer";
+import Anvil from "@/components/app/games/Anvil"
 
 export default {
   name: 'App',
@@ -22,7 +24,8 @@ export default {
   components: {
     Lobby,
     Games,
-    Footer
+    Footer,
+    Anvil
   },
   sockets: {
     connect() {
