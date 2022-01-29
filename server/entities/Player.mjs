@@ -1,3 +1,5 @@
+import { UUIDGenerator } from "../utils/UUIDGenerator.mjs"
+
 export class Player {
     id
     socket
@@ -16,7 +18,7 @@ export class Player {
     isAdmin
 
     constructor(id, socket, name) {
-        this.id = '' + Math.floor(Math.random() * 1_000_000)
+        this.id = UUIDGenerator.uuid()
         this.socket = socket
         this.name = name
         this.isAdmin = false
@@ -62,7 +64,7 @@ export class Player {
         })
     }
 
-    leave(){
+    leave() {
         this.isAdmin = false
     }
 
@@ -72,5 +74,9 @@ export class Player {
 
     setAdmin(isAdmin) {
         this.isAdmin = isAdmin
+    }
+
+    addScore(score) {
+        this.score += score
     }
 }
