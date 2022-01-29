@@ -59,13 +59,13 @@ export class HundredMetersClick extends GameInstance {
                 }
                 if (value < 100) {
                     this.meters.set(player.id, value + 1)
-                    this.lobby.emitPlayers('100meters', this.encodeMeters())
+                    this.lobby.emitPlayers('updateRun', this.encodeMeters())
                 }
             })
         }
         setTimeout(() => {
             endStartGameClb()
-        }, 10_000)
+        }, 20_000)
     }
 
     /**
@@ -88,9 +88,12 @@ export class HundredMetersClick extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
-        const gameResults = new GameResult(
-            this.meters.map((meters, player) => new IndividualGameResult(player, meters))
-        )
+        const result = []
+        for (const [player, meter] of this.meters.entries()) {
+            const objPlayer = this.lobby.getPlayerById(player)
+            result.push(new IndividualGameResult(objPlayer, meter))
+        }
+        const gameResults = new GameResult(result)
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
@@ -101,7 +104,7 @@ export class HundredMetersClick extends GameInstance {
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
-            res.push({'id': key, 'meter': value})
+            res.push({'player': this.lobby.getPlayerById(key).encode(), 'meter': value})
         }
         return res
     }

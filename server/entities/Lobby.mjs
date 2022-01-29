@@ -3,7 +3,7 @@ import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
 import {HundredMetersClick} from './games/HundredMetersClick.mjs'
 import {ObstacleRun} from './games/ObstacleRun.mjs'
-import {TugWar} from './games/TugWar.js'
+import {TugWar} from './games/TugWar.mjs'
 
 export class Lobby {
     /**
@@ -187,6 +187,7 @@ export class Lobby {
             const disconnected = []
             for (const player of this.disconnected) {
                 if (player.id === id) {
+                    console.log(`reconnect player ${player.name}`)
                     player.reconnect(socket)
                     this.notifyLobbyUpdate()
                 } else {
@@ -196,5 +197,9 @@ export class Lobby {
             this.disconnected = disconnected
         }
         return null
+    }
+
+    getPlayerById(id) {
+        return this.players.find(p => p.id === id)
     }
 }
