@@ -19,6 +19,9 @@ export class HundredMetersClick extends GameInstance {
         this.lobby = lobby
     }
 
+    /**
+     * @param {function} endRulesClb
+     */
     rules(endRulesClb) {
         this.lobby.emitPlayers('rules', 'Dans le cent metre clic, le premier à cliquer 100 fois gagne !')
         setTimeout(() => endRulesClb(), 5000)
@@ -32,6 +35,9 @@ export class HundredMetersClick extends GameInstance {
         this.isEnded = false
     }
 
+    /**
+     * @param {function} endStartGameClb
+     */
     startGame(endStartGameClb) {
         for (const player of this.lobby.players) {
             player.socket('touch', () => {
@@ -52,6 +58,9 @@ export class HundredMetersClick extends GameInstance {
         }, 10_000)
     }
 
+    /**
+     * @param {function} endEndGameClb
+     */
     endGame(endEndGameClb) {
         if (!this.isEnded) {
             this.offTouch()
@@ -65,10 +74,16 @@ export class HundredMetersClick extends GameInstance {
         }
     }
 
+    /**
+     * @param {function} endLeaderBoardCLb
+     */
     leaderBoard(endLeaderBoardCLb) {
         endLeaderBoardCLb()
     }
 
+    /**
+     * @return {object[]}
+     */
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
