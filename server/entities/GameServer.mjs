@@ -40,7 +40,7 @@ export class GameServer {
                 if (!player.lobby) {
                     for (const lobby of this.lobbies) {
                         if (lobbyName === lobby.id) {
-                            lobbyName.join(player)
+                            lobby.join(player)
                         }
                     }
                 }
