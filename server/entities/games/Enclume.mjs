@@ -49,7 +49,7 @@ export class Enclume extends GameInstance {
             player.socket.once('touch', delta => {
                 player.socket.removeAllListeners('touch')
                 const touch = new Touch(player, delta)
-                this.lobby.emitPlayers('playerTouch', touch)
+                this.lobby.emitPlayers('playerTouch', touch.encode())
                 this.touchs.push(touch)
             })
         }
