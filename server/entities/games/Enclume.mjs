@@ -1,5 +1,6 @@
+import { Touch } from './Touch.mjs'
+import { PointScore } from '../PointScore.mjs'
 import {Touch} from './Touch.mjs'
-import {Classement} from './Classement.mjs'
 import {GameInstance} from './GameInstance.mjs'
 
 export class Enclume extends GameInstance {
@@ -88,11 +89,15 @@ export class Enclume extends GameInstance {
         const touchsSorted = this.touchs.sort((touchA, touchB) => touchB.delta - touchA.delta)
         const leaderBoard = []
         let position = 1
-        for (const board of touchsSorted) {
-            leaderBoard.push(new Classement(board.player, position))
+        for (const touch of touchsSorted) {
+            if (touch.delta >= 0) {
+                leaderBoard.push(PointScore.pointsFor(touch.player, position))
+            } else {
+                leaderBoard.push(PointScore.pointsForNonFinisher(touch.player, position))
+            }
             position++
         }
-        this.lobby.emitPlayers('leaderBoardGame', leaderBoard)
+        this.lobby.emitPlayers('leaderBoardGame', leaderBoard.map(p => p.encode()))
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
 }
