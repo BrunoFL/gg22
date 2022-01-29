@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid" id="app">
-    <Lobby v-if="isInLobby"></Lobby>
+    <Lobby v-if="isInLobby" @swapScreen="swapScreen()"></Lobby>
     <Games v-if="isInGamesList"></Games>
     <Footer></Footer>
   </div>
@@ -23,6 +23,12 @@ export default {
     Lobby,
     Games,
     Footer
+  },
+  methods: {
+    swapScreen() {
+        this.isInLobby = false,
+        this.isInGamesList = true
+    }
   },
   sockets: {
     connect() {
