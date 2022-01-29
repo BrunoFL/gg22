@@ -143,10 +143,11 @@ export class TugWar extends GameInstance {
     }
 
     leaderBoard(endLeaderBoardCLb) {
-        new TeamGameResults([
+        const gameResults = new TeamGameResults([
             new TeamGameResult(this.teamA, this.center < 0),
             new TeamGameResult(this.teamB, this.center > 0)
         ])
+        gameResults.attributePoints()
 
         super.leaderBoard(endLeaderBoardCLb)
     }
