@@ -1,4 +1,4 @@
-import { UUIDGenerator } from '../utils/UUIDGenerator.mjs'
+import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {Lobby} from './Lobby.mjs'
 import {Player} from './Player.mjs'
 
@@ -47,11 +47,26 @@ export class GameServer {
         })
     }
 
+    /**
+     * @param {Lobby} lobby
+     */
     destroyLobby(lobby) {
         this.lobbies = this.lobbies.filter(l => l.id !== lobby.id)
-        this.io.emit('listLobbies', this.encodeLobbies())
+        this.io.emit('listLobbies', this.openLobbies())
     }
 
+    /**
+     * @return {object[]}
+     */
+    openLobbies() {
+        return this.lobbies
+            .filter(lobby => lobby.isOpen)
+            .map(lobby => lobby.encode())
+    }
+
+    /**
+     * @return {object[]}
+     */
     encodeLobbies() {
         return this.lobbies.map(l => l.encode())
     }

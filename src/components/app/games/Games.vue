@@ -19,7 +19,7 @@ export default {
   name: "Games",
   data(){
     return {
-        listGames: ['Enclume', 'Tir à la corde'],
+        listGames: [],
         isGameSelected: true,
         selectedGame: ''
     }

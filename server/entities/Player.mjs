@@ -1,4 +1,4 @@
-import { UUIDGenerator } from "../utils/UUIDGenerator.mjs"
+import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 
 export class Player {
     id
@@ -35,6 +35,9 @@ export class Player {
         this.score = 0
     }
 
+    /**
+     * @return {object}
+     */
     encode() {
         return {
             'id': this.id,
@@ -68,14 +71,24 @@ export class Player {
         this.isAdmin = false
     }
 
+    /**
+     * @param {string} event
+     * @param {object} content
+     */
     emit(event, content) {
         this.socket.emit(event, content)
     }
 
+    /**
+     * @param {boolean} isAdmin
+     */
     setAdmin(isAdmin) {
         this.isAdmin = isAdmin
     }
 
+    /**
+     * @param {number} score
+     */
     addScore(score) {
         this.score += score
     }

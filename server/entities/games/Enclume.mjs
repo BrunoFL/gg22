@@ -1,7 +1,8 @@
 import {Touch} from './Touch.mjs'
 import {Classement} from './Classement.mjs'
+import {GameInstance} from './GameInstance.mjs'
 
-export class Enclume {
+export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
      */
@@ -16,36 +17,39 @@ export class Enclume {
     touchs
 
     constructor(lobby) {
+        super()
         this.lobby = lobby
     }
 
+<<<<<<< HEAD
     start() {
         this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tête. À vous de l\'arrêter au plus tard pour un maximum de points !')
+=======
+    initGame() {
+        this.touchs = []
+        this.seconds = Math.floor(Math.random() * 7) + 3
+    }
+
+    /**
+     * @param {function} endRulesclb
+     */
+    rules(endRulesclb) {
+        this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete. À vous de l\'arreter au plus tard pour un maximum de points !')
+>>>>>>> b0d9daa86aaf926f74f0905ce383279e44471983
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
             setTimeout(() => {
-                this.timer()
+                endRulesclb()
             }, 2000)
         }, 5000)
     }
 
-    timer() {
-        this.lobby.emitPlayers('rules', '3')
-        setTimeout(() => {
-            this.lobby.emitPlayers('rules', '2')
-            setTimeout(() => {
-                this.lobby.emitPlayers('rules', '1')
-                setTimeout(() => {
-                    this.startGame()
-                }, 1000)
-            }, 1000)
-        }, 1000)
-    }
-
-    startGame() {
-        this.seconds = Math.floor(Math.random() * 7) + 3
+    /**
+     * @param {function} endStartGameClb
+     */
+    startGame(endStartGameClb) {
         this.lobby.emitPlayers('startEnclume', this.seconds)
-        setTimeout(() => this.endGame(), this.seconds + 2000)
+        setTimeout(() => endStartGameClb(), this.seconds + 2000)
         for (const player of this.lobby.players) {
             player.socket.on('touch', delta => {
                 player.socket.off('touch')
@@ -56,14 +60,20 @@ export class Enclume {
         }
     }
 
-    endGame() {
+    /**
+     * @param {function} endEndGameClb
+     */
+    endGame(endEndGameClb) {
         for (const player of this.lobby.players) {
             player.socket.off('touch')
         }
-        setTimeout(() => this.showResults(), 3000)
+        setTimeout(() => endEndGameClb(), 3000)
     }
 
-    showResults() {
+    /**
+     * @param {function} endLeaderBoardCLb
+     */
+    leaderBoard(endLeaderBoardCLb) {
         for (const player of this.lobby.players) {
             let isPresent = false
             for (const touch of this.touchs) {
@@ -83,5 +93,6 @@ export class Enclume {
             position++
         }
         this.lobby.emitPlayers('leaderBoardGame', leaderBoard)
+        setTimeout(() => endLeaderBoardCLb(), 3000)
     }
 }
