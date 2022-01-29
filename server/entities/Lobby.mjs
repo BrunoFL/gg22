@@ -1,5 +1,6 @@
 import {GameServer} from './GameServer.mjs'
 import {Enclume} from './games/Enclume.mjs'
+import { UUIDGenerator } from '../utils/UUIDGenerator.mjs'
 
 export class Lobby {
     /**
@@ -39,7 +40,7 @@ export class Lobby {
         this.players = []
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
-        this.id = '' + Math.floor(Math.random() * 1_000_000)
+        this.id = UUIDGenerator.uuid()
         this.admin = null
     }
 

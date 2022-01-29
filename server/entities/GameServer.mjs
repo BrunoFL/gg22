@@ -1,3 +1,4 @@
+import { UUIDGenerator } from '../utils/UUIDGenerator.mjs'
 import {Lobby} from './Lobby.mjs'
 import {Player} from './Player.mjs'
 
@@ -22,7 +23,7 @@ export class GameServer {
 
     listen() {
         this.io.on('connection', socket => {
-            const player = new Player(Math.random(), socket, socket.id)
+            const player = new Player(UUIDGenerator.uuid, socket, socket.id)
             socket.on('createLobby', lobbyName => {
                 console.log(`create lobby ${lobbyName}`)
                 const lobby = new Lobby(this.io, this, lobbyName)

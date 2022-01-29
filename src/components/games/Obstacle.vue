@@ -1,7 +1,8 @@
 <template>
     <div id="obstacleGame">
         <h1>DOR - Dual Obstacle Run</h1>
-        <div class="gameWindow" v-on:click="interact()">
+        <div class="gameWindow">
+            <input @keydown.space="interact()" autofocus>
             <img id="perso" src="../../assets/perso.jpeg">
         </div>
     </div>
