@@ -11,6 +11,9 @@ export class Touch {
         this.delta = delta
     }
 
+    /**
+     * @return {object}
+     */
     encode() {
         return {
             'player': this.player.encode(),

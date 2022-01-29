@@ -95,6 +95,9 @@ export class Enclume extends GameInstance {
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }
 
+    /**
+     * @return {string}
+     */
     encode() {
         return Enclume.name()
     }

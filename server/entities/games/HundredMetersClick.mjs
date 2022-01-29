@@ -104,6 +104,9 @@ export class HundredMetersClick extends GameInstance {
         return res
     }
 
+    /**
+     * @return {string}
+     */
     encode() {
         return HundredMetersClick.name()
     }
