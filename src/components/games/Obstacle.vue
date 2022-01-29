@@ -2,9 +2,15 @@
     <div id="obstacleGame">
         <h1>DOR - Dual Obstacle Run</h1>
         <p>{{rules}}</p>
-        <div id="gameObstacleRun">
-            <input @keydown.space="interact()" autofocus>
-            <img id="perso" src="../../assets/perso.jpeg">
+        <div id='gameWindow'>
+          <div class="playerWindow">
+              <button v-if="team == 1" v-on:click="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
+              <img id="perso1" src="../../assets/perso.jpeg">
+          </div>
+          <div class="playerWindow">
+              <button v-if="team == 2" v-on:click="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
+              <img id="perso2" src="../../assets/img/jospin.jpg">
+          </div>
         </div>
     </div>
 </template>
@@ -15,8 +21,10 @@ export default {
   data() {
     return {
         rules: '',
-        pos_x: '0px',
-        pos_y: '0px'
+        character1Pos: '0px',
+        character2Pos: '0px',
+        team: '',
+        direction: ''
     }
   },
   methods: {
@@ -32,25 +40,60 @@ export default {
     rules(rules) {
       this.rules = rules;
     },
-    startObstacleRun() {
-      //setup vue
+    startObstacleRun(data) {
+      console.log('client : ' + data)
+      this.team = data.team;
+      this.direction = (data.direction == 0) ? 'up' : 'down' 
     },
-    updateCharacterPos(pos) {
-      this.pos_x = pos.pos_x + 'px';
-      this.pos_y = pos.pos_y + 'px';
-      console.log(this.pos_x, this.pos_y)
+    updateCharacterPos(ret) {
+      if (ret.team == 1) {
+        this.character1Pos = ret.position + 'px';
+      } else {
+        this.character2Pos = ret.position + 'px';
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+#obstacleGame {
+  height: 100%;
+}
 
-#perso {
-  width:5%;
-  min-width: 20px;
+#gameWindow {
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.playerWindow {
+  position: relative;
+  float: left;
+  border: black 2px solid;
+  width: 50%;
+  height: 100%;
+}
+
+#moveCharacter {
   position: absolute;
-  bottom: v-bind(pos_y);
-  left: v-bind(pos_x);
+  bottom: 2rem;
+  margin: auto;
+}
+
+#perso1 {
+  width:5%;
+  min-width: 40px;
+  margin: 2%;
+  position: absolute;
+  bottom: v-bind(character1Pos);
+  left: 0px;
+}
+#perso2 {
+  width:5%;
+  min-width: 40px;
+  margin: 2%;
+  position: absolute;
+  bottom: v-bind(character2Pos);
+  right: 0px;
 }
 </style>

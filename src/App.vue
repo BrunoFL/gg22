@@ -4,7 +4,8 @@
     <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
-    <HundredMetersClick v-if="isInHundredMetersClic"></HundredMetersClick>
+    <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
+    <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromHundred(event)"></TugWar>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
@@ -16,6 +17,7 @@ import Games from "@/components/app/games/Games";
 import GameRanking from "@/components/app/ranking/GameRanking";
 import Footer from "@/components/app/footer/Footer";
 import Anvil from "@/components/games/Anvil";
+import TugWar from "@/components/games/TugWar";
 import Obstacle from "@/components/games/Obstacle";
 import HundredMetersClick from "@/components/games/HundredMetersClick";
 
@@ -28,6 +30,7 @@ export default {
       isInAnvilGame: false,
       isInObstacleRun: false,
       isInHundredMetersClic: false,
+      isInTugWar: false,
       listGames: [],
       actualGame: '',
     }
@@ -39,6 +42,7 @@ export default {
     GameRanking,
     Footer,
     Anvil,
+    TugWar,
     Obstacle
   },
   methods: {
@@ -49,6 +53,11 @@ export default {
     },    
     swapScreenFromAnvil(listGames) {
         this.isInAnvilGame = false,
+        this.isInGamesList = true
+        this.listGames = listGames
+    },
+    swapScreenFromHundred(listGames) {
+        this.isInHundredMetersClic = false,
         this.isInGamesList = true
         this.listGames = listGames
     },    
@@ -64,6 +73,9 @@ export default {
             break;
           case 'Course d\'obstacle':
             this.isInObstacleRun = true
+            break;
+          case 'La guerre des tugs sans haches':
+            this.isInTugWar = true
             break;
           default:
             break;

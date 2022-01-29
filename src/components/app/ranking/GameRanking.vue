@@ -26,8 +26,8 @@
     <div v-if="displayGeneral" id="displayGeneral">
       <h1>Classement général</h1>
       <b-list-group class="mx-auto" style="width: 33%;">
-        <b-list-group-item variant="secondary" v-for="player of generalRank" :key="player">
-          {{player.name}}
+        <b-list-group-item variant="secondary" v-for="(player, index) of generalRank" :key="index">
+          {{(index + 1) + ' - ' + player.name + ' ' + player.score + 'pts'}}
         </b-list-group-item>
       </b-list-group>
     </div>

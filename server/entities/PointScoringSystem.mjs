@@ -5,12 +5,12 @@ export class PointScoringSystem {
     /**
      * @param {number} position 
      * @param {boolean} finished 
-     * @returns 
+     * @returns {number}
      */
     static pointsFor(position, finished) {
         if (position > PointScoringSystem.pointScoringSystem.length || !finished) {
             return 0
         }
-        return this.pointScoringSystem[position]
+        return PointScoringSystem.pointScoringSystem[position]
     }
 }
