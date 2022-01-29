@@ -1,8 +1,9 @@
 <template>
   <div class="container-fluid" id="app">
-    <Lobby v-if="isInLobby" @swapScreen="swapScreen()"></Lobby>
-    <Games v-if="isInGamesList" @swapToGames="swapToGames()"></Games>
+    <Lobby v-if="isInLobby" @swapScreen="event => swapScreen(event)"></Lobby>
+    <Games v-if="isInGamesList" @swapToGames="swapToGames()" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame"></Anvil>
+    <GameRanking v-if="false"></GameRanking>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
@@ -11,6 +12,7 @@
 <script>
 import Lobby from "@/components/app/lobby/Lobby";
 import Games from "@/components/app/games/Games";
+import GameRanking from "@/components/app/ranking/GameRanking";
 import Footer from "@/components/app/footer/Footer";
 import Anvil from "@/components/games/Anvil";
 import Obstacle from "@/components/games/Obstacle";
@@ -22,20 +24,27 @@ export default {
       isInLobby: true,
       isInGamesList: false,
       isInAnvilGame: false,
+<<<<<<< HEAD
       isInObstacleRun: false
+=======
+      listGames: [],
+      isInObstacleRun: true//false
+>>>>>>> e47ff5ae9f5e93deaf072b440f8fbd04ae62afcb
     }
   },
   components: {
     Lobby,
     Games,
+    GameRanking,
     Footer,
     Anvil,
     Obstacle
   },
   methods: {
-    swapScreen() {
+    swapScreen(listGames) {
         this.isInLobby = false,
         this.isInGamesList = true
+        this.listGames = listGames
     },    
     swapToGames() {
         this.isInLobby = false,
