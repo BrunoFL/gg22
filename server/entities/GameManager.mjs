@@ -35,7 +35,7 @@ export class GameManager {
      */
     runGame(game) {
         this.game = game
-        this.lobby.emitPlayers("gameStarted", this.game.name())
+        this.lobby.emitPlayers("gameStarted", this.game.encode())
         this.game.rules(() => {
             this.game.initGame()
             this.timer()
