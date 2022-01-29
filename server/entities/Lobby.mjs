@@ -149,7 +149,9 @@ export class Lobby {
      * @return {object[]}
      */
     encodePlayers() {
-        return this.players.sort((p1,p2) => p1.score - p2.score).map(p => p.encode())
+        return this.players
+            .sort((p1, p2) => p1.score - p2.score)
+            .map(p => p.encode())
     }
 
     /**
@@ -206,7 +208,7 @@ export class Lobby {
         return this.players.find(p => p.id === id)
     }
 
-     leaderBoard() {
+    leaderBoard() {
         this.emitPlayers('leaderBoardGeneral', this.encodePlayers())
     }
 }

@@ -9,7 +9,7 @@
         </b-list-group-item>
       </b-list-group>
     </div>
-    <b-button v-if="isGameSelected" v-on:click="startGame()" variant="success">Lancer le jeu !</b-button>
+    <b-button class="m-3" v-if="isGameSelected" v-on:click="startGame()" variant="success">Lancer le jeu !</b-button>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
   methods: {
     startGame() {
         this.$socket.client.emit('startGame', this.selectedGame)
-    },   
+    },
     selectGame(game) {
         this.selectedGame = game
     }
