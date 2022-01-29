@@ -9,12 +9,15 @@ export class HundredMetersClick extends GameInstance {
      * @type {Map}
      */
     meters
+    /**
+     * @type {Boolean}
+     */
+    isEnded
 
     constructor(lobby) {
         super()
         this.lobby = lobby
     }
-
 
     rules(endRulesClb) {
         this.lobby.emitPlayers('rules', 'Dans le cent metre clic, le premier à cliquer 100 fois gagne !')
@@ -25,14 +28,8 @@ export class HundredMetersClick extends GameInstance {
         this.meters = new Map()
         for (const player of this.lobby.players) {
             this.meters.set(player.id, 0)
-            player.socket('touch', () => {
-                const value = this.meters.get(player.id)
-                this.meters.set(player.id, value + 1)
-                if (value === 99) {
-
-                }
-            })
         }
+        this.isEnded = false
     }
 
     startGame(endStartGameClb) {
@@ -45,6 +42,7 @@ export class HundredMetersClick extends GameInstance {
                 if (value < 100) {
                     this.meters.set(player.id, value + 1)
                     this.lobby.emitPlayers('100meters', this.encodeMeters())
+                    endStartGameClb()
                 }
             })
         }
@@ -54,10 +52,12 @@ export class HundredMetersClick extends GameInstance {
     }
 
     endGame(endEndGameClb) {
-        for (const player of this.lobby.players) {
-            player.socket.off('touch')
+        if (!this.isEnded) {
+            for (const player of this.lobby.players) {
+                player.socket.off('touch')
+            }
+            endEndGameClb()
         }
-        endEndGameClb()
     }
 
     leaderBoard(endLeaderBoardCLb) {
@@ -67,10 +67,7 @@ export class HundredMetersClick extends GameInstance {
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
-            res.push({
-                'id': key,
-                'meter': value
-            })
+            res.push({'id': key, 'meter': value})
         }
         return res
     }
