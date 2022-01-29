@@ -45,7 +45,10 @@ export class GameManager {
     endGame() {
         this.game.endGame(() => {
             this.game.leaderBoard(() => {
-                this.lobby.listGames()
+                this.lobby.leaderBoard()
+                setTimeout(()=>{
+                    this.lobby.listGames()
+                }, 4000)
             })
         })
     }
