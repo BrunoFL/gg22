@@ -1,8 +1,14 @@
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 
 export class Player {
+    /**
+     * @type {string}
+     */
     id
     socket
+    /**
+     * @type {string}
+     */
     name
     /**
      * @type {Lobby}
@@ -24,6 +30,7 @@ export class Player {
         this.isAdmin = false
         this.resetScore()
         this.listen()
+        this.socket.emit('setId', this.id)
     }
 
     join(lobby) {
@@ -36,12 +43,20 @@ export class Player {
     }
 
     /**
+     * @param {number} points 
+     */
+    scorePoints(points) {
+        this.score += points
+    }
+
+    /**
      * @return {object}
      */
     encode() {
         return {
             'id': this.id,
             'name': this.name,
+            'socketId': this.socket.id,
             'score': this.score,
             'isAdmin': this.isAdmin
         }
@@ -91,5 +106,9 @@ export class Player {
      */
     addScore(score) {
         this.score += score
+    }
+
+    reconnect(socket) {
+        this.socket = socket
     }
 }

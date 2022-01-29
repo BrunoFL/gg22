@@ -2,7 +2,8 @@ import {Enclume} from './games/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
 import {HundredMetersClick} from './games/HundredMetersClick.mjs'
-import { ObstacleRun } from './games/ObstacleRun.mjs'
+import {ObstacleRun} from './games/ObstacleRun.mjs'
+import {TugWar} from './games/TugWar.mjs'
 
 export class Lobby {
     /**
@@ -37,6 +38,10 @@ export class Lobby {
      * @type {GameManager}
      */
     gameManager
+    /**
+     * @type {Player[]}
+     */
+    disconnected
 
     /**
      * @param {Emitter} io
@@ -52,10 +57,12 @@ export class Lobby {
         this.games.set(Enclume.name(), new Enclume(this))
         this.games.set(HundredMetersClick.name(), new HundredMetersClick(this))
         this.games.set(ObstacleRun.name(), new ObstacleRun(this))
+        this.games.set(TugWar.name(), new TugWar(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
         this.gameManager = new GameManager(this)
+        this.disconnected = []
     }
 
     /**
@@ -93,6 +100,7 @@ export class Lobby {
             const newAdmin = this.players[0]
             this.setAdmin(newAdmin)
             this.notifyLobbyUpdate()
+            this.disconnected.push(player)
         }
     }
 
@@ -173,5 +181,26 @@ export class Lobby {
 
     listGames() {
         this.emitPlayers('listGames', this.encodeGames())
+    }
+
+    joinById(id, socket) {
+        if (this.isOpen) {
+            const disconnected = []
+            for (const player of this.disconnected) {
+                if (player.id === id) {
+                    console.log(`reconnect player ${player.name}`)
+                    player.reconnect(socket)
+                    this.notifyLobbyUpdate()
+                } else {
+                    disconnected.push(this.disconnected)
+                }
+            }
+            this.disconnected = disconnected
+        }
+        return null
+    }
+
+    getPlayerById(id) {
+        return this.players.find(p => p.id === id)
     }
 }
