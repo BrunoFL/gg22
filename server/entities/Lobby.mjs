@@ -48,8 +48,8 @@ export class Lobby {
         this.name = name
         this.players = []
         this.games = new Map()
-        this.games.set('Enclume', new Enclume(this))
-        this.games.set('100 mètre clic', new HundredMetersClick(this))
+        this.games.set(Enclume.name(), new Enclume(this))
+        this.games.set(HundredMetersClick.name(), new HundredMetersClick(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true

@@ -2,7 +2,7 @@
     <div id="obstacleGame">
         <h1>DOR - Dual Obstacle Run</h1>
         <div class="gameWindow">
-            <input @keydown.space="interact()" autofocus>
+            <input @keydown.space="interact()" hidden autofocus>
             <img id="perso" src="../../assets/perso.jpeg">
         </div>
     </div>
@@ -22,7 +22,7 @@ export default {
      * Depending on the direction that was assigned to you, moves the character.
      */
     interact() {
-      console.log("prout")
+      console.log('prout')
       this.$socket.client.emit('interactWithCharacter')
     }
   },
@@ -40,11 +40,10 @@ export default {
 </script>
 
 <style scoped>
-.gameWindow {
-
-}
 
 #perso {
-
+  position: absolute;
+  bottom: pos_x rem;
+  left: pos_y rem;
 }
 </style>
