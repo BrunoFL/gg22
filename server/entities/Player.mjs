@@ -36,6 +36,13 @@ export class Player {
     }
 
     /**
+     * @param {number} points 
+     */
+    scorePoints(points) {
+        this.score += points
+    }
+
+    /**
      * @return {object}
      */
     encode() {
