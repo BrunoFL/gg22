@@ -21,6 +21,13 @@ export class Enclume extends GameInstance {
         this.lobby = lobby
     }
 
+    /**
+     * @return {string}
+     */
+    static name() {
+        return 'Enclume'
+    }
+
     initGame() {
         this.touchs = []
         this.seconds = Math.floor(Math.random() * 7) + 3

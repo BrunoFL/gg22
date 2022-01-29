@@ -20,6 +20,13 @@ export class HundredMetersClick extends GameInstance {
     }
 
     /**
+     * @return {string}
+     */
+    static name() {
+        return '100 mètre clic'
+    }
+
+    /**
      * @param {function} endRulesClb
      */
     rules(endRulesClb) {
