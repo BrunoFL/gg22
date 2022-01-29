@@ -28,6 +28,7 @@ export class TeamGameResult {
         } else {
             this.attributePoints = 0
         }
+        this.team.players.forEach(player => player.scorePoints(this.attributedPoints))
     }
 
     encode() {
