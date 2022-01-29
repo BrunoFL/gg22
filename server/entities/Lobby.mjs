@@ -174,12 +174,14 @@ export class Lobby {
     startGame(gameName) {
         const game = this.games.get(gameName)
         if (game) {
+            this.closeLobby()
             console.log(`Start Game ${gameName} in lobby ${this.name}`)
             this.gameManager.runGame(game)
         }
     }
 
     listGames() {
+        this.isOpen = true
         this.emitPlayers('listGames', this.encodeGames())
     }
 

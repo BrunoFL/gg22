@@ -6,6 +6,11 @@ export class ObstacleRun extends GameInstance {
      */
     lobby
 
+    /**
+     * @type {Map}
+     */
+    affectations
+
     characterPos
 
     constructor(lobby) {
@@ -22,8 +27,11 @@ export class ObstacleRun extends GameInstance {
     }
 
     initGame() {
+        this.affectations = new Map()
+        var direction = 0//0 = right, 1 = left, 2 = up, 3 = down
         for (const player of this.lobby.players) {
-
+            this.affectations.set(player.id, direction)
+            ++direction
         }
     }
 
@@ -47,7 +55,7 @@ export class ObstacleRun extends GameInstance {
         this.lobby.emitPlayers('startObstacleRun')
         for (const player of this.lobby.players) {
             player.socket.on('interactWithCharacter', () => {
-                this.lobby.emitPlayers('updateCharacterPos', this.updateCharacterPos())
+                this.lobby.emitPlayers('updateCharacterPos', this.updateCharacterPos(player.id))
             })
         }
     }
@@ -63,10 +71,29 @@ export class ObstacleRun extends GameInstance {
         super.leaderBoard(endLeaderBoardClb)
     }
 
-    updateCharacterPos() {
-        console.log('recu')
-        ++this.characterPos.pos_x
-        ++this.characterPos.pos_y
+    updateCharacterPos(playerId) {
+        switch (this.affectations.get(playerId)) {
+            case 0: //right
+                this.characterPos.pos_x += 5
+                break;
+            case 1: //left
+                this.characterPos.pos_x -= 5
+                break;
+            case 2: //top
+                this.characterPos.pos_y += 5
+                break;
+            case 3: //down
+                this.characterPos.pos_y -= 5
+                break;
+            default:
+                break;
+        }
         return this.characterPos
+    }
+    /**
+     * @return {string}
+     */
+    encode() {
+        return ObstacleRun.name()
     }
 }

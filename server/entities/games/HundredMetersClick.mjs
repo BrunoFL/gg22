@@ -50,6 +50,7 @@ export class HundredMetersClick extends GameInstance {
         for (const player of this.lobby.players) {
             this.lobby.emitPlayers('rules', 'C\'est parti')
             this.lobby.emitPlayers('startRun', null)
+            let cpt = 0
             player.socket.on('touch', () => {
                 const value = this.meters.get(player.id)
                 if (value === 99) {
@@ -59,8 +60,11 @@ export class HundredMetersClick extends GameInstance {
                 }
                 if (value < 100) {
                     this.meters.set(player.id, value + 1)
-                    this.lobby.emitPlayers('updateRun', this.encodeMeters())
+                    if (cpt % 5 === 0){
+                        this.lobby.emitPlayers('updateRun', this.encodeMeters())
+                    }
                 }
+                cpt++
             })
         }
         setTimeout(() => {
