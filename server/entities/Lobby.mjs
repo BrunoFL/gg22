@@ -99,10 +99,7 @@ export class Lobby {
         this.admin = player
         player.setAdmin(true)
         this.admin.socket.on('startGame', gameName => {
-            const game = this.games.get(gameName)
-            if (game) {
-                this.gameManager.runGame(game)
-            }
+            this.startGame(gameName)
         })
     }
 
@@ -162,7 +159,15 @@ export class Lobby {
         this.isOpen = false
     }
 
-    listGames(){
+    startGame(gameName) {
+        const game = this.games.get(gameName)
+        if (game) {
+            console.log(`Start Game ${gameName} in lobby ${this.name}`)
+            this.gameManager.runGame(game)
+        }
+    }
+
+    listGames() {
         this.emitPlayers('listGames', this.encodeGames())
     }
 }
