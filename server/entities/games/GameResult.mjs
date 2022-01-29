@@ -54,7 +54,7 @@ export class IndividualGameResult {
     }
 
     attributePoints() {
-        this.attributePoints = PointScoringSystem.pointsFor(this.position, this.finished)
+        this.attributedPoints = PointScoringSystem.pointsFor(this.position, this.finished)
         this.player.scorePoints(this.attributedPoints)
     }
 }
