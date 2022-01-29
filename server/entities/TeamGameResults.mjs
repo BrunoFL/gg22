@@ -11,7 +11,7 @@ export class TeamGameResult {
     /**
      * @type {number}
      */
-     attributedPoints
+    attributedPoints
 
     /**
      * @param {Team} team
@@ -40,6 +40,11 @@ export class TeamGameResult {
 }
 
 export class TeamGameResults {
+
+    /**
+     * @type {TeamGameResult[]}
+     */
+    teamResults
 
     /**
      * @param {TeamGameResult[]} teamResults 
