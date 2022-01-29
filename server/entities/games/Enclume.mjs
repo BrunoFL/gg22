@@ -21,21 +21,6 @@ export class Enclume extends GameInstance {
         this.lobby = lobby
     }
 
-<<<<<<< HEAD
-start() {
-    this
-.
-    lobby
-.
-
-    emitPlayers(
-
-    'rules'
-,
-    'Dans quelques secondes, une enclume va vous tomber sur la tête. À vous de l\'arrêter au plus tard pour un maximum de points !'
-)
-=======
-
     initGame() {
         this.touchs = []
         this.seconds = Math.floor(Math.random() * 7) + 3
@@ -46,7 +31,6 @@ start() {
      */
     rules(endRulesclb) {
         this.lobby.emitPlayers('rules', 'Dans quelques secondes, une enclume va vous tomber sur la tete. À vous de l\'arreter au plus tard pour un maximum de points !')
-        >>> >>> > b0d9daa86aaf926f74f0905ce383279e44471983
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
             setTimeout(() => {
