@@ -1,40 +1,16 @@
-export class PointScore {
-    player
-    position
-    score
-    finished
+export class PointScoringSystem {
 
-    pointScoringSystem = [10, 6, 4, 3, 2, 1]
+    static pointScoringSystem = [10, 6, 4, 3, 2, 1]
 
-    constructor(player, position, finished) {
-        this.player = player
-        this.position = position
-        this.finished = finished
-        this.score = this.getScore(position)
-        this.player.addScore(this.score)
-    }
-
-    static pointsFor(player, position) {
-        return new PointScore(player, position, true)
-    }
-
-    static pointsForNonFinisher(player, position) {
-        return new PointScore(player, position, true)
-    }
-
-    getScore(position) {
-        if (position > this.scores.length || !this.finished) {
+    /**
+     * @param {number} position 
+     * @param {boolean} finished 
+     * @returns 
+     */
+    static pointsFor(position, finished) {
+        if (position > pointScoringSystem.length || !finished) {
             return 0
         }
-        return this.pointScoringSystem[position - 1]
+        return this.pointScoringSystem[position]
     }
-
-    encode() {
-        return {
-            'player': this.player.encode(),
-            'position': this.position,
-            'score': this.score
-        }
-    }
-
 }
