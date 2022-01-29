@@ -23,23 +23,20 @@ export class Lobby {
         this.players = []
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
-        this.listen()
         this.id = Math.random()
     }
 
-    listen() {
-
-    }
-
     join(player) {
+        console.log(`player ${player} joined ${this.name}`)
         this.players.push(player)
         this.notifyLobbyUpdate(player)
         player.socket.on('listGames', () => this.encodeGames())
         player.join(this)
-        console.log(`player ${player} connected`)
     }
 
     leave(player) {
+        console.log(`player ${player} leave ${this.name}`)
+        player.off('listGames')
         this.players = this.players.filter(p => p !== player)
         this.notifyLobbyUpdate(player)
         if (this.players.length === 0) {
@@ -69,6 +66,10 @@ export class Lobby {
     }
 
     destroy() {
+        console.log(`Destroy lobby ${this.name}`)
+        for(const player of this.players){
+            this.leave(player)
+        }
         this.server.destroyLobby(this)
     }
 }

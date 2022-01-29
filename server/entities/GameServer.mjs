@@ -2,7 +2,6 @@ import {Lobby} from './Lobby.mjs'
 import {Player} from './Player.mjs'
 
 export class GameServer {
-
     /**
      * @type {Emitter}
      */
@@ -32,14 +31,13 @@ export class GameServer {
             })
 
             socket.on('getLobbies', () => {
-                console.log('bip boup')
                 socket.emit('listLobbies', this.encodeLobbies())
             })
 
-            socket.on('joinLobby', lobbyName => {
+            socket.on('joinLobby', lobbyId => {
                 if (!player.lobby) {
                     for (const lobby of this.lobbies) {
-                        if (lobbyName === lobby.id) {
+                        if (lobbyId === lobby.id) {
                             lobby.join(player)
                         }
                     }
