@@ -19,10 +19,10 @@ export default {
   name: 'App',
     data(){
     return {
-      isInLobby: false,//true,
+      isInLobby: true,
       isInGamesList: false,
       isInAnvilGame: false,
-      isInObstacleRun: true//false
+      isInObstacleRun: false
     }
   },
   components: {

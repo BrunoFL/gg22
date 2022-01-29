@@ -6,6 +6,13 @@ export class GameInstance {
         return ''
     }
 
+/**
+ * @returns {string}
+ */
+    encode(){
+        return ""
+    }
+
     /**
      * @param {Function} endRulesClb
      */
