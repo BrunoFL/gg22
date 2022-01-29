@@ -9,7 +9,7 @@
         <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
       </div>
     </div>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList"></GameRanking>
+    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
 
@@ -41,6 +41,9 @@ export default {
       this.touchTime = new Date().getTime()
       this.delta = (this.startTime + (this.duration * 1000) - this.touchTime)
       this.$socket.client.emit('touch',this.delta)
+    },
+    swapScreen(event) {
+      this.$emit('swapScreen', event)
     }
   },
   sockets: {
@@ -72,6 +75,7 @@ export default {
     position: relative;
     animation-duration: v-bind(fallDuration);
     animation-play-state: v-bind(anvilState);
+    animation-timing-function: linear;
   }
 
   #character{
