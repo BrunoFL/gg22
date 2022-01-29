@@ -48,7 +48,7 @@ export class GameManager {
                 this.lobby.leaderBoard()
                 setTimeout(()=>{
                     this.lobby.listGames()
-                }, 4000)
+                }, 8000)
             })
         })
     }
