@@ -1,8 +1,9 @@
 <template>
     <div id="obstacleGame">
         <h1>DOR - Dual Obstacle Run</h1>
-        <div class="gameWindow">
-            <input @keydown.space="interact()" hidden autofocus>
+        <p>{{rules}}</p>
+        <div id="gameObstacleRun">
+            <input @keydown.space="interact()" autofocus>
             <img id="perso" src="../../assets/perso.jpeg">
         </div>
     </div>
@@ -13,6 +14,7 @@ export default {
   name: 'ObtacleRun',
   data() {
     return {
+        rules: '',
         pos_x: 0,
         pos_y: 0
     }
@@ -27,9 +29,12 @@ export default {
     }
   },
   sockets: {
-    /*
-     * 👂 Listen to socket events emitted from the socket server
-     */
+    rules(rules) {
+      this.rules = rules;
+    },
+    startObstacleRun() {
+      //setup vue
+    },
     updateCharacterPos(pos) {
       this.pos_x = pos.pos_x;
       this.pos_y = pos.pos_y;

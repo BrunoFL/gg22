@@ -1,5 +1,5 @@
-import { GameInstance } from './GameInstance.mjs'
-import { GameResult, IndividualGameResult } from './GameResult.mjs'
+import {GameInstance} from './GameInstance.mjs'
+import {GameResult, IndividualGameResult} from './GameResult.mjs'
 
 export class HundredMetersClick extends GameInstance {
     /**
@@ -99,8 +99,15 @@ export class HundredMetersClick extends GameInstance {
     encodeMeters() {
         const res = []
         for (const [key, value] of this.meters) {
-            res.push({ 'id': key, 'meter': value })
+            res.push({'id': key, 'meter': value})
         }
         return res
+    }
+
+    /**
+     * @return {string}
+     */
+    encode() {
+        return HundredMetersClick.name()
     }
 }

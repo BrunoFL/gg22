@@ -3,7 +3,13 @@ export class GameInstance {
      * @return {string}
      */
     static name() {
-        return ''
+
+    }
+
+    /**
+     * @returns {string}
+     */
+    encode() {
     }
 
     /**

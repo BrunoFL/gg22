@@ -21,12 +21,12 @@ export default {
   name: 'App',
     data(){
     return {
-      isInLobby: true,//true,
+      isInLobby: true,
       isInGamesList: false,
       isInAnvilGame: false,
+      isInObstacleRun: false,
       listGames: [],
       actualGame: '',
-      isInObstacleRun: false//false
     }
   },
   components: {
