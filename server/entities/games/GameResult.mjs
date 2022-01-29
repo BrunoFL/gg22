@@ -73,7 +73,7 @@ export class GameResult {
     }
 
     attributePoints() {
-        this.results
+        this.results = this.results
             .sort((r1, r2) => {
                 if (!r1.finished) {
                     return 1
@@ -83,8 +83,9 @@ export class GameResult {
                 }
                 return r1.gameScore - r2.gameScore
             })
+        this.results
             .forEach((val, position) => {
-                val.setPosition(position + 1)
+                val.setPosition(position)
                 val.attributePoints()
             })
     }

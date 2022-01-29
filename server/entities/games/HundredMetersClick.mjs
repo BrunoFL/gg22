@@ -86,7 +86,9 @@ export class HundredMetersClick extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
-        const gameResults = new GameResult(this.meters.forEach((meters, player) => new IndividualGameResult(player, meters)))
+        const gameResults = new GameResult(
+            this.meters.map((meters, player) => new IndividualGameResult(player, meters))
+        )
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         setTimeout(() => endLeaderBoardCLb(), 3000)
     }

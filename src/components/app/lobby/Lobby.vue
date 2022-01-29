@@ -107,7 +107,6 @@ export default {
       return this.adminName === this.playerName
     },
     goToGamesList() {
-      this.$emit('swapScreen')
       this.$socket.client.emit('askListGames')
     }
   },
@@ -118,6 +117,9 @@ export default {
     },
     updateLobby(lobby) {
       this.lobby = lobby
+    },
+    listGames(listGames) {
+        this.$emit('swapScreen', listGames)
     }
   }
 }

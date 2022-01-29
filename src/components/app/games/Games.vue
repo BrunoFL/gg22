@@ -17,9 +17,11 @@
 
 export default {
   name: "Games",
+  props: {
+    listGames: String,
+  },
   data(){
     return {
-        listGames: [],
         isGameSelected: true,
         selectedGame: ''
     }
@@ -37,9 +39,6 @@ export default {
     }
   },
   sockets: {
-    listGames(listGames) {
-        this.listGames = listGames
-    }
   }
 }
 </script>
