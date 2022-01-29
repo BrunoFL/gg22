@@ -1,7 +1,8 @@
 <template>
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby" @swapScreen="swapScreen()"></Lobby>
-    <Games v-if="isInGamesList"></Games>
+    <Games v-if="isInGamesList" @swapToGames="swapToGames()"></Games>
+    <Anvil v-if="isInAnvilGame"></Anvil>
     <Footer></Footer>
   </div>
 </template>
@@ -10,24 +11,32 @@
 import Lobby from "@/components/app/lobby/Lobby";
 import Games from "@/components/app/games/Games";
 import Footer from "@/components/app/footer/Footer";
+import Anvil from "@/components/games/Anvil"
 
 export default {
   name: 'App',
     data(){
     return {
       isInLobby: true,
-      isInGamesList: false
+      isInGamesList: false,
+      isInAnvilGame: false
     }
   },
   components: {
     Lobby,
     Games,
-    Footer
+    Footer,
+    Anvil
   },
   methods: {
     swapScreen() {
         this.isInLobby = false,
         this.isInGamesList = true
+    },    
+    swapToGames() {
+        this.isInLobby = false,
+        this.isInGamesList = false,
+        this.isInAnvilGame = true
     }
   },
   sockets: {

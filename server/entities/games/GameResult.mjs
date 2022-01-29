@@ -30,7 +30,7 @@ export class IndividualGameResult {
      * @param {number} gameScore
      * @param {boolean} finished 
      */
-    constructor(player, gameScore, finished) {
+    constructor(player, gameScore, finished = true) {
         this.player = player
         this.gameScore = gameScore
         this.finished = finished

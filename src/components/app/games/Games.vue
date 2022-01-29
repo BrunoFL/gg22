@@ -30,6 +30,7 @@ export default {
   methods: {
     startGame() {
         this.$socket.client.emit('startGame', this.selectedGame)
+        this.$emit('swapToGames')
     },   
     selectGame(game) {
         this.selectedGame = game

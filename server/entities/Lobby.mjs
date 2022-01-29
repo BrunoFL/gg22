@@ -1,6 +1,7 @@
 import {Enclume} from './games/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
+import {HundredMetersClick} from './games/HundredMetersClick.mjs'
 
 export class Lobby {
     /**
@@ -48,6 +49,7 @@ export class Lobby {
         this.players = []
         this.games = new Map()
         this.games.set('Enclume', new Enclume(this))
+        this.games.set('100 mètre clic', new HundredMetersClick(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true
@@ -99,10 +101,7 @@ export class Lobby {
         this.admin = player
         player.setAdmin(true)
         this.admin.socket.on('startGame', gameName => {
-            const game = this.games.get(gameName)
-            if (game) {
-                this.gameManager.runGame(game)
-            }
+            this.startGame(gameName)
         })
     }
 
@@ -162,7 +161,15 @@ export class Lobby {
         this.isOpen = false
     }
 
-    listGames(){
+    startGame(gameName) {
+        const game = this.games.get(gameName)
+        if (game) {
+            console.log(`Start Game ${gameName} in lobby ${this.name}`)
+            this.gameManager.runGame(game)
+        }
+    }
+
+    listGames() {
         this.emitPlayers('listGames', this.encodeGames())
     }
 }
