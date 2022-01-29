@@ -38,7 +38,7 @@ export class HundredMetersClick extends GameInstance {
             player.socket('touch', () => {
                 const value = this.meters.get(player.id)
                 if (value === 99) {
-                    player.socket.off('touch')
+                    player.socket.removeAllListeners('touch')
                     this.offTouch()
                     endStartGameClb()
                 }
@@ -62,7 +62,7 @@ export class HundredMetersClick extends GameInstance {
 
     offTouch() {
         for (const player of this.lobby.players) {
-            player.socket.off('touch')
+            player.socket.removeAllListeners('touch')
         }
     }
 
