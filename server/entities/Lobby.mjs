@@ -207,6 +207,6 @@ export class Lobby {
     }
 
      leaderBoard() {
-        this.lobby.emitPlayers('leaderBoardGeneral', this.encodePlayers())
+        this.emitPlayers('leaderBoardGeneral', this.encodePlayers())
     }
 }
