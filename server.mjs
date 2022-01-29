@@ -35,9 +35,4 @@ httpServer.listen(port, () => {
 	console.log(`Listening on port ${port}`)
 })
 
-/*
- *  Store connected clients etc.
- *  Do not use in production 🤪
- */
-
 const server = new GameServer(io)
