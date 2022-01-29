@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby" @swapScreen="event => swapScreen(event)"></Lobby>
-    <Games v-if="isInGamesList" @swapToGames="swapToGames()" :listGames="listGames"></Games>
+    <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
@@ -21,11 +21,12 @@ export default {
   name: 'App',
     data(){
     return {
-      isInLobby: false,//true,
+      isInLobby: true,//true,
       isInGamesList: false,
       isInAnvilGame: false,
       listGames: [],
-      isInObstacleRun: true//false
+      actualGame: '',
+      isInObstacleRun: false//false
     }
   },
   components: {
@@ -42,10 +43,11 @@ export default {
         this.isInGamesList = true
         this.listGames = listGames
     },    
-    swapToGames() {
+    swapToGames(event) {
         this.isInLobby = false,
         this.isInGamesList = false,
         this.isInAnvilGame = true
+        this.actualGame = event
     }
   },
   sockets: {
