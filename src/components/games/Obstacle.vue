@@ -15,8 +15,8 @@ export default {
   data() {
     return {
         rules: '',
-        pos_x: 0,
-        pos_y: 0
+        pos_x: '0px',
+        pos_y: '0px'
     }
   },
   methods: {
@@ -36,8 +36,8 @@ export default {
       //setup vue
     },
     updateCharacterPos(pos) {
-      this.pos_x = pos.pos_x;
-      this.pos_y = pos.pos_y;
+      this.pos_x = pos.pos_x + 'px';
+      this.pos_y = pos.pos_y + 'px';
       console.log(this.pos_x, this.pos_y)
     }
   }
@@ -47,8 +47,10 @@ export default {
 <style scoped>
 
 #perso {
+  width:5%;
+  min-width: 20px;
   position: absolute;
-  bottom: pos_x rem;
-  left: pos_y rem;
+  bottom: v-bind(pos_y);
+  left: v-bind(pos_x);
 }
 </style>
