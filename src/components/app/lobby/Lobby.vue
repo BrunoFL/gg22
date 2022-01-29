@@ -1,6 +1,7 @@
 <template>
   <div id="mainLobby">
     <h1 class="display-1">NOM DU JEU</h1>
+    <!--<Obstacle></Obstacle>-->
 
     <!-- PLAYER NAME CHOICE -->
     <div id="choiceName">
@@ -39,8 +40,10 @@
 
     <div v-if="clickJoinLobby" id="joinLobby">
       <h1>{{nameLobby}}</h1>
-      <b-list-group >
-
+      <b-list-group v-for="player of lobby.players" :key="player.id">
+        <b-list-group-item>
+          {{player.name}}
+        </b-list-group-item>
       </b-list-group>
     </div>
   </div>
@@ -49,7 +52,9 @@
 </template>
 
 <script>
+//import Obstacle from '../../games/Obstacle.vue'
 export default {
+  //components: { Obstacle },
   name: "Lobby",
   data(){
     return {
