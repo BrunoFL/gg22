@@ -69,7 +69,7 @@ export class GameResult {
      */
     constructor(playerResults) {
         this.results = playerResults
-        this.attributedPoints()
+        this.attributePoints()
     }
 
     attributePoints() {
