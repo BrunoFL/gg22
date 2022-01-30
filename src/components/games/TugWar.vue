@@ -47,6 +47,12 @@ export default {
     tugEnd() {
 
     },
+    tugInit(data) {
+      console.log(data)
+    },
+    center(result){
+      this.center = result
+    },
     rules(rules) {
       this.rules = rules
     },
