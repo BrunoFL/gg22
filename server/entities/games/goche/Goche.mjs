@@ -104,6 +104,6 @@ export class Goche extends GameInstance {
      * @return {string}
      */
     encode() {
-        return Enclume.name()
+        return Goche.name()
     }
 }
