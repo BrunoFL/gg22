@@ -24,6 +24,10 @@ export class Goche extends GameInstance {
      */
     run
     /**
+     * @type {boolean}
+     */
+    endGame
+    /**
      * res == 0 de goche
      * res == 1 de droate
      * @param {Proposition[]}
@@ -85,9 +89,11 @@ export class Goche extends GameInstance {
         this.responses = new Map()
         this.run = 0
         this.responsesByRun = 0
+        this.endGame = false
         for (const player of this.lobby.players) {
             this.responses.set(player.id, 0)
         }
+        setTimeout(() => this.endGame(), 60_000)
     }
 
     /**
@@ -131,10 +137,13 @@ export class Goche extends GameInstance {
      * @param {function} endEndGameClb
      */
     endGame(endEndGameClb) {
-        for (const player of this.lobby.players) {
-            player.socket.removeAllListeners('touch')
+        if (!this.endGame) {
+            this.endGame = true
+            for (const player of this.lobby.players) {
+                player.socket.removeAllListeners('touch')
+            }
+            setTimeout(() => endEndGameClb(), 3000)
         }
-        setTimeout(() => endEndGameClb(), 3000)
     }
 
     /**
