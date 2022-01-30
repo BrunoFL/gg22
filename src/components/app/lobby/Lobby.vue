@@ -17,10 +17,10 @@
     <div v-if="!isClicked" id="firstScreen" class="m-5">
       <b-row cols="2">
         <b-col offset="2" cols="4">
-          <b-button class="w-75" v-on:click="initLobby()">Create lobby</b-button>
+          <b-button class="w-75" v-on:click="initLobby()">Créer une salle</b-button>
         </b-col>
         <b-col cols="4">
-          <b-button class="w-75" v-on:click="getLobbies()">Join lobby</b-button>
+          <b-button class="w-75" v-on:click="getLobbies()">Rejoindre une salle</b-button>
         </b-col>
       </b-row>
     </div>
@@ -52,7 +52,7 @@
 
     <!-- BLOC JOIN LOBBY -->
     <div v-if="clickJoinLobby" id="joinLobby" class="m-5">
-      <h2>Lobby • {{ nameLobby }} •
+      <h2>Lobby • {{ lobby.name }} •
         <b-badge  v-if="lobby && lobby.players" variant="primary" pill>{{ lobby.players.length }}</b-badge>
       </h2>
       <b-list-group class="mx-auto" style="width: 45%;">

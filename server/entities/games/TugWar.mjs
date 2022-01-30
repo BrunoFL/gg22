@@ -19,8 +19,17 @@ export class TugWar extends GameInstance {
      * @type {boolean}
      */
     isEnded
+    /**
+     * @type {Map}
+     */
     touchsA
+    /**
+     * @type {Map}
+     */
     touchsB
+    /**
+     * @type {number}
+     */
     center
 
     constructor(lobby) {
@@ -37,6 +46,18 @@ export class TugWar extends GameInstance {
     }
 
     rules(endRulesClb) {
+        let cpt = 0
+        this.teamA = new Team('Team A')
+        this.teamB = new Team('Team B')
+        for (const player of this.lobby.players) {
+            if (cpt % 2 === 0) {
+                this.teamA.addPlayer(player)
+            } else {
+                this.teamB.addPlayer(player)
+            }
+            cpt++
+        }
+        this.lobby.emitPlayers('tugInit', this.encodeTeams())
         this.lobby.emitPlayers('rules', '2 équipes l\'une contre l\'autre !')
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Il va falloir faire preuve de coordination !')
@@ -50,21 +71,9 @@ export class TugWar extends GameInstance {
     }
 
     initGame() {
-        let cpt = 0
-        this.teamA = new Team('Team A')
-        this.teamB = new Team('Team B')
-        for (const player of this.lobby.players) {
-            if (cpt % 2 === 0) {
-                this.teamA.addPlayer(player)
-            } else {
-                this.teamB.addPlayer(player)
-            }
-            cpt++
-        }
-        this.lobby.emitPlayers('tugInit', this.encodeTeams())
         this.isEnded = false
-        this.touchsA = []
-        this.touchsB = []
+        this.touchsA = new Map()
+        this.touchsB = new Map()
         this.center = 0
     }
 
@@ -79,16 +88,17 @@ export class TugWar extends GameInstance {
 
     onceTouchTeamA(endStartGameClb) {
         for (const player of this.teamA.players) {
-            player.socket.once('touch', time => {
-                this.touchsA.push(time)
-                if (this.touchsA.length === this.teamA.players.length) {
-                    const etendue = this.getEtendue(this.touchsA)
-                    this.center -= etendue
-                    this.lobby.emitPlayers('tug', this.center)
-                    if (this.center <= -30) {
-                        endStartGameClb()
-                    } else {
-                        this.onceTouchTeamA(endStartGameClb)
+            player.socket.on('touch', time => {
+                if (!this.touchsA.has(player.id)) {
+                    this.touchsA.set(player.id, time)
+                    if (this.touchsA.size === this.teamA.players.length) {
+                        const etendue = this.getEtendue(this.touchsA)
+                        this.touchsA = new Map()
+                        this.center -= etendue
+                        this.lobby.emitPlayers('tug', this.center)
+                        if (this.center <= -30) {
+                            endStartGameClb()
+                        }
                     }
                 }
             })
@@ -97,26 +107,31 @@ export class TugWar extends GameInstance {
 
     onceTouchTeamB(endStartGameClb) {
         for (const player of this.teamB.players) {
-            player.socket.once('touch', time => {
-                this.touchsB.push(time)
-                if (this.touchsB.length === this.teamB.players.length) {
-                    const etendue = this.getEtendue(this.touchsB)
-                    this.center += etendue
-                    this.lobby.emitPlayers('tug', this.center)
-                    if (this.center >= 30) {
-                        endStartGameClb()
-                    } else {
-                        this.onceTouchTeamB(endStartGameClb)
+            player.socket.on('touch', time => {
+                if (!this.touchsB.has(player.id)) {
+                    this.touchsB.set(player.id, time)
+                    if (this.touchsB.size === this.teamB.players.length) {
+                        const etendue = this.getEtendue(this.touchsB)
+                        this.touchsB = new Map()
+                        this.center -= etendue
+                        this.lobby.emitPlayers('tug', this.center)
+                        if (this.center <= -30) {
+                            endStartGameClb()
+                        }
                     }
                 }
             })
         }
     }
 
+    /**
+     * @param {Map} values
+     * @return {number}
+     */
     getEtendue(values) {
-        let min = values[0]
-        let max = values[0]
-        for (const val of values) {
+        let min = Infinity
+        let max = -Infinity
+        for (const val of values.values()) {
             if (val < min) {
                 min = val
             }
@@ -124,7 +139,7 @@ export class TugWar extends GameInstance {
                 max = val
             }
         }
-        const etendue = 5 - (max - min) / 1000
+        const etendue = 3 - (max - min) / 1000
         return Math.max(etendue, 0)
     }
 
@@ -149,14 +164,12 @@ export class TugWar extends GameInstance {
             new TeamGameResult(this.teamB, this.center > 0)
         ])
         gameResults.attributePoints()
-
-        super.leaderBoard(endLeaderBoardCLb)
     }
 
     encodeTeams() {
         return {
             'teamA': this.teamA.encode(),
-            'teamB': this.teamA.encode()
+            'teamB': this.teamB.encode()
         }
     }
 }

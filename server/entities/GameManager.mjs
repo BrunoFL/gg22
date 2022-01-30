@@ -36,7 +36,7 @@ export class GameManager {
      */
     runGame(game) {
         this.game = game
-        this.lobby.emitPlayers("gameStarted", this.game.encode())
+        this.lobby.emitPlayers('gameStarted', this.game.encode())
         this.game.rules(() => {
             this.game.initGame()
             this.timer()
@@ -46,9 +46,11 @@ export class GameManager {
     endGame() {
         this.game.endGame(() => {
             this.game.leaderBoard(() => {
-                this.lobby.leaderBoard()
-                setTimeout(()=>{
-                    this.lobby.listGames()
+                setTimeout(() => {
+                    this.lobby.leaderBoard()
+                    setTimeout(() => {
+                        this.lobby.listGames()
+                    }, 8000)
                 }, 8000)
             })
         })
