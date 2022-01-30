@@ -4,6 +4,7 @@ import {GameManager} from './GameManager.mjs'
 import {HundredMetersClick} from './games/hundredmetersclicker/HundredMetersClick.mjs'
 import {ObstacleRun} from './games/ObstacleRun.mjs'
 import {TugWar} from './games/tugowar/TugWar.mjs'
+import {Goche} from './games/goche/Goche.mjs'
 
 export class Lobby {
     /**
@@ -58,6 +59,7 @@ export class Lobby {
         this.games.set(HundredMetersClick.name(), new HundredMetersClick(this))
         this.games.set(ObstacleRun.name(), new ObstacleRun(this))
         this.games.set(TugWar.name(), new TugWar(this))
+        this.games.set(Goche.name(), new Goche(this))
         this.id = UUIDGenerator.uuid()
         this.admin = null
         this.isOpen = true

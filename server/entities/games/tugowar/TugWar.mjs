@@ -115,7 +115,7 @@ export class TugWar extends GameInstance {
                         this.touchsB = new Map()
                         this.center += etendue
                         this.lobby.emitPlayers('tug', this.center)
-                        if (this.center <= -30) {
+                        if (this.center >= 30) {
                             endStartGameClb()
                         }
                     }

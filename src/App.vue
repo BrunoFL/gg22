@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby" @sendLobbyToApp="event => getLobbyData(event)" @swapScreen="event => swapScreen(event)"></Lobby>
-    <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
+    <Games v-if="isInGamesList" :lobby="lobby"  @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame" :lobby="lobby"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
