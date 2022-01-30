@@ -46,6 +46,18 @@ export class TugWar extends GameInstance {
     }
 
     rules(endRulesClb) {
+        let cpt = 0
+        this.teamA = new Team('Team A')
+        this.teamB = new Team('Team B')
+        for (const player of this.lobby.players) {
+            if (cpt % 2 === 0) {
+                this.teamA.addPlayer(player)
+            } else {
+                this.teamB.addPlayer(player)
+            }
+            cpt++
+        }
+        this.lobby.emitPlayers('tugInit', this.encodeTeams())
         this.lobby.emitPlayers('rules', '2 équipes l\'une contre l\'autre !')
         setTimeout(() => {
             this.lobby.emitPlayers('rules', 'Il va falloir faire preuve de coordination !')
@@ -59,18 +71,6 @@ export class TugWar extends GameInstance {
     }
 
     initGame() {
-        let cpt = 0
-        this.teamA = new Team('Team A')
-        this.teamB = new Team('Team B')
-        for (const player of this.lobby.players) {
-            if (cpt % 2 === 0) {
-                this.teamA.addPlayer(player)
-            } else {
-                this.teamB.addPlayer(player)
-            }
-            cpt++
-        }
-        this.lobby.emitPlayers('tugInit', this.encodeTeams())
         this.isEnded = false
         this.touchsA = []
         this.touchsB = []
@@ -87,6 +87,7 @@ export class TugWar extends GameInstance {
     }
 
     onceTouchTeamA(endStartGameClb) {
+        this.touchsA = []
         for (const player of this.teamA.players) {
             player.socket.once('touch', time => {
                 this.touchsA.push(time)
@@ -105,6 +106,7 @@ export class TugWar extends GameInstance {
     }
 
     onceTouchTeamB(endStartGameClb) {
+        this.touchsB = []
         for (const player of this.teamB.players) {
             player.socket.once('touch', time => {
                 this.touchsB.push(time)
@@ -133,7 +135,7 @@ export class TugWar extends GameInstance {
                 max = val
             }
         }
-        const etendue = 5 - (max - min) / 1000
+        const etendue = 3 - (max - min) / 1000
         return Math.max(etendue, 0)
     }
 
