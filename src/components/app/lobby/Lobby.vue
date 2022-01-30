@@ -129,7 +129,6 @@ export default {
   },
   sockets: {
     listLobbies(lobbies) {
-      console.log('boup bip')
       this.lobbies = lobbies
     },
     updateLobby(lobby) {
