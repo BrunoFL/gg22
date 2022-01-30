@@ -12,7 +12,6 @@
             <b-list-group-item v-for="player of teamA" :key="player.id">{{ player.name }}</b-list-group-item>
           </b-list-group>
         </div>
-        <span>{{ center }}</span>
         <div style="float: right;">{{ teamBName }}<br>
           <b-list-group class="mx-auto" style="width: 100%;">
             <b-list-group-item v-for="player of teamB" :key="player.id">{{ player.name }}</b-list-group-item>
