@@ -169,7 +169,7 @@ export class TugWar extends GameInstance {
     encodeTeams() {
         return {
             'teamA': this.teamA.encode(),
-            'teamB': this.teamA.encode()
+            'teamB': this.teamB.encode()
         }
     }
 }
