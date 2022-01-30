@@ -1,5 +1,6 @@
 import {GameInstance} from '../GameInstance.mjs'
 import {GameResult, IndividualGameResult} from '../GameResult.mjs'
+import {Proposition} from './Proposition.mjs'
 
 export class Goche extends GameInstance {
     /**
@@ -15,9 +16,16 @@ export class Goche extends GameInstance {
      */
     responses
     /**
-     * @param {string[]}
+     * @type {number}
      */
-    proposition = []
+    responsesRun
+    /**
+     * @param {Proposition[]}
+     */
+    proposition = [
+        new Proposition('1', 1),
+        new Proposition('1', 0),
+    ]
     /**
      * @param {number}
      */
@@ -38,6 +46,10 @@ export class Goche extends GameInstance {
     initGame() {
         this.responses = new Map()
         this.cpt = 0
+        this.responsesRun = 0
+        for (const player of this.lobby.players) {
+            this.responses.set(player.id, 0)
+        }
     }
 
     /**
@@ -54,13 +66,17 @@ export class Goche extends GameInstance {
      * @param {function} endStartGameClb
      */
     startGame(endStartGameClb) {
-        this.lobby.emitPlayers('question', this.proposition[this.cpt])
+        this.responsesRun = 0
+        const proposition = this.proposition[this.cpt]
+        this.lobby.emitPlayers('question', proposition)
         for (const player of this.lobby.players) {
             player.socket.once('touch', response => {
-                this.responses.set(player.id, response)
+                this.responsesRun++
+                const value = this.responses.get(player.id)
+                this.responses.set(player.id, proposition.res === response ? value + 1 : value)
                 if (this.cpt === 5) {
                     endStartGameClb()
-                } else if (this.responses.size === this.lobby.players.length) {
+                } else if (this.responsesRun === this.lobby.players.length) {
                     this.startGame(endStartGameClb)
                 }
             })
