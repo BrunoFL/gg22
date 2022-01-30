@@ -49,7 +49,7 @@ export default {
     tugInit(data) {
       console.log(data)
     },
-    center(result){
+    tug(result){
       this.center = result
     },
     rules(rules) {
