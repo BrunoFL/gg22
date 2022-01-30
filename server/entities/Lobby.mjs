@@ -208,7 +208,7 @@ export class Lobby {
         return this.players.find(p => p.id === id)
     }
 
-    leaderBoard() {
+    leaderBoardGeneral() {
         this.emitPlayers('leaderBoardGeneral', this.encodePlayers())
     }
 }

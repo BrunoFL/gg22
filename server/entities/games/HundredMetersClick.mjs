@@ -100,6 +100,7 @@ export class HundredMetersClick extends GameInstance {
         }
         const gameResults = new GameResult(result)
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     /**

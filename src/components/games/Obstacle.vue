@@ -4,11 +4,11 @@
         <p>{{rules}}</p>
         <div id='gameWindow'>
           <div class="playerWindow">
-              <button v-if="team == 1" v-on:click="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
+              <button autofocus v-if="team == 1" @keydown.space="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
               <img id="perso1" src="../../assets/perso.jpeg">
           </div>
           <div class="playerWindow">
-              <button v-if="team == 2" v-on:click="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
+              <button autofocus v-if="team == 2" @keydown.space="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
               <img id="perso2" src="../../assets/img/jospin.jpg">
           </div>
         </div>
