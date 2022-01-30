@@ -10,7 +10,6 @@
         <span>{{ center }}</span>
         <div style="float: right;">B</div>
     </div>
-    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
     <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
