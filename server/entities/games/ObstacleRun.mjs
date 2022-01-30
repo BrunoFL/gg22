@@ -97,7 +97,7 @@ export class ObstacleRun extends GameInstance {
         for (const player of this.lobby.players) {
             player.socket.removeAllListeners('interactWithCharacter')
         }
-        setTimeout(() => endEndGameClb(), 2000)
+        endLeaderBoardCLb()
     }
 
     leaderBoard(endLeaderBoardClb) {
@@ -120,7 +120,7 @@ export class ObstacleRun extends GameInstance {
             this.character2Pos -= 5;
         }
         return this.character2Pos
-        
+
     }
 
     /**
