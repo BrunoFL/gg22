@@ -1,19 +1,31 @@
+import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
+
 export class Obstacle {
+    id
     position
     direction
     speed
+    style
 
     constructor() {
+        this.id = UUIDGenerator.uuid()
         this.position = {
             'x': 0,
             'y': Math.floor(Math.random() * 100)
         }
         this.speed = 4 + Math.floor(Math.random() * 3)
         this.direction = Math.random() < 0.5 ? 1 : -1
+        this.style = {
+            top: this.position.y + "px",
+            right: this.position.x + "px"
+        }
     }
 
-    moveForward() {
-        position.x += (speed * direction)
+    updateStyle() {
+        this.style = {
+            top: this.position.y + "px",
+            right: this.position.x + "px"
+        }
     }
 
     /**

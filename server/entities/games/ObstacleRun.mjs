@@ -85,6 +85,7 @@ export class ObstacleRun extends GameInstance {
      * @param {function} endRulesClb
      */
     startGame(endStartGameClb) {
+        //start game
         for (const player of this.lobby.players) {
             var data = {
                 'team': this.teams.get(player.id),
@@ -93,10 +94,12 @@ export class ObstacleRun extends GameInstance {
             console.log(data)
             player.emit('startObstacleRun', data)
         }
-        setTimeout(() => {
-            this.obstacles.push(new Obstacle())
-            this.lobby.emitPlayers('updateObstacles', this.obstacles)
-        }, 500)
+
+        //update data
+        this.updateObstaclePos()
+        this.addObstacle()
+
+        //update character position
         for (const player of this.lobby.players) {
             player.socket.on('interactWithCharacter', () => {
                 this.lobby.emitPlayers('updateCharacterPos', {'position': this.updateCharacterPos(player.id), 'team': this.teams.get(player.id)})
@@ -132,6 +135,25 @@ export class ObstacleRun extends GameInstance {
         }
         return this.character2Pos
 
+    }
+
+    updateObstaclePos() {
+        setTimeout(() => {
+            for (const obstacle of this.obstacles) {
+                obstacle.position.x += obstacle.speed * obstacle.direction * 0.01
+                obstacle.updateStyle()
+            }
+            this.lobby.emitPlayers('updateObstacles', this.obstacles)
+            this.updateObstaclePos()
+        }, 200)
+    }
+    
+    addObstacle() {
+        setTimeout(() => {
+            this.obstacles.push(new Obstacle())
+            this.lobby.emitPlayers('updateObstacles', this.obstacles)
+            this.addObstacle()
+        }, (Math.random() * 1000) + 500)
     }
 
     /**
