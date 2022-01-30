@@ -1,5 +1,8 @@
 <template>
   <div id="gamesList">
+    <audio autoplay controls loop>
+      <source src="@/assets/sound/menu.mp3">
+    </audio>
     <!-- BLOC GAMES LIST -->
     <div id="displayListGames">
       <h1>Jeux</h1>
