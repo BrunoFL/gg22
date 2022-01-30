@@ -1,9 +1,9 @@
-import {Enclume} from './games/Enclume.mjs'
+import {Enclume} from './games/enclume/Enclume.mjs'
 import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
 import {GameManager} from './GameManager.mjs'
-import {HundredMetersClick} from './games/HundredMetersClick.mjs'
+import {HundredMetersClick} from './games/hundredmetersclicker/HundredMetersClick.mjs'
 import {ObstacleRun} from './games/ObstacleRun.mjs'
-import {TugWar} from './games/TugWar.mjs'
+import {TugWar} from './games/tugowar/TugWar.mjs'
 
 export class Lobby {
     /**
