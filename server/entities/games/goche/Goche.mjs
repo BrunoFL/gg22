@@ -8,10 +8,6 @@ export class Goche extends GameInstance {
      */
     lobby
     /**
-     * @type {number}
-     */
-    seconds
-    /**
      * @type {Map}
      */
     responses
@@ -88,7 +84,7 @@ export class Goche extends GameInstance {
     /**
      * @param {Function} endStartGameClb
      */
-     initGame(endEndGameClb) {
+    initGame(endEndGameClb) {
         this.responses = new Map()
         this.run = 0
         this.responsesByRun = 0
@@ -119,7 +115,7 @@ export class Goche extends GameInstance {
     /**
      * @param {function} endStartGameClb
      */
-    run(endStartGameClb){
+    run(endStartGameClb) {
         this.responsesByRun = 0
         this.run++
         if (Math.random() < 0.05) {

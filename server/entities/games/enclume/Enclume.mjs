@@ -58,7 +58,7 @@ export class Enclume extends GameInstance {
         for (const player of this.lobby.players) {
             player.socket.once('touch', delta => {
                 player.socket.removeAllListeners('touch')
-                player.socket.emit('rules', delta >= 0  ? `C'était juste ! ${delta/1000}s` : `Perdu ! de ${delta/1000}s`)
+                player.socket.emit('rules', delta >= 0 ? `C'était juste ! ${delta / 1000}s` : `Perdu ! de ${delta / 1000}s`)
                 const touch = new Touch(player, delta)
                 this.lobby.emitPlayers('playerTouch', touch.encode())
                 this.touchs.push(touch)

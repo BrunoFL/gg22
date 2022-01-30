@@ -1,6 +1,6 @@
 import {GameInstance} from './GameInstance.mjs'
-import {GameResult, IndividualGameResult} from './GameResult.mjs'
-import { Obstacle } from './Obstacle.mjs'
+import {GameResult} from './GameResult.mjs'
+import {Obstacle} from './Obstacle.mjs'
 
 export class ObstacleRun extends GameInstance {
     /**
@@ -16,7 +16,7 @@ export class ObstacleRun extends GameInstance {
     /**
      * @type {Map}
      */
-     affectations
+    affectations
 
     /**
      * @type {number}
@@ -29,13 +29,13 @@ export class ObstacleRun extends GameInstance {
     character2Pos
 
     /**
-     * @type {Obstacle[]}  
+     * @type {Obstacle[]}
      */
     obstacles
     /**
      * @type {boolean}
      */
-     isEnded
+    isEnded
 
     constructor(lobby) {
         super()
@@ -48,16 +48,16 @@ export class ObstacleRun extends GameInstance {
     /**
      * @return {string}
      */
-     static name() {
+    static name() {
         return 'Course d\'obstacle'
     }
 
     initGame() {
         this.teams = new Map()
         this.affectations = new Map()
-        var direction1 = 0
-        var direction2 = 0
-        var toggle = false
+        let direction1 = 0
+        let direction2 = 0
+        let toggle = false
         for (const player of this.lobby.players) {
             if (toggle) {
                 this.teams.set(player.id, 1)
@@ -87,13 +87,10 @@ export class ObstacleRun extends GameInstance {
         }, 5000)
     }
 
-    /**
-     * @param {function} endRulesClb
-     */
-    startGame(endStartGameClb) {
+    startGame() {
         //start game
         for (const player of this.lobby.players) {
-            var data = {
+            const data = {
                 'team': this.teams.get(player.id),
                 'direction': this.affectations.get(player.id)
             }
@@ -108,7 +105,10 @@ export class ObstacleRun extends GameInstance {
         //update character position
         for (const player of this.lobby.players) {
             player.socket.on('interactWithCharacter', () => {
-                this.lobby.emitPlayers('updateCharacterPos', {'position': this.updateCharacterPos(player.id), 'team': this.teams.get(player.id)})
+                this.lobby.emitPlayers('updateCharacterPos', {
+                    'position': this.updateCharacterPos(player.id),
+                    'team': this.teams.get(player.id)
+                })
             })
         }
         setTimeout(() => endStartGameClb(), 6_000)
@@ -130,7 +130,7 @@ export class ObstacleRun extends GameInstance {
     /**
      * @param {function} endLeaderBoardCLb
      */
-     leaderBoard(endLeaderBoardCLb) {
+    leaderBoard(endLeaderBoardCLb) {
         const res = []
         /*for (const [id, score] of this.responses.entries()) {
             const player = this.lobby.getPlayerById(id)
@@ -145,44 +145,44 @@ export class ObstacleRun extends GameInstance {
     updateCharacterPos(playerId) {
         if (this.teams.get(playerId) == 1) { //team 1
             if (this.affectations.get(playerId) == 0) { // direction up
-                this.character1Pos += 10;
+                this.character1Pos += 10
             } else { // direction down
-                this.character1Pos -= 10;
+                this.character1Pos -= 10
             }
             return this.character1Pos
         }
         //team 2
         if (this.affectations.get(playerId) == 0) { // direction up
-            this.character2Pos += 10;
+            this.character2Pos += 10
         } else { // direction down
-            this.character2Pos -= 10;
+            this.character2Pos -= 10
         }
         return this.character2Pos
 
     }
 
     updateObstaclePos() {
-        if (!this.isEnded){
-        setTimeout(() => {
-            for (const obstacle of this.obstacles) {
-                obstacle.position.x += obstacle.speed * obstacle.direction
-                obstacle.updateStyle()
-            }
-            this.lobby.emitPlayers('updateObstacles', this.obstacles)
-            this.updateObstaclePos()
-        }, 200)
+        if (!this.isEnded) {
+            setTimeout(() => {
+                for (const obstacle of this.obstacles) {
+                    obstacle.position.x += obstacle.speed * obstacle.direction
+                    obstacle.updateStyle()
+                }
+                this.lobby.emitPlayers('updateObstacles', this.obstacles)
+                this.updateObstaclePos()
+            }, 200)
+        }
     }
-    }
-    
+
     addObstacle() {
-        if (!this.isEnded){
-        setTimeout(() => {
-            this.obstacles.push(new Obstacle())
-            this.lobby.emitPlayers('updateObstacles', this.obstacles)
-            this.addObstacle()
-        }, (Math.random() * 1000) + 500)
+        if (!this.isEnded) {
+            setTimeout(() => {
+                this.obstacles.push(new Obstacle())
+                this.lobby.emitPlayers('updateObstacles', this.obstacles)
+                this.addObstacle()
+            }, (Math.random() * 1000) + 500)
+        }
     }
-}
 
     /**
      * @return {string}

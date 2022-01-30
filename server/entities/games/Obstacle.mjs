@@ -16,15 +16,15 @@ export class Obstacle {
         this.speed = 4 + Math.floor(Math.random() * 3)
         this.direction = Math.random() < 0.5 ? 1 : -1
         this.style = {
-            top: this.position.y + "px",
-            right: this.position.x + "px"
+            top: this.position.y + 'px',
+            right: this.position.x + 'px'
         }
     }
 
     updateStyle() {
         this.style = {
-            top: this.position.y + "px",
-            right: this.position.x + "px"
+            top: this.position.y + 'px',
+            right: this.position.x + 'px'
         }
     }
 
