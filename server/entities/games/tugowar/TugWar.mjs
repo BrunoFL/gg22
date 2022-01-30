@@ -1,6 +1,6 @@
-import {Team} from '../Team.mjs'
-import {TeamGameResult, TeamGameResults} from '../TeamGameResults.mjs'
-import {GameInstance} from './GameInstance.mjs'
+import {Team} from '../../Team.mjs'
+import {TeamGameResult, TeamGameResults} from '../../TeamGameResults.mjs'
+import {GameInstance} from '../GameInstance.mjs'
 
 export class TugWar extends GameInstance {
     /**
