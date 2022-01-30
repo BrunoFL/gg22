@@ -7,12 +7,17 @@ export class GameManager {
      * @type {GameInstance}
      */
     game
+    /**
+     * @type {boolean}
+     */
+    running
 
     /**
      * @param {Lobby} lobby
      */
     constructor(lobby) {
         this.lobby = lobby
+        this.running = false
     }
 
     timer() {
@@ -35,20 +40,28 @@ export class GameManager {
      * @param {GameInstance} game
      */
     runGame(game) {
-        this.game = game
-        this.lobby.emitPlayers('gameStarted', this.game.encode())
-        this.game.rules(() => {
-            this.game.initGame()
-            this.timer()
-        })
+        if (!this.running) {
+            this.game = game
+            this.running = true
+            console.log(`Start game ${this.game.encode()}`)
+            this.lobby.emitPlayers('gameStarted', this.game.encode())
+            this.game.rules(() => {
+                this.game.initGame()
+                this.timer()
+            })
+        }
     }
 
     endGame() {
+        console.log(`Ending game ${this.game.encode()}`)
         this.game.endGame(() => {
+            console.log(`LeaderBoard game ${this.game.encode()}`)
             this.game.leaderBoard(() => {
                 setTimeout(() => {
                     this.lobby.leaderBoardGeneral()
                     setTimeout(() => {
+                        console.log(`End game ${this.game.encode()}`)
+                        this.running = false
                         this.lobby.listGames()
                     }, 8000)
                 }, 8000)

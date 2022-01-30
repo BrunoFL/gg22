@@ -7,10 +7,6 @@ export class Touch {
         this.delta = delta
     }
 
-    setDelta(delta) {
-        this.delta = delta
-    }
-
     /**
      * @return {object}
      */
