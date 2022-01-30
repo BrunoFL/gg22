@@ -16,7 +16,7 @@
           </b-list-group>
         </div>
     </div>
-    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
+    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" :disabled="!start" v-on:click="increment">TIREZ !</b-button>
     <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
@@ -37,7 +37,8 @@ export default {
       teamAName: '',
       teamB: [],
       teamBName: '',
-      center: 0
+      center: 0,
+      start: false
     }
   },
   components: {
@@ -53,7 +54,7 @@ export default {
   },
   sockets: {
     tugStart() {
-
+      this.start = true
     },
     tugEnd() {
 
