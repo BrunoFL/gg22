@@ -3,7 +3,7 @@
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
     </div>
-    <div class="m-5" style="font-size: 150%">
+    <div v-if="!isRankingOpen" class="m-5" style="font-size: 150%">
         <div style="float: left;">{{ teamAName }}<br>
           <b-list-group class="mx-auto" style="width: 100%;">
             <b-list-group-item v-for="player of teamA" :key="player.id">{{ player.name }}</b-list-group-item>
@@ -16,8 +16,8 @@
           </b-list-group>
         </div>
     </div>
-    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" :disabled="!start" v-on:click="increment">TIREZ !</b-button>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
+    <b-button v-if="!isRankingOpen" type="button" variant="warning" class="mx-auto" style="width: 33%;" :disabled="!start" v-on:click="increment">TIREZ !</b-button>
+    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" :isTeamGame=true @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
 

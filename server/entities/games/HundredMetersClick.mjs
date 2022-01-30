@@ -67,7 +67,7 @@ export class HundredMetersClick extends GameInstance {
         }
         setTimeout(() => {
             endStartGameClb()
-        }, 30_000)
+        }, 60_000)
     }
 
     /**
