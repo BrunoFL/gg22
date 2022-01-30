@@ -4,11 +4,19 @@
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
     </div>
     <div class="m-5" style="font-size: 150%">
-        <div style="float: left;">A</div>
+        <div style="float: left;">{{ teamAName }}<br>
+          <b-list-group class="mx-auto" style="width: 100%;">
+            <b-list-group-item v-for="player of teamA" :key="player.id">{{ player.name }}</b-list-group-item>
+          </b-list-group>
+        </div>
         <span>{{ center }}</span>
-        <div style="float: right;">B</div>
+        <div style="float: right;">{{ teamBName }}<br>
+          <b-list-group class="mx-auto" style="width: 100%;">
+            <b-list-group-item v-for="player of teamB" :key="player.id">{{ player.name }}</b-list-group-item>
+          </b-list-group>
+        </div>
     </div>
-    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
+    <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" :disabled="!start" v-on:click="increment">TIREZ !</b-button>
     <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
@@ -25,7 +33,12 @@ export default {
       clients: [],
       isRankingOpen: false,
       rankingList: [],
-      center: 0
+      teamA: [],
+      teamAName: '',
+      teamB: [],
+      teamBName: '',
+      center: 0,
+      start: false
     }
   },
   components: {
@@ -41,13 +54,16 @@ export default {
   },
   sockets: {
     tugStart() {
-
+      this.start = true
     },
     tugEnd() {
 
     },
     tugInit(data) {
-      console.log(data)
+      this.teamA = data.teamA.players
+      this.teamAName = data.teamA.name
+      this.teamB = data.teamB.players
+      this.teamBName = data.teamB.name
     },
     tug(result){
       this.center = result
