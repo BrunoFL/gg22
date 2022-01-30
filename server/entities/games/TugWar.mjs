@@ -152,6 +152,7 @@ export class TugWar extends GameInstance {
     endGame(endEndGameClb) {
         if (!this.isEnded) {
             this.lobby.emitPlayers('tugEnd', null)
+            this.lobby.emitPlayers('rules', this.center < 0 ? `${this.teamA.name} a gagné la partie` : `${this.teamB.name} a gagné la partie`)
             this.isEnded = true
             this.removeTouchs()
             endEndGameClb()
