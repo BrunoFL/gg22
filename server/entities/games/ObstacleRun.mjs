@@ -31,6 +31,10 @@ export class ObstacleRun extends GameInstance {
      * @type {Obstacle[]}  
      */
     obstacles
+    /**
+     * @type {boolean}
+     */
+     isEnded
 
     constructor(lobby) {
         super()
@@ -66,6 +70,7 @@ export class ObstacleRun extends GameInstance {
                 toggle = true
             }
         }
+        this.isEnded = false
     }
 
     /**
@@ -105,17 +110,35 @@ export class ObstacleRun extends GameInstance {
                 this.lobby.emitPlayers('updateCharacterPos', {'position': this.updateCharacterPos(player.id), 'team': this.teams.get(player.id)})
             })
         }
+        setTimeout(() => endStartGameClb(), 6_000)
     }
 
+    /**
+     * @param {function} endEndGameClb
+     */
     endGame(endEndGameClb) {
-        for (const player of this.lobby.players) {
-            player.socket.removeAllListeners('interactWithCharacter')
+        if (!this.isEnded) {
+            for (const player of this.lobby.players) {
+                player.socket.removeAllListeners('updateCharacterPos')
+                player.socket.removeAllListeners('updateObstacles')
+            }
+            setTimeout(() => endEndGameClb(), 3000)
         }
-        endLeaderBoardCLb()
     }
 
-    leaderBoard(endLeaderBoardClb) {
-        super.leaderBoard(endLeaderBoardClb)
+    /**
+     * @param {function} endLeaderBoardCLb
+     */
+     leaderBoard(endLeaderBoardCLb) {
+        const res = []
+        /*for (const [id, score] of this.responses.entries()) {
+            const player = this.lobby.getPlayerById(id)
+            res.push(new IndividualGameResult(player, score))
+        }*/
+
+        const gameResults = new GameResult(res)
+        this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     updateCharacterPos(playerId) {
