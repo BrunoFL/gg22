@@ -130,7 +130,7 @@ export class Goche extends GameInstance {
                 if (this.run >= 8) {
                     endStartGameClb()
                 } else if (this.responsesByRun === this.lobby.players.length) {
-                    this.run(endStartGameClb)
+                    this.runGame(endStartGameClb)
                 }
             })
         }
