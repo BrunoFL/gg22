@@ -105,6 +105,7 @@ export class Goche extends GameInstance {
      */
     startGame(endStartGameClb) {
         this.responsesByRun = 0
+        this.run++
         const index = Math.floor(Math.random() * this.propositions.length)
         const proposition = this.propositions[index]
         this.lobby.emitPlayers('question', proposition)
@@ -113,7 +114,7 @@ export class Goche extends GameInstance {
                 this.responsesByRun++
                 const value = this.responses.get(player.id)
                 this.responses.set(player.id, proposition.res === response ? value + 1 : value)
-                if (this.run === 5) {
+                if (this.run >= 5) {
                     endStartGameClb()
                 } else if (this.responsesByRun === this.lobby.players.length) {
                     this.startGame(endStartGameClb)
