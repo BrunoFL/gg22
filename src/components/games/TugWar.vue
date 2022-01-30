@@ -4,6 +4,11 @@
     <div id="rules">
       {{rulesRun}}
     </div>
+    <div>
+        <span style="float: left;">A</span>
+        <span>{{ center }}</span>
+        <span style="float: right;">B</span>
+    </div>
     <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
   </div>
   <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
@@ -20,7 +25,8 @@ export default {
       rulesRun: '',
       clients: [],
       isRankingOpen: false,
-      rankingList: []
+      rankingList: [],
+      center: 0
     }
   },
   components: {
@@ -28,7 +34,7 @@ export default {
   },
   methods: {
     increment(){
-      this.$socket.client.emit("touch", Date.getTime())
+      this.$socket.client.emit("touch", new Date().getTime())
     },
     swapScreen(event) {
       this.$emit('swapScreen', event)
