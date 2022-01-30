@@ -64,12 +64,17 @@ export class GameResult {
      * @type {IndividualGameResult[]}
      */
     results
+    /**
+     * @type {boolean} 
+     */
 
     /**
      * @param {IndividualGameResult[]} playerResults 
+     * @param {boolean} invertScorePoints
      */
-    constructor(playerResults) {
+    constructor(playerResults, invertScorePoints = false) {
         this.results = playerResults
+        this.invertScorePoints = invertScorePoints
         this.attributePoints()
     }
 
@@ -82,13 +87,20 @@ export class GameResult {
                 if (!r2.finished) {
                     return -1
                 }
-                return r1.gameScore - r2.gameScore
+                console.log(`invertScorePoints : ${this.invertScorePoints}`)
+                console.log(`r1 : ${r1.player.name} ${r1.gameScore}`);
+                console.log(`r2 : ${r2.player.name} ${r2.gameScore}`);
+                if (this.invertScorePoints) {
+                    return r1.gameScore - r2.gameScore
+                }
+                return r2.gameScore - r1.gameScore
             })
         this.results
             .forEach((val, position) => {
                 val.setPosition(position)
                 val.attributePoints()
             })
+        this.results.forEach(r=>console.log(`${r.player.name} P${r.position} : ${r.gameScore}pts`))
     }
 
     encode() {
