@@ -113,7 +113,7 @@ export class TugWar extends GameInstance {
                     if (this.touchsB.size === this.teamB.players.length) {
                         const etendue = this.getEtendue(this.touchsB)
                         this.touchsB = new Map()
-                        this.center -= etendue
+                        this.center += etendue
                         this.lobby.emitPlayers('tug', this.center)
                         if (this.center <= -30) {
                             endStartGameClb()
