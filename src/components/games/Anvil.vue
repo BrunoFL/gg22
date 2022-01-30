@@ -2,14 +2,20 @@
   <div id="anvilContainer">
     <div v-if="!isRankingOpen" v-on:click="stopAnvil()">
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{rules}}</p>
-      <div id="gameAnvil">
-        <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
-      </div>
-      <div id="character">
-        <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
+      <p>{{lobby}}</p>
+      <div class="row">
+        <div class="col-3" v-for="player of lobby.players" :key="player.id">
+          <p v-if="alertPlayer !== '' && alertPlayer.player.name === player.name">{{alertPlayer.player.name}} a touché !</p>
+          <div id="gameAnvil">
+            <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
+          </div>
+          <div id="character">
+            <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
+          </div>
+        </div>
       </div>
     </div>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
+    <GameRanking v-if="isRankingOpen" :rankingList="rankingList"  @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
 
@@ -18,6 +24,9 @@ import GameRanking from "@/components/app/ranking/GameRanking";
 
 export default {
   name: "Anvil",
+  props: {
+    lobby: Array
+  },
   data(){
     return {
       rules: '',
@@ -76,6 +85,8 @@ export default {
     animation-duration: v-bind(fallDuration);
     animation-play-state: v-bind(anvilState);
     animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    visibility: hidden;
   }
 
   #character{
@@ -93,6 +104,10 @@ export default {
   @keyframes anvilGoesBRRRR {
     0% {
       top: 0px;
+      visibility: visible;
+    }
+    99%{
+      visibility: visible;
     }
     100% {
       top: 200px;
