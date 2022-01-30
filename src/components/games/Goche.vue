@@ -4,12 +4,12 @@
       <h1>Gôche ou Droate</h1>
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
       <h2>{{proposition.name}}</h2>
-      <div class="row">
-        <div class="col-6">
-          <b-button v-on:click="jeSuisGocho()">Gôche</b-button>
+      <div class="row m-5">
+        <div class="col-sm-4 offset-sm-2">
+          <b-button class="btn-lg w-100" v-on:click="jeSuisGocho()">Gôche</b-button>
         </div>
-        <div class="col-6">
-          <b-button v-on:click="QUANDLEPARCFLORAL()">Droate</b-button>
+        <div class="col-sm-4">
+          <b-button class="btn-lg w-100" v-on:click="QUANDLEPARCFLORAL()">Droate</b-button>
         </div>
       </div>
     </div>
