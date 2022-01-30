@@ -20,6 +20,8 @@ export class Goche extends GameInstance {
      */
     responsesRun
     /**
+     * res == 0 de goche
+     * res == 1 de droate
      * @param {Proposition[]}
      */
     proposition = [
