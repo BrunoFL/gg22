@@ -1,5 +1,8 @@
 <template>
   <div>
+    <audio autoplay controls loop>
+      <source src="@/assets/sound/course_clic.mp3">
+    </audio>
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
       <h1>100m clic</h1>
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
