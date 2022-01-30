@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid" id="app">
-    <Lobby v-if="isInLobby" @swapScreen="event => swapScreen(event)"></Lobby>
+    <Lobby v-if="isInLobby" @sendLobbyToApp="event => getLobbyData(event)" @swapScreen="event => swapScreen(event)"></Lobby>
     <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
-    <Anvil v-if="isInAnvilGame"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
+    <Anvil v-if="isInAnvilGame" :lobby="lobby"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
     <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromHundred(event)"></TugWar>
@@ -33,6 +33,7 @@ export default {
       isInTugWar: false,
       listGames: [],
       actualGame: '',
+      lobby: Array
     }
   },
   components: {
@@ -80,6 +81,9 @@ export default {
           default:
             break;
         }
+    },
+    getLobbyData(event){
+      this.lobby = event;
     }
   },
   sockets: {

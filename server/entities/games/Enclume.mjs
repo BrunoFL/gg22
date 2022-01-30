@@ -96,6 +96,7 @@ export class Enclume extends GameInstance {
             this.touchs.map(touch => new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0))
         )
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     /**

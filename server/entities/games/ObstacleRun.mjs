@@ -1,4 +1,5 @@
 import {GameInstance} from './GameInstance.mjs'
+import { Obstacle } from './Obstacle.mjs'
 
 export class ObstacleRun extends GameInstance {
     /**
@@ -26,11 +27,17 @@ export class ObstacleRun extends GameInstance {
      */
     character2Pos
 
+    /**
+     * @type {Obstacle[]}  
+     */
+    obstacles
+
     constructor(lobby) {
         super()
         this.lobby = lobby
         this.character1Pos = 0
         this.character2Pos = 0
+        this.obstacles = []
     }
 
     /**
@@ -86,6 +93,10 @@ export class ObstacleRun extends GameInstance {
             console.log(data)
             player.emit('startObstacleRun', data)
         }
+        setTimeout(() => {
+            this.obstacles.push(new Obstacle())
+            this.lobby.emitPlayers('updateObstacles', this.obstacles)
+        }, 500)
         for (const player of this.lobby.players) {
             player.socket.on('interactWithCharacter', () => {
                 this.lobby.emitPlayers('updateCharacterPos', {'position': this.updateCharacterPos(player.id), 'team': this.teams.get(player.id)})
@@ -97,7 +108,7 @@ export class ObstacleRun extends GameInstance {
         for (const player of this.lobby.players) {
             player.socket.removeAllListeners('interactWithCharacter')
         }
-        setTimeout(() => endEndGameClb(), 2000)
+        endLeaderBoardCLb()
     }
 
     leaderBoard(endLeaderBoardClb) {
@@ -120,7 +131,7 @@ export class ObstacleRun extends GameInstance {
             this.character2Pos -= 5;
         }
         return this.character2Pos
-        
+
     }
 
     /**

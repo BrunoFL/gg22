@@ -4,7 +4,7 @@
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
       <div class="group row align-items-start" v-for="player of run" :key="player.id">
         <div class="row">
-          <span class="col-1" style="font-size: 125%" v-if="isMyId(player.player.socketId)">
+          <span class="col-1" style="font-size: 125%">
             {{ player.player.name }}
           </span>
         </div>

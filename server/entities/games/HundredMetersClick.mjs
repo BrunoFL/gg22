@@ -67,7 +67,7 @@ export class HundredMetersClick extends GameInstance {
         }
         setTimeout(() => {
             endStartGameClb()
-        }, 30_000)
+        }, 60_000)
     }
 
     /**
@@ -100,6 +100,7 @@ export class HundredMetersClick extends GameInstance {
         }
         const gameResults = new GameResult(result)
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     /**

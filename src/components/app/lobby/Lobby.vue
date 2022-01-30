@@ -94,6 +94,7 @@ export default {
         return player.isAdmin === true
       })
       this.adminName = playerAdmin[0].name
+      this.$emit('sendLobbyToApp',this.lobby)
     }
   },
   methods: {
