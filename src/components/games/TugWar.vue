@@ -5,10 +5,10 @@
       <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !
       </b-button>
     </div>
-    <div>
-        <span style="float: left;">A</span>
+    <div class="m-5" style="font-size: 150%">
+        <div style="float: left;">A</div>
         <span>{{ center }}</span>
-        <span style="float: right;">B</span>
+        <div style="float: right;">B</div>
     </div>
     <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>

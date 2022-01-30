@@ -49,7 +49,6 @@ export class HundredMetersClick extends GameInstance {
      */
     startGame(endStartGameClb) {
         for (const player of this.lobby.players) {
-            this.lobby.emitPlayers('rules', 'C\'est parti')
             this.lobby.emitPlayers('startRun', null)
             let cpt = 1
             player.socket.on('touch', () => {

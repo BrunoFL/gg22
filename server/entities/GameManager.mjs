@@ -22,6 +22,7 @@ export class GameManager {
             setTimeout(() => {
                 this.lobby.emitPlayers('rules', '1')
                 setTimeout(() => {
+                    this.lobby.emitPlayers('rules', 'C\'est parti !')
                     this.game.startGame(() => {
                         this.endGame()
                     })
