@@ -1,6 +1,6 @@
 <template>
     <div id="obstacleGame">
-        <h1>DOR - Dual Obstacle Run</h1>
+        <h1>Dual Obstacle Run</h1>
         <p>{{rules}}</p>
         <div id='gameWindow'>
           <div class="playerWindow">

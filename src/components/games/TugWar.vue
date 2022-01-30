@@ -1,6 +1,7 @@
 <template>
   <div>
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
+      <h1>Tir à la corde</h1>
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
     </div>
     <div v-if="!isRankingOpen">

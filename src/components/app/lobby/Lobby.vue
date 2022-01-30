@@ -130,6 +130,9 @@ export default {
     },
     goToGamesList() {
       this.$socket.client.emit('askListGames')
+    },
+    getAudio(src) {
+      return src
     }
   },
   sockets: {
