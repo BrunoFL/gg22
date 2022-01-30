@@ -10,13 +10,14 @@
         </b-col>
         <b-col>
           <img id="second" src="@/assets/img/p2.png">
-          <h3>{{ getSecond(istTeamGame) }}</h3>
+          <h3>{{ getSecond(isTeamGame) }}</h3>
         </b-col>
         <b-col>
           <img id="third" src="@/assets/img/p3.png">
           <h3>{{ getThird() }}</h3>
         </b-col>
       </b-row>
+      <br>
       <b-list-group class="mx-auto" style="width: 33%;">
         <b-list-group-item variant="secondary" v-for="playerState of otherRanking" :key="playerState">
           {{ playerState.player.name }}
@@ -37,10 +38,12 @@
     </div>
     <div v-if="displayGeneral" id="displayGeneral">
       <h1>Classement général</h1>
-      <b-list-group class="mx-auto" style="width: 33%;">
-        <b-list-group-item style="font-size: 125%" variant="secondary" v-for="(player, index) of generalRank"
-                           :key="index">
-          {{ (index + 1) + ' - ' + player.name + ' ' + player.score + 'pts' }}
+      <b-list-group class="mx-auto" style="width: 50%;">
+        <b-list-group-item style="font-size: 125%" variant="secondary" v-for="(player, index) of generalRank" :key="index">
+          <div v-if="(index + 1) != 1" style="float: left; font-weight: bold">{{ (index + 1) + 'e' }}</div>
+          <div v-if="((index + 1) === 1)" style="float: left; font-weight: bold">{{ (index + 1) + 'er' }}</div>
+          <span style="font-weight: bold">{{ player.name}}</span>
+          <div style="float: right; font-weight: bold">{{ player.score + 'pts' }}</div>
         </b-list-group-item>
       </b-list-group>
     </div>
@@ -66,9 +69,11 @@ export default {
       generalRank: []
     }
   },
-  watch: {},
+  watch: {
+  },
   methods: {
     getFirst(isTeamGame) {
+      this.getOther()
       if (this.rankingList[0]) {
         if(!isTeamGame){
           let firstData = this.rankingList.filter(function (player) {
@@ -114,7 +119,7 @@ export default {
     getOther() {
       if (this.rankingList[0]) {
         let thirdData = this.rankingList.filter(function (player) {
-          return (player.position != 2 || player.position === 1 || player.position === 0)
+          return (player.position > 2)
         })
         if (thirdData)
           return this.otherRanking = thirdData

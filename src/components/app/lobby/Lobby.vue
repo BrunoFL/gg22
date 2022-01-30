@@ -23,10 +23,10 @@
     <div v-if="!isClicked" id="firstScreen" class="m-5">
       <b-row cols="2">
         <b-col offset="2" cols="4">
-          <b-button class="w-75" v-on:click="initLobby()">Créer une salle</b-button>
+          <b-button class="w-75 btn-lg" v-on:click="initLobby()">Créer une salle</b-button>
         </b-col>
         <b-col cols="4">
-          <b-button class="w-75" v-on:click="getLobbies()">Rejoindre une salle</b-button>
+          <b-button class="w-75 btn-lg" v-on:click="getLobbies()">Rejoindre une salle</b-button>
         </b-col>
       </b-row>
     </div>
