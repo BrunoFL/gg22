@@ -1,8 +1,11 @@
 <template>
   <div id="mainLobby">
-    <audio autoplay controls loop>
-      <source src="@/assets/sound/menu.mp3">
-    </audio>
+    <div v-if="isMounted">
+      <audio autoplay controls loop>
+        <source src="@/assets/sound/menu.mp3">
+      </audio>
+    </div>
+
     <h1 class="display-1">DUEL 3000</h1>
 
     <!-- PLAYER NAME CHOICE -->
@@ -86,7 +89,8 @@ export default {
       lobby: '',
       selectedLobby: '',
       isLobbySelected: false,
-      adminName: ''
+      adminName: '',
+      isMounted: false
     }
   },
   watch: {
@@ -130,10 +134,10 @@ export default {
     },
     goToGamesList() {
       this.$socket.client.emit('askListGames')
-    },
-    getAudio(src) {
-      return src
     }
+  },
+  mounted() {
+    this.isMounted = true
   },
   sockets: {
     listLobbies(lobbies) {

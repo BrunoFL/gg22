@@ -26,7 +26,7 @@ export class Goche extends GameInstance {
     /**
      * @type {boolean}
      */
-    endGame
+    isEnded
     /**
      * res == 0 de goche
      * res == 1 de droate
@@ -89,7 +89,7 @@ export class Goche extends GameInstance {
         this.responses = new Map()
         this.run = 0
         this.responsesByRun = 0
-        this.endGame = false
+        this.isEnded = false
         for (const player of this.lobby.players) {
             this.responses.set(player.id, 0)
         }
@@ -112,7 +112,7 @@ export class Goche extends GameInstance {
     startGame(endStartGameClb) {
         this.responsesByRun = 0
         this.run++
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.05) {
             const playerIndex = Math.floor(Math.random() * this.lobby.players.length)
             this.lobby.emitPlayers('rules', `Il semblerait que ${this.lobby.players[playerIndex].name} soit de droite ...`)
         }
@@ -137,8 +137,8 @@ export class Goche extends GameInstance {
      * @param {function} endEndGameClb
      */
     endGame(endEndGameClb) {
-        if (!this.endGame) {
-            this.endGame = true
+        if (!this.isEnded) {
+            this.isEnded = true
             for (const player of this.lobby.players) {
                 player.socket.removeAllListeners('touch')
             }
