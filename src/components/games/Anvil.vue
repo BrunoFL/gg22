@@ -1,7 +1,7 @@
 <template>
   <div id="anvilContainer">
     <div v-if="!isRankingOpen" v-on:click="stopAnvil()">
-      <p>{{rules}}</p>
+      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{rules}}</p>
       <div id="gameAnvil">
         <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
       </div>

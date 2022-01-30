@@ -44,15 +44,16 @@ export class Enclume extends GameInstance {
                 this.lobby.emitPlayers('rules', 'Attention nous allons démarrer')
                 setTimeout(() => {
                     endRulesClb()
-                }, 2000)
-            }, 2000)
-        }, 2000)
+                }, 3000)
+            }, 3000)
+        }, 3000)
     }
 
     /**
      * @param {function} endStartGameClb
      */
     startGame(endStartGameClb) {
+        this.lobby.emitPlayers('rules', 'C\'est parti !')
         this.lobby.emitPlayers('startEnclume', this.seconds)
         setTimeout(() => endStartGameClb(), this.seconds * 1000 + 2000)
         for (const player of this.lobby.players) {

@@ -1,8 +1,9 @@
 <template>
-<div>
-  <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
-    <div id="rules">
-      {{rulesRun}}
+  <div>
+    <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
+      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
+      <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !
+      </b-button>
     </div>
     <div>
         <span style="float: left;">A</span>
@@ -11,17 +12,16 @@
     </div>
     <b-button type="button" variant="warning" class="mx-auto" style="width: 33%;" v-on:click="increment">TIREZ !</b-button>
   </div>
-  <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
-</div>
 </template>
 
 <script>
-import GameRanking from "@/components/app/ranking/GameRanking";
+import GameRanking from '@/components/app/ranking/GameRanking'
 
 export default {
-  name: "TugWar",
-  data(){
-    return{
+  name: 'TugWar',
+  data() {
+    return {
+      rules: '',
       rulesRun: '',
       clients: [],
       isRankingOpen: false,
@@ -41,14 +41,14 @@ export default {
     }
   },
   sockets: {
-    tugStart(){
-
-    },    
-    tugEnd(){
+    tugStart() {
 
     },
-    rules(rules){
-      this.rulesRun = rules
+    tugEnd() {
+
+    },
+    rules(rules) {
+      this.rules = rules
     },
     leaderBoardGame(event) {
       this.isRankingOpen = true
