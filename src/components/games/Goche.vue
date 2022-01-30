@@ -1,5 +1,8 @@
 <template>
   <div>
+    <audio autoplay controls loop>
+      <source src="@/assets/sound/droate_goche.mp3">
+    </audio>
     <div v-if="!isRankingOpen">
       <h1>Gôche ou Droate</h1>
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>

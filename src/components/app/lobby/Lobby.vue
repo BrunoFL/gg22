@@ -1,11 +1,5 @@
 <template>
   <div id="mainLobby">
-    <div v-if="isMounted">
-      <audio autoplay controls loop>
-        <source src="@/assets/sound/menu.mp3">
-      </audio>
-    </div>
-
     <h1 class="display-1">DUEL 3000</h1>
 
     <!-- PLAYER NAME CHOICE -->
@@ -69,6 +63,9 @@
         Lancer la partie !
       </b-button>
     </div>
+    <audio autoplay controls loop>
+      <source src="@/assets/sound/menu.mp3">
+    </audio>
   </div>
 
   <!-- BLOC JOIN LOBBIES -->
@@ -135,9 +132,6 @@ export default {
     goToGamesList() {
       this.$socket.client.emit('askListGames')
     }
-  },
-  mounted() {
-    this.isMounted = true
   },
   sockets: {
     listLobbies(lobbies) {
