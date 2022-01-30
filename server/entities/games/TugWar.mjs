@@ -19,8 +19,17 @@ export class TugWar extends GameInstance {
      * @type {boolean}
      */
     isEnded
+    /**
+     * @type {number[]}
+     */
     touchsA
+    /**
+     * @type {number[]}
+     */
     touchsB
+    /**
+     * @type {number}
+     */
     center
 
     constructor(lobby) {
