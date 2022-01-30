@@ -1,21 +1,24 @@
 <template>
   <div>
-    <h1>Gôche ou Droate</h1>
-    {{ rules }}
-    <h2>{{proposition.name}}</h2>
-    <div class="row">
-      <div class="col-6">
-        <b-button v-on:click="jeSuisGocho()">Gôche</b-button>
-      </div>
-      <div class="col-6">
-        <b-button v-on:click="QUANDLEPARCFLORAL()">Droate</b-button>
+    <div v-if="!isRankingOpen">
+      <h1>Gôche ou Droate</h1>
+      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
+      <h2>{{proposition.name}}</h2>
+      <div class="row">
+        <div class="col-6">
+          <b-button v-on:click="jeSuisGocho()">Gôche</b-button>
+        </div>
+        <div class="col-6">
+          <b-button v-on:click="QUANDLEPARCFLORAL()">Droate</b-button>
+        </div>
       </div>
     </div>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
+      <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
   </div>
 </template>
 
 <script>
+import GameRanking from '@/components/app/ranking/GameRanking'
 export default {
   name: "Goche",
   data(){
@@ -25,6 +28,9 @@ export default {
       proposition: '',
       rankingList: []
     }
+  },
+  components: {
+    GameRanking
   },
   methods: {
     jeSuisGocho(){
