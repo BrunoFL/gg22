@@ -166,6 +166,7 @@ export class TugWar extends GameInstance {
         ])
         gameResults.attributePoints()
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     encodeTeams() {
