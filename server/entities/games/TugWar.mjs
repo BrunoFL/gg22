@@ -1,5 +1,5 @@
-import { Team } from '../Team.mjs'
-import { TeamGameResult, TeamGameResults } from '../TeamGameResults.mjs'
+import {Team} from '../Team.mjs'
+import {TeamGameResult, TeamGameResults} from '../TeamGameResults.mjs'
 import {GameInstance} from './GameInstance.mjs'
 
 export class TugWar extends GameInstance {
@@ -61,6 +61,7 @@ export class TugWar extends GameInstance {
             }
             cpt++
         }
+        this.lobby.emitPlayers('tugInit', this.encodeTeams())
         this.isEnded = false
         this.touchsA = []
         this.touchsB = []
@@ -123,7 +124,7 @@ export class TugWar extends GameInstance {
                 max = val
             }
         }
-        const etendue = 30 - (max - min) / 1000
+        const etendue = 5 - (max - min) / 1000
         return Math.max(etendue, 0)
     }
 
@@ -150,5 +151,12 @@ export class TugWar extends GameInstance {
         gameResults.attributePoints()
 
         super.leaderBoard(endLeaderBoardCLb)
+    }
+
+    encodeTeams() {
+        return {
+            'teamA': this.teamA.encode(),
+            'teamB': this.teamA.encode()
+        }
     }
 }
