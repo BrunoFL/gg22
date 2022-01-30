@@ -5,7 +5,7 @@
     <Anvil v-if="isInAnvilGame" :lobby="lobby"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
-    <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromHundred(event)"></TugWar>
+    <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromTug(event)"></TugWar>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
@@ -59,6 +59,11 @@ export default {
     },
     swapScreenFromHundred(listGames) {
         this.isInHundredMetersClic = false,
+        this.isInGamesList = true
+        this.listGames = listGames
+    },     
+    swapScreenFromTug(listGames) {
+        this.isInTugWar = false,
         this.isInGamesList = true
         this.listGames = listGames
     },    
