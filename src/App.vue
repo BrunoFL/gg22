@@ -1,11 +1,12 @@
 <template>
   <div class="container-fluid" id="app">
     <Lobby v-if="isInLobby" @sendLobbyToApp="event => getLobbyData(event)" @swapScreen="event => swapScreen(event)"></Lobby>
-    <Games v-if="isInGamesList" @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
+    <Games v-if="isInGamesList" :lobby="lobby"  @swapToGames="event => swapToGames(event)" :listGames="listGames"></Games>
     <Anvil v-if="isInAnvilGame" :lobby="lobby"  @swapScreen="event => swapScreenFromAnvil(event)"></Anvil>
     <GameRanking v-if="false"></GameRanking>
     <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
     <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromTug(event)"></TugWar>
+    <Goche v-if="isInGoche" @swapScreen="event => swapScreenFromGoche(event)"></Goche>
     <Obstacle v-if="isInObstacleRun"></Obstacle>
     <Footer></Footer>
   </div>
@@ -20,6 +21,7 @@ import Anvil from "@/components/games/Anvil";
 import TugWar from "@/components/games/TugWar";
 import Obstacle from "@/components/games/Obstacle";
 import HundredMetersClick from "@/components/games/HundredMetersClick";
+import Goche from "@/components/games/Goche"
 
 export default {
   name: 'App',
@@ -31,6 +33,7 @@ export default {
       isInObstacleRun: false,
       isInHundredMetersClic: false,
       isInTugWar: false,
+      isInGoche: false,
       listGames: [],
       actualGame: '',
       lobby: Array
@@ -44,7 +47,8 @@ export default {
     Footer,
     Anvil,
     TugWar,
-    Obstacle
+    Obstacle,
+    Goche
   },
   methods: {
     swapScreen(listGames) {
@@ -63,10 +67,15 @@ export default {
         this.listGames = listGames
     },     
     swapScreenFromTug(listGames) {
-        this.isInTugWar = false,
+        this.isInTugWar = false
         this.isInGamesList = true
         this.listGames = listGames
-    },    
+    },
+    swapScreenFromGoche(listGames){
+      this.isInGoche = false
+      this.isInGamesList = true
+      this.listGames = listGames
+    },
     swapToGames(event) {
         this.isInLobby = false
         this.isInGamesList = false
@@ -82,6 +91,9 @@ export default {
             break;
           case 'La guerre des tugs sans haches':
             this.isInTugWar = true
+            break;
+          case 'Gôche Droate':
+            this.isInGoche = true
             break;
           default:
             break;

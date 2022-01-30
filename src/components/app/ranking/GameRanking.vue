@@ -5,15 +5,15 @@
       <h1>Gagnant</h1>
       <b-row>
         <b-col cols="12" class="mt-3">
-          <img id="first" src="@/assets/img/first.png">
+          <img id="first" src="@/assets/img/p1.png">
           <h3>{{ getFirst(isTeamGame) }}</h3>
         </b-col>
         <b-col>
-          <img id="second" src="@/assets/img/second.png">
+          <img id="second" src="@/assets/img/p2.png">
           <h3>{{ getSecond(istTeamGame) }}</h3>
         </b-col>
         <b-col>
-          <img id="third" src="@/assets/img/third.png">
+          <img id="third" src="@/assets/img/p3.png">
           <h3>{{ getThird() }}</h3>
         </b-col>
       </b-row>
@@ -26,11 +26,11 @@
     <div v-if="displayWinners && isTeamGame" id="displayTeamWinner">
         <h1>Gagnant</h1>
         <div>
-          <img style="width: 17%;" src="@/assets/img/first.png">
+          <img style="width: 17%;" src="@/assets/img/p1.png">
           <h3>{{ getFirst(isTeamGame) }}</h3>
         </div>
         <div>
-          <img style="width: 15%;" src="@/assets/img/second.png">
+          <img style="width: 15%;" src="@/assets/img/p2.png">
           <h3>{{ getSecond(isTeamGame) }}</h3>
         </div>
         
