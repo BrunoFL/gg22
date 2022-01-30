@@ -1,9 +1,10 @@
 <template>
   <div id="anvilContainer">
-    <div v-if="!isRankingOpen">
+    <div v-if="!isRankingOpen" class="row justify-content-center gap-3">
+      <h1>Enclume</h1>
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{rules}}</p>
       <div class="row">
-        <div class="col-3" v-for="player of lobby.players" :key="player.id" v-on:click="stopAnvil()">
+        <div id="canvas" class="col-3" v-for="player of lobby.players" :key="player.id" v-on:click="stopAnvil()">
           <div id="gameAnvil">
             <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
           </div>
@@ -86,6 +87,12 @@ export default {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
     visibility: hidden;
+  }
+
+  #canvas{
+    height: 600px;
+    border: 2px solid black;
+    border-radius: 10px;
   }
 
   #character{
