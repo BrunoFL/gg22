@@ -81,10 +81,7 @@ export class Goche extends GameInstance {
         return 'Gôche Droate'
     }
 
-    /**
-     * @param {Function} endStartGameClb
-     */
-    initGame(endEndGameClb) {
+    initGame() {
         this.responses = new Map()
         this.run = 0
         this.responsesByRun = 0
@@ -108,14 +105,14 @@ export class Goche extends GameInstance {
      * @param {function} endStartGameClb
      */
     startGame(endStartGameClb) {
-        setTimeout(() => this.endGame(endEndGameClb), 60_000)
-        this.run(endStartGameClb)
+        setTimeout(() => this.endGame(endStartGameClb), 60_000)
+        this.runGame(endStartGameClb)
     }
 
     /**
      * @param {function} endStartGameClb
      */
-    run(endStartGameClb) {
+    runGame(endStartGameClb) {
         this.responsesByRun = 0
         this.run++
         if (Math.random() < 0.05) {
