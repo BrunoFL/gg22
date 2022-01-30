@@ -158,8 +158,6 @@ export class TugWar extends GameInstance {
             new TeamGameResult(this.teamB, this.center > 0)
         ])
         gameResults.attributePoints()
-
-        super.leaderBoard(endLeaderBoardCLb)
     }
 
     encodeTeams() {
