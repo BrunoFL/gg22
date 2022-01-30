@@ -57,7 +57,7 @@ export class Lobby {
         this.games = new Map()
         this.games.set(Enclume.name(), new Enclume(this))
         this.games.set(HundredMetersClick.name(), new HundredMetersClick(this))
-        this.games.set(ObstacleRun.name(), new ObstacleRun(this))
+        // this.games.set(ObstacleRun.name(), new ObstacleRun(this))
         this.games.set(TugWar.name(), new TugWar(this))
         this.games.set(Goche.name(), new Goche(this))
         this.id = UUIDGenerator.uuid()
