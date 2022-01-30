@@ -46,7 +46,7 @@
           <b-badge variant="primary" pill>{{ lobby.players.length }}</b-badge>
         </b-list-group-item>
       </b-list-group>
-      <b-button v-if="isLobbySelected" v-on:click="joinLobby(selectedLobby.id)" variant="success">Rejoindre le lobby
+      <b-button class="m-3" v-if="isLobbySelected" v-on:click="joinLobby(selectedLobby.id)" variant="success">Rejoindre le lobby
       </b-button>
     </div>
 
