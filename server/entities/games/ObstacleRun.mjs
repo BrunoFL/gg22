@@ -1,4 +1,5 @@
 import {GameInstance} from './GameInstance.mjs'
+import {GameResult, IndividualGameResult} from './GameResult.mjs'
 import { Obstacle } from './Obstacle.mjs'
 
 export class ObstacleRun extends GameInstance {
@@ -118,9 +119,9 @@ export class ObstacleRun extends GameInstance {
      */
     endGame(endEndGameClb) {
         if (!this.isEnded) {
+            this.isEnded = true
             for (const player of this.lobby.players) {
-                player.socket.removeAllListeners('updateCharacterPos')
-                player.socket.removeAllListeners('updateObstacles')
+                player.socket.removeAllListeners('interactWithCharacter')
             }
             setTimeout(() => endEndGameClb(), 3000)
         }
@@ -161,6 +162,7 @@ export class ObstacleRun extends GameInstance {
     }
 
     updateObstaclePos() {
+        if (!this.isEnded){
         setTimeout(() => {
             for (const obstacle of this.obstacles) {
                 obstacle.position.x += obstacle.speed * obstacle.direction
@@ -170,14 +172,17 @@ export class ObstacleRun extends GameInstance {
             this.updateObstaclePos()
         }, 200)
     }
+    }
     
     addObstacle() {
+        if (!this.isEnded){
         setTimeout(() => {
             this.obstacles.push(new Obstacle())
             this.lobby.emitPlayers('updateObstacles', this.obstacles)
             this.addObstacle()
         }, (Math.random() * 1000) + 500)
     }
+}
 
     /**
      * @return {string}
