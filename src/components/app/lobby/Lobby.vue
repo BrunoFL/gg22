@@ -100,6 +100,7 @@ export default {
       })
       this.adminName = playerAdmin[0].name
       this.$emit('sendLobbyToApp', this.lobby)
+      this.$emit('sendPlayerToApp', this.playerName)
     }
   },
   methods: {
