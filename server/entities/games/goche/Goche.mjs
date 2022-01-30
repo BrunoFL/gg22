@@ -97,21 +97,13 @@ export class Goche extends GameInstance {
      * @param {function} endLeaderBoardCLb
      */
     leaderBoard(endLeaderBoardCLb) {
-        for (const player of this.lobby.players) {
-            let isPresent = false
-            for (const touch of this.touchs) {
-                if (touch.player.id === player.id) {
-                    isPresent = true
-                }
-            }
-            if (!isPresent) {
-                this.touchs.push(new Touch(player, -Infinity))
-            }
+        const res = []
+        for (const [id, score] of this.responses.entries()) {
+            const player = this.lobby.getPlayerById(id)
+            res.push(new IndividualGameResult(player, score))
         }
 
-        const gameResults = new GameResult(
-            this.touchs.map(touch => new IndividualGameResult(touch.player, touch.delta, touch.delta >= 0))
-        )
+        const gameResults = new GameResult(res)
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
         endLeaderBoardCLb()
     }
