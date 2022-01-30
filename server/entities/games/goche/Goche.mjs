@@ -106,6 +106,10 @@ export class Goche extends GameInstance {
     startGame(endStartGameClb) {
         this.responsesByRun = 0
         this.run++
+        if (Math.random() < 0.2) {
+            const index = Math.floor(Math.random() * this.lobby.players.length)
+            this.lobby.emitPlayers('rules', `Il semblerait que ${this.lobby.players[index].name} soit de droite ...`)
+        }
         const index = Math.floor(Math.random() * this.propositions.length)
         const proposition = this.propositions[index]
         this.lobby.emitPlayers('question', proposition)
