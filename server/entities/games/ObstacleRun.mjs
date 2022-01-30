@@ -121,17 +121,17 @@ export class ObstacleRun extends GameInstance {
     updateCharacterPos(playerId) {
         if (this.teams.get(playerId) == 1) { //team 1
             if (this.affectations.get(playerId) == 0) { // direction up
-                this.character1Pos += 5;
+                this.character1Pos += 10;
             } else { // direction down
-                this.character1Pos -= 5;
+                this.character1Pos -= 10;
             }
             return this.character1Pos
         }
         //team 2
         if (this.affectations.get(playerId) == 0) { // direction up
-            this.character2Pos += 5;
+            this.character2Pos += 10;
         } else { // direction down
-            this.character2Pos -= 5;
+            this.character2Pos -= 10;
         }
         return this.character2Pos
 
@@ -140,7 +140,7 @@ export class ObstacleRun extends GameInstance {
     updateObstaclePos() {
         setTimeout(() => {
             for (const obstacle of this.obstacles) {
-                obstacle.position.x += obstacle.speed * obstacle.direction * 0.01
+                obstacle.position.x += obstacle.speed * obstacle.direction
                 obstacle.updateStyle()
             }
             this.lobby.emitPlayers('updateObstacles', this.obstacles)

@@ -3,7 +3,7 @@
         <h1>Dual Obstacle Run</h1>
         <p>{{rules}}</p>
         <div id='gameWindow'>
-          <img v-for="obstacle in obstacles" :key="obstacle.id" class='obstacle' v-bind:style="obstacle.style" src='@/assets/img/feu.jpg'>
+          <img v-for="obstacle in obstacles" :key="obstacle.id" class='obstacle' v-bind:style="obstacle.style" src='@/assets/img/poticha.png'>
           <div class="playerWindow">
               <button autofocus v-if="team == 1" @keydown.space="interact()" id="moveCharacter" class="btn btn-outline-success">Go {{direction}}</button>
               <img id="perso1" src="@/assets/perso.jpeg">
@@ -71,6 +71,7 @@ export default {
 #gameWindow {
   height: 80%;
   background-color: rgba(255, 255, 255, 0.9);
+  position: relative;
 }
 
 .playerWindow {
@@ -89,7 +90,7 @@ export default {
 
 #perso1 {
   width:5%;
-  min-width: 40px;
+  min-width: 80px;
   margin: 2%;
   position: absolute;
   bottom: v-bind(character1Pos);
@@ -97,7 +98,7 @@ export default {
 }
 #perso2 {
   width:5%;
-  min-width: 40px;
+  min-width: 80px;
   margin: 2%;
   position: absolute;
   bottom: v-bind(character2Pos);

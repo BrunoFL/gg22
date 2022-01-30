@@ -1,4 +1,4 @@
-import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
+import {UUIDGenerator} from '../../utils/UUIDGenerator.mjs'
 
 export class Obstacle {
     id
@@ -10,8 +10,8 @@ export class Obstacle {
     constructor() {
         this.id = UUIDGenerator.uuid()
         this.position = {
-            'x': 0,
-            'y': Math.floor(Math.random() * 100)
+            'x': 530,
+            'y': Math.floor(Math.random() * 700)
         }
         this.speed = 4 + Math.floor(Math.random() * 3)
         this.direction = Math.random() < 0.5 ? 1 : -1
