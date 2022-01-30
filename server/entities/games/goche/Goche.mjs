@@ -8,10 +8,6 @@ export class Goche extends GameInstance {
      */
     lobby
     /**
-     * @type {number}
-     */
-    seconds
-    /**
      * @type {Map}
      */
     responses
@@ -93,7 +89,6 @@ export class Goche extends GameInstance {
         for (const player of this.lobby.players) {
             this.responses.set(player.id, 0)
         }
-        setTimeout(() => this.endGame(), 60_000)
     }
 
     /**
@@ -110,6 +105,14 @@ export class Goche extends GameInstance {
      * @param {function} endStartGameClb
      */
     startGame(endStartGameClb) {
+        setTimeout(() => this.endGame(endStartGameClb), 60_000)
+        this.runGame(endStartGameClb)
+    }
+
+    /**
+     * @param {function} endStartGameClb
+     */
+    runGame(endStartGameClb) {
         this.responsesByRun = 0
         this.run++
         if (Math.random() < 0.05) {
@@ -127,7 +130,7 @@ export class Goche extends GameInstance {
                 if (this.run >= 8) {
                     endStartGameClb()
                 } else if (this.responsesByRun === this.lobby.players.length) {
-                    this.startGame(endStartGameClb)
+                    this.runGame(endStartGameClb)
                 }
             })
         }

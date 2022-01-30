@@ -11,6 +11,10 @@ export class GameServer {
      * @type {Lobby[]}
      */
     lobbies
+    /**
+     * {Player[]}
+     */
+    players
 
     /**
      * @param {Emitter} io
@@ -18,17 +22,21 @@ export class GameServer {
     constructor(io) {
         this.io = io
         this.lobbies = []
+        this.players = []
         this.listen()
     }
 
     listen() {
         this.io.on('connection', socket => {
             const player = new Player(UUIDGenerator.uuid, socket, socket.id)
+            this.players.push(player)
             socket.on('createLobby', lobbyName => {
                 console.log(`create lobby ${lobbyName}`)
                 const lobby = new Lobby(this.io, this, lobbyName)
                 this.lobbies.push(lobby)
                 lobby.join(player)
+                this.players = this.players.filter(p => p.id !== player.id)
+                this.emitListLobbies()
             })
 
             socket.on('getLobbies', () => {
@@ -58,7 +66,7 @@ export class GameServer {
      */
     destroyLobby(lobby) {
         this.lobbies = this.lobbies.filter(l => l.id !== lobby.id)
-        this.io.emit('listLobbies', this.openLobbies())
+        this.emitListLobbies()
     }
 
     /**
@@ -75,5 +83,11 @@ export class GameServer {
      */
     encodeLobbies() {
         return this.lobbies.map(l => l.encode())
+    }
+
+    emitListLobbies() {
+        for (const player of this.players) {
+            player.socket.emit('listLobbies', this.encodeLobbies())
+        }
     }
 }

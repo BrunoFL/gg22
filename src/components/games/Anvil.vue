@@ -5,11 +5,12 @@
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{rules}}</p>
       <div class="row">
         <div id="canvas" class="col-3" v-for="player of lobby.players" :key="player.id" v-on:click="stopAnvil()">
+          <h2>{{player.name}}</h2>
           <div id="gameAnvil">
             <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
           </div>
           <div id="character">
-            <img id="characterIMG" alt="poticha" src="@/assets/img/poticha.png"><br>
+            <img id="characterIMG" alt="poticha" src="@/assets/img/poticha.png"><br><br>
             <h2 v-if="alertPlayer !== '' && alertPlayer.player.name === player.name">{{alertPlayer.player.name}} a touché !</h2>
           </div>
         </div>

@@ -15,7 +15,7 @@ export class TeamGameResult {
 
     /**
      * @param {Team} team
-     * @param {boolean} win 
+     * @param {boolean} win
      */
     constructor(team, win) {
         this.team = team
@@ -26,7 +26,7 @@ export class TeamGameResult {
         if (this.win) {
             this.attributedPoints = 5
         } else {
-            this.attributePoints = 0
+            this.attributedPoints = 0
         }
         this.team.players.forEach(player => player.scorePoints(this.attributedPoints))
     }
@@ -48,7 +48,7 @@ export class TeamGameResults {
     teamResults
 
     /**
-     * @param {TeamGameResult[]} teamResults 
+     * @param {TeamGameResult[]} teamResults
      */
     constructor(teamResults) {
         this.teamResults = teamResults

@@ -1,5 +1,6 @@
 <template>
     <div id="obstacleGame">
+      <div v-if="!isRankingOpen">
         <h1>Dual Obstacle Run</h1>
         <p>{{rules}}</p>
         <div id='gameWindow'>
@@ -13,6 +14,8 @@
               <img id="perso2" src="@/assets/img/jospin.jpg">
           </div>
         </div>
+      </div>
+      <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
     </div>
 </template>
 
@@ -26,6 +29,7 @@ export default {
         character2Pos: '0px',
         team: '',
         direction: '',
+        isRankingOpen: false,
         obstacles: []
     }
   },
@@ -58,6 +62,10 @@ export default {
       } else {
         this.character2Pos = ret.position + 'px';
       }
+    },
+    leaderBoardGame(event) {
+      this.isRankingOpen = true
+      this.rankingList = event
     }
   }
 }

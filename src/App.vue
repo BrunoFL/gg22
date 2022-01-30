@@ -7,7 +7,7 @@
     <HundredMetersClick v-if="isInHundredMetersClic" @swapScreen="event => swapScreenFromHundred(event)"></HundredMetersClick>
     <TugWar v-if="isInTugWar" @swapScreen="event => swapScreenFromTug(event)"></TugWar>
     <Goche v-if="isInGoche" @swapScreen="event => swapScreenFromGoche(event)"></Goche>
-    <Obstacle v-if="isInObstacleRun"></Obstacle>
+    <Obstacle v-if="isInObstacleRun"  @swapScreen="event => swapScreenFromObstacle(event)"></Obstacle>
     <Footer></Footer>
   </div>
 </template>
@@ -73,6 +73,11 @@ export default {
     },
     swapScreenFromGoche(listGames){
       this.isInGoche = false
+      this.isInGamesList = true
+      this.listGames = listGames
+    },
+    swapScreenFromObstacle(listGames) {
+      this.isInObstacleRun = false
       this.isInGamesList = true
       this.listGames = listGames
     },
