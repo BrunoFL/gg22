@@ -53,7 +53,7 @@
       "importWorkboxFrom": "local",
       "navigateFallback": "/",
       "exclude": [
-        "\\w*\\.(?:js)$"
+        "/\\w*\\.(?:js)$/"
       ]
     }
   }
