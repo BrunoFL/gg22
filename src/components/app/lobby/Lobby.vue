@@ -1,5 +1,8 @@
 <template>
   <div id="mainLobby">
+    <audio autoplay controls loop>
+      <source src="@/assets/sound/menu.mp3">
+    </audio>
     <h1 class="display-1">DUEL 3000</h1>
 
     <!-- PLAYER NAME CHOICE -->
@@ -46,14 +49,15 @@
           <b-badge variant="primary" pill>{{ lobby.players.length }}</b-badge>
         </b-list-group-item>
       </b-list-group>
-      <b-button class="m-3" v-if="isLobbySelected" v-on:click="joinLobby(selectedLobby.id)" variant="success">Rejoindre le lobby
+      <b-button class="m-3" v-if="isLobbySelected" v-on:click="joinLobby(selectedLobby.id)" variant="success">Rejoindre
+        le lobby
       </b-button>
     </div>
 
     <!-- BLOC JOIN LOBBY -->
     <div v-if="clickJoinLobby" id="joinLobby" class="m-5">
       <h2>Lobby • {{ lobby.name }} •
-        <b-badge  v-if="lobby && lobby.players" variant="primary" pill>{{ lobby.players.length }}</b-badge>
+        <b-badge v-if="lobby && lobby.players" variant="primary" pill>{{ lobby.players.length }}</b-badge>
       </h2>
       <b-list-group class="mx-auto" style="width: 45%;">
         <b-list-group-item v-for="player of lobby.players" :key="player.id">{{ player.name }}</b-list-group-item>
@@ -94,7 +98,7 @@ export default {
         return player.isAdmin === true
       })
       this.adminName = playerAdmin[0].name
-      this.$emit('sendLobbyToApp',this.lobby)
+      this.$emit('sendLobbyToApp', this.lobby)
     }
   },
   methods: {
