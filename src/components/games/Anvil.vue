@@ -8,7 +8,7 @@
             <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
           </div>
           <div id="character">
-            <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg"><br>
+            <img id="characterIMG" alt="poticha" src="@/assets/img/poticha.png"><br>
             <h2 v-if="alertPlayer !== '' && alertPlayer.player.name === player.name">{{alertPlayer.player.name}} a touché !</h2>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default {
     top: 200px;
   }
   #characterIMG{
-    width: 150px;
+    width: 200px;
   }
 
   #anvil{
@@ -109,7 +109,7 @@ export default {
       visibility: visible;
     }
     100% {
-      top: 200px;
+      top: 250px;
     }
   }
 </style>
