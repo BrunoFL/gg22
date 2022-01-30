@@ -1,6 +1,6 @@
-import {Team} from '../Team.mjs'
-import {TeamGameResult, TeamGameResults} from '../TeamGameResults.mjs'
-import {GameInstance} from './GameInstance.mjs'
+import {Team} from '../../Team.mjs'
+import {TeamGameResult, TeamGameResults} from '../../TeamGameResults.mjs'
+import {GameInstance} from '../GameInstance.mjs'
 
 export class TugWar extends GameInstance {
     /**
@@ -113,9 +113,9 @@ export class TugWar extends GameInstance {
                     if (this.touchsB.size === this.teamB.players.length) {
                         const etendue = this.getEtendue(this.touchsB)
                         this.touchsB = new Map()
-                        this.center -= etendue
+                        this.center += etendue
                         this.lobby.emitPlayers('tug', this.center)
-                        if (this.center <= -30) {
+                        if (this.center >= 30) {
                             endStartGameClb()
                         }
                     }
@@ -166,6 +166,7 @@ export class TugWar extends GameInstance {
         ])
         gameResults.attributePoints()
         this.lobby.emitPlayers('leaderBoardGame', gameResults.encode())
+        endLeaderBoardCLb()
     }
 
     encodeTeams() {

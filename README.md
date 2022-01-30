@@ -1,8 +1,8 @@
-# vue3-socketio-heroku
+# Duel 3000
 
 Thanks to https://github.com/alexwidua/vue-socketio-heroku-starter
 
-Automatic deploy on https://vue3-socketio.herokuapp.com/ (free)
+Automatic deploy on https://ggj2022.herokuapp.com/ (free)
 
 - [Vue 3](https://v3.vuejs.org/)
 - [Socket.io 4](https://socket.io/)
@@ -10,6 +10,16 @@ Automatic deploy on https://vue3-socketio.herokuapp.com/ (free)
 - PWA
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/BrunoFL/vue3-socketio-heroku)
+
+
+## Credits:
+
+Marie Smolinski : Fullstack business strategist
+Nathan Piranda : UX/UI costumer experience manager
+Christopher Petitjean : UX/UI operation director
+Thibaud Jeannin : Chief technology architect
+Eliott Lallemand : Music hero creator
+Bruno Follet : Global operation squad leader
 
 ## Prerequisites
 

@@ -1,5 +1,5 @@
-import {GameInstance} from './GameInstance.mjs'
-import {GameResult, IndividualGameResult} from './GameResult.mjs'
+import {GameInstance} from '../GameInstance.mjs'
+import {GameResult, IndividualGameResult} from '../GameResult.mjs'
 
 export class HundredMetersClick extends GameInstance {
     /**
