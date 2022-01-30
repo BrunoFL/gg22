@@ -3,7 +3,7 @@ export class Touch {
     delta
 
     constructor(player, delta) {
-        this.player = player
+        this.player = player.substring(0, 8)
         this.delta = delta
     }
 
