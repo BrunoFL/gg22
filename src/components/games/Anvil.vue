@@ -1,16 +1,15 @@
 <template>
   <div id="anvilContainer">
-    <div v-if="!isRankingOpen" v-on:click="stopAnvil()">
+    <div v-if="!isRankingOpen">
       <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{rules}}</p>
-      <p>{{lobby}}</p>
       <div class="row">
-        <div class="col-3" v-for="player of lobby.players" :key="player.id">
-          <p v-if="alertPlayer !== '' && alertPlayer.player.name === player.name">{{alertPlayer.player.name}} a touché !</p>
+        <div class="col-3" v-for="player of lobby.players" :key="player.id" v-on:click="stopAnvil()">
           <div id="gameAnvil">
             <img id="anvil" src="@/assets/img/anvil.png" alt="anvil">
           </div>
           <div id="character">
-            <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg">
+            <img id="characterIMG" alt="giscard" src="@/assets/perso.jpeg"><br>
+            <h2 v-if="alertPlayer !== '' && alertPlayer.player.name === player.name">{{alertPlayer.player.name}} a touché !</h2>
           </div>
         </div>
       </div>
