@@ -18,13 +18,17 @@ export class Goche extends GameInstance {
     /**
      * @type {number}
      */
-    responsesRun
+    responsesByRun
+    /**
+     * @type {number}
+     */
+    run
     /**
      * res == 0 de goche
      * res == 1 de droate
      * @param {Proposition[]}
      */
-    proposition = [
+    propositions = [
         new Proposition('Le barbecue', 0),
         new Proposition('Relocaliser', 0),
         new Proposition('Le djembé', 0),
@@ -64,10 +68,6 @@ export class Goche extends GameInstance {
         new Proposition('La zoubida', 1),
         new Proposition('Les allemands', 1),
     ]
-    /**
-     * @param {number}
-     */
-    cpt
 
     constructor(lobby) {
         super()
@@ -83,8 +83,8 @@ export class Goche extends GameInstance {
 
     initGame() {
         this.responses = new Map()
-        this.cpt = 0
-        this.responsesRun = 0
+        this.run = 0
+        this.responsesByRun = 0
         for (const player of this.lobby.players) {
             this.responses.set(player.id, 0)
         }
@@ -104,17 +104,18 @@ export class Goche extends GameInstance {
      * @param {function} endStartGameClb
      */
     startGame(endStartGameClb) {
-        this.responsesRun = 0
-        const proposition = this.proposition[this.cpt]
+        this.responsesByRun = 0
+        const index = Math.floor(Math.random() * this.propositions.length)
+        const proposition = this.propositions[index]
         this.lobby.emitPlayers('question', proposition)
         for (const player of this.lobby.players) {
             player.socket.once('touch', response => {
-                this.responsesRun++
+                this.responsesByRun++
                 const value = this.responses.get(player.id)
                 this.responses.set(player.id, proposition.res === response ? value + 1 : value)
-                if (this.cpt === 5) {
+                if (this.run === 5) {
                     endStartGameClb()
-                } else if (this.responsesRun === this.lobby.players.length) {
+                } else if (this.responsesByRun === this.lobby.players.length) {
                     this.startGame(endStartGameClb)
                 }
             })
