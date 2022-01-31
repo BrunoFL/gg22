@@ -49,7 +49,7 @@ export class TugWar extends GameInstance {
         let cpt = 0
         this.teamA = new Team('Team A')
         this.teamB = new Team('Team B')
-        for (const player of this.lobby.players.sort((a, b) => Math.random() - 0.5)) {
+        for (const player of this.lobby.players.sort(() => Math.random() - 0.5)) {
             if (cpt % 2 === 0) {
                 this.teamA.addPlayer(player)
             } else {
