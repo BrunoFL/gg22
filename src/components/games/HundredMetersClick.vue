@@ -15,7 +15,7 @@
         :index="index"
       >
         <div class="row">
-          <span class="col-1 fw-bolder" style="font-size: 125%">
+          <span class="row fw-bolder" style="font-size: 125%">
             {{ player.player.name }}
           </span>
         </div>

@@ -5,16 +5,22 @@
       <h1>Gagnant</h1>
       <div class="row">
         <div class="row mt-3">
-          <img id="first" src="@/assets/img/p1.png" />
+          <img class="mx-auto" id="first" src="@/assets/img/p1.png" />
           <h3>{{ getFirst(isTeamGame) }}</h3>
         </div>
-        <div class="row">
-          <img id="second" src="@/assets/img/p2.png" />
-          <h3>{{ getSecond(isTeamGame) }}</h3>
-        </div>
-        <div class="row">
-          <img id="third" src="@/assets/img/p3.png" />
-          <h3>{{ getThird() }}</h3>
+        <div class="d-flex mt-5">
+          <div class="d-flex flex-row">
+            <div class="row">
+              <img id="second" class="mx-auto" src="@/assets/img/p2.png" />
+              <h3>{{ getSecond(isTeamGame) }}</h3>
+            </div>
+          </div>
+          <div class="d-flex flex-row-reverse mt-5">
+            <div class="row">
+              <img class="mx-auto" id="third" src="@/assets/img/p3.png" />
+              <h3>{{ getThird() }}</h3>
+            </div>
+          </div>
         </div>
       </div>
       <br />
@@ -144,6 +150,10 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 30%;
+}
+
 #first {
   width: 10%;
 }
