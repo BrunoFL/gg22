@@ -5,6 +5,7 @@ import 'bootstrap';
 
 import VueSocketIOExt from 'vue-socket.io-extended'
 import { io } from 'socket.io-client'
+import 'bootstrap/dist/css/bootstrap.css'
 
 const socket = io(process.env.VUE_APP_HOST)
 
