@@ -51,10 +51,7 @@
     "workboxPluginMode": "GenerateSW",
     "workboxOptions": {
       "importWorkboxFrom": "local",
-      "navigateFallback": "/",
-      "exclude": [
-        "/\\w*\\.(?:js)$/"
-      ]
+      "navigateFallback": "/"
     }
   }
 }
