@@ -22,7 +22,7 @@
     <button
       type="button"
       class="m-3 btn btn-success"
-      v-if="isGameSelected && isAdmin()"
+      v-if="isGameSelected && this.lobby.admin.name === this.playerName"
       v-on:click="startGame()"
       variant="success"
     >
@@ -52,17 +52,9 @@ export default {
       this.$socket.client.emit("startGame", this.selectedGame);
     },
     selectGame(game) {
-      this.selectedGame = game;
-      this.getAdmin();
-    },
-    getAdmin() {
-      let playerAdmin = this.lobby.players.filter(function (player) {
-        return player.isAdmin === true;
-      });
-      this.adminName = playerAdmin[0].name;
-    },
-    isAdmin() {
-      return this.adminName === this.playerName;
+      if (this.lobby.admin.name === this.playerName) {
+        this.selectedGame = game;
+      }
     },
   },
   sockets: {

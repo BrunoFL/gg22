@@ -1,77 +1,115 @@
 <template>
   <div>
     <audio autoplay controls loop>
-      <source src="@/assets/sound/course_clic.mp3">
+      <source src="@/assets/sound/course_clic.mp3" />
     </audio>
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
       <h1>100m clic</h1>
-      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
-      <div class="group row align-items-start" v-for="player of run" :key="player.id">
+      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">
+        {{ rules }}
+      </p>
+      <div
+        class="group row align-items-start"
+        v-for="(player, index) of run"
+        :key="player.id"
+        :index="index"
+      >
         <div class="row">
-          <span class="col-1" style="font-size: 125%">
+          <span class="col-1 fw-bolder" style="font-size: 125%">
             {{ player.player.name }}
           </span>
         </div>
-        <b-progress style="height: 25px; font-size: 125%" :value="player.meter" :max="max" show-progress
-                    animated></b-progress>
+        <div class="progress" style="height: 30px; font-size: 125%">
+          <div
+            class="progress-bar animated progress-bar-striped progress-bar-animated bg-success"
+            :style="this.progressCss(player.meter)"
+            :class="this.progressClass(index)"
+            role="progressbar"
+            :aria-valuenow="player.meter"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            {{ player.meter }}
+          </div>
+        </div>
       </div>
-      <b-button variant="outline-primary" size="lg" class="w-75 m-5" v-on:click="increment">
+      <button
+        type="button"
+        class="btn btn-outline-primary w-75 m-5"
+        v-on:click="increment"
+      >
         RUN
-      </b-button>
+      </button>
       <!--      {{ run }}-->
     </div>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" @swapScreen="event => swapScreen(event)"></GameRanking>
+    <GameRanking
+      v-if="isRankingOpen"
+      :rankingList="rankingList"
+      @swapScreen="(event) => swapScreen(event)"
+    ></GameRanking>
   </div>
 </template>
 
 <script>
-import GameRanking from '@/components/app/ranking/GameRanking'
+import GameRanking from "@/components/app/ranking/GameRanking";
 
 export default {
-  name: 'HundredMetersClick',
+  name: "HundredMetersClick",
   data() {
     return {
       value: 0,
-      max: 100,
-      rules: '',
+      rules: "",
       clients: [],
-      run: '',
+      run: "",
       isRankingOpen: false,
-      rankingList: []
-    }
+      rankingList: [],
+    };
   },
   components: {
     GameRanking,
   },
   methods: {
     increment() {
-      this.$socket.client.emit('touch')
+      this.$socket.client.emit("touch");
     },
     isMyId(id) {
-      return id === this.$socket.client.id
+      return id === this.$socket.client.id;
     },
     swapScreen(event) {
-      this.$emit('swapScreen', event)
-    }
+      this.$emit("swapScreen", event);
+    },
+    progressCss(value) {
+      return `width: ${value}%`;
+    },
+    progressClass(index) {
+      switch (index) {
+        case 0:
+          return "bg-sucess";
+        case 1:
+          return "bg-info";
+        case 2:
+          return "bg-warning";
+        default:
+          return "bg-error";
+      }
+    },
   },
   sockets: {
     updateRun(data) {
       data.sort((a, b) => {
-        return b.meter - a.meter
-      })
-      this.run = data
+        return b.meter - a.meter;
+      });
+      this.run = data;
     },
     rules(rules) {
-      this.rules = rules
+      this.rules = rules;
     },
     leaderBoardGame(event) {
-      this.isRankingOpen = true
-      this.rankingList = event
-    }
-  }
-}
+      this.isRankingOpen = true;
+      this.rankingList = event;
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

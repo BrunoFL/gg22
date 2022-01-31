@@ -88,7 +88,9 @@
     <div v-if="clickJoinLobby" id="joinLobby" class="m-5">
       <h2>
         Salle • {{ lobby.name }} •
-        <span class="badge rounded-pill bg-dark">{{ lobby.players.length }}</span>
+        <span v-if="lobby.players" class="badge rounded-pill bg-dark">{{
+          lobby.players.length
+        }}</span>
       </h2>
       <ul class="list-group mx-auto col-sm-12 col-md-6 col-lg-5 m-3">
         <li
