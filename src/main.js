@@ -1,6 +1,6 @@
 import {createApp} from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
+// import './registerServiceWorker'
 import BootstrapVue3 from 'bootstrap-vue-3'
 
 import VueSocketIOExt from 'vue-socket.io-extended'
