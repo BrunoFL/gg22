@@ -1,23 +1,37 @@
 <template>
   <div id="gamesList">
     <audio autoplay controls loop>
-      <source src="@/assets/sound/menu.mp3">
+      <source src="@/assets/sound/menu.mp3" />
     </audio>
     <!-- BLOC GAMES LIST -->
     <div id="displayListGames">
       <h1>Jeux</h1>
-      <b-list-group class="mx-auto" style="width: 33%;">
-        <b-list-group-item v-for="game of listGames" :key="game" href="#" v-on:click="selectGame(game)" style="width: auto;">
-          {{game}}
-        </b-list-group-item>
-      </b-list-group>
+      <ul class="list-group mx-auto col-sm-12 col-md-6 col-lg-5 m-3">
+        <li
+          v-for="game of listGames"
+          :key="game"
+          href="#"
+          v-on:click="selectGame(game)"
+          class="ps-3 list-group-item align-items-center"
+          :class="{ active: this.selectedGame === game }"
+        >
+          {{ game }}
+        </li>
+      </ul>
     </div>
-    <b-button class="m-3" v-if="isGameSelected && isAdmin()" v-on:click="startGame()" variant="success">Lancer le jeu !</b-button>
+    <button
+      type="button"
+      class="m-3 btn btn-success"
+      v-if="isGameSelected && isAdmin()"
+      v-on:click="startGame()"
+      variant="success"
+    >
+      Lancer le jeu !
+    </button>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "Games",
   props: {
@@ -25,40 +39,38 @@ export default {
     lobby: Object,
     playerName: String,
   },
-  data(){
+  data() {
     return {
-        isGameSelected: true,
-        adminName: '',
-        selectedGame: ''
-    }
+      isGameSelected: true,
+      adminName: "",
+      selectedGame: "",
+    };
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     startGame() {
-        this.$socket.client.emit('startGame', this.selectedGame)
+      this.$socket.client.emit("startGame", this.selectedGame);
     },
     selectGame(game) {
-        this.selectedGame = game
-        this.getAdmin()
+      this.selectedGame = game;
+      this.getAdmin();
     },
     getAdmin() {
       let playerAdmin = this.lobby.players.filter(function (player) {
-        return player.isAdmin === true
-      })
-      this.adminName = playerAdmin[0].name
+        return player.isAdmin === true;
+      });
+      this.adminName = playerAdmin[0].name;
     },
     isAdmin() {
-      return this.adminName === this.playerName
+      return this.adminName === this.playerName;
     },
   },
   sockets: {
-      gameStarted(gameName) {
-          this.$emit('swapToGames', gameName)
-      }
-  }
-}
+    gameStarted(gameName) {
+      this.$emit("swapToGames", gameName);
+    },
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

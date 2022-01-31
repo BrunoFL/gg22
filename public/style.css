@@ -35,3 +35,8 @@ body {
         background-position: 0
     }
 }
+
+#app .list-group-item.active {
+  background-color: #619af0;
+  border-color: #619af0;
+}
