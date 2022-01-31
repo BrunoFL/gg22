@@ -41,5 +41,20 @@
       "parser": "babel-eslint"
     },
     "rules": {}
+  },
+  "pwa": {
+    "name": "Duel 3000",
+    "themeColor": "#000",
+    "msTileColor": "white",
+    "appleMobileWebAppCapable": "yes",
+    "appleMobileWebAppStatusBarStyle": "white",
+    "workboxPluginMode": "GenerateSW",
+    "workboxOptions": {
+      "importWorkboxFrom": "local",
+      "navigateFallback": "/",
+      "exclude": [
+        "/\\w*\\.(?:js)$/"
+      ]
+    }
   }
 }

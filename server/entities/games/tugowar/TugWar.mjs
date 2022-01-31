@@ -1,6 +1,6 @@
-import {Team} from '../../Team.mjs'
-import {TeamGameResult, TeamGameResults} from '../../TeamGameResults.mjs'
-import {GameInstance} from '../GameInstance.mjs'
+import { Team } from '../../Team.mjs'
+import { TeamGameResult, TeamGameResults } from '../../TeamGameResults.mjs'
+import { GameInstance } from '../GameInstance.mjs'
 
 export class TugWar extends GameInstance {
     /**
@@ -49,7 +49,7 @@ export class TugWar extends GameInstance {
         let cpt = 0
         this.teamA = new Team('Team A')
         this.teamB = new Team('Team B')
-        for (const player of this.lobby.players) {
+        for (const player of this.lobby.players.sort((a, b) => Math.random() - 0.5)) {
             if (cpt % 2 === 0) {
                 this.teamA.addPlayer(player)
             } else {
