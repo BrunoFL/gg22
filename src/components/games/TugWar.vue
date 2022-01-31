@@ -2,104 +2,135 @@
   <div>
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
       <h1>Tir à la corde</h1>
-      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">{{ rules }}</p>
+      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">
+        {{ rules }}
+      </p>
     </div>
+
     <div v-if="!isRankingOpen">
-      <b-form-input id="range" disabled v-model="center" type="range" min="-30" max="30"></b-form-input>
+      <input
+        id="range"
+        disabled
+        v-model="center"
+        type="range"
+        min="-30"
+        class="form-range"
+        max="30"
+      />
     </div>
-    <div v-if="!isRankingOpen" class="m-5" style="font-size: 150%">
-        <div style="float: left;">{{ teamAName }}<br>
-          <b-list-group class="mx-auto" style="width: 100%;">
-            <b-list-group-item v-for="player of teamA" :key="player.id">{{ player.name }}</b-list-group-item>
-          </b-list-group>
-        </div>
-        <div style="float: right;">{{ teamBName }}<br>
-          <b-list-group class="mx-auto" style="width: 100%;">
-            <b-list-group-item v-for="player of teamB" :key="player.id">{{ player.name }}</b-list-group-item>
-          </b-list-group>
-        </div>
+
+    <button
+      type="button"
+      v-if="!isRankingOpen"
+      class="btn btn-primary mx-auto w-50 mt-5"
+      :disabled="!started"
+      v-on:click="increment"
+    >
+      TIRER !
+    </button>
+
+    <div v-if="!isRankingOpen" class="row mt-5 p-3" style="font-size: 150%">
+      <div class="col">
+        <h2 class="mx-auto">{{ teamAName }}</h2>
+        <ul class="mx-auto w-75 list-group">
+          <li class="list-group-item" v-for="player of teamA" :key="player.id">
+            {{ player.name }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h2 class="mx-auto">{{ teamAName }}</h2>
+        <ul class="mx-auto w-75 list-group">
+          <li class="list-group-item" v-for="player of teamB" :key="player.id">
+            {{ player.name }}
+          </li>
+        </ul>
+      </div>
     </div>
-    <b-button v-if="!isRankingOpen" type="button" class="mx-auto" style="width: 33%; background: rgb(25, 135, 84); color: white;" :disabled="!start" v-on:click="increment">TIREZ !</b-button>
-    <GameRanking v-if="isRankingOpen" :rankingList="rankingList" :isTeamGame=true @swapScreen="event => swapScreen(event)"></GameRanking>
+
+    <GameRanking
+      v-if="isRankingOpen"
+      :rankingList="rankingList"
+      :isTeamGame="true"
+      @swapScreen="(event) => swapScreen(event)"
+    ></GameRanking>
   </div>
 </template>
 
 <script>
-import GameRanking from '@/components/app/ranking/GameRanking'
+import GameRanking from "@/components/app/ranking/GameRanking";
 
 export default {
-  name: 'TugWar',
+  name: "TugWar",
   data() {
     return {
-      rules: '',
-      rulesRun: '',
+      rules: "",
+      rulesRun: "",
       clients: [],
       isRankingOpen: false,
       rankingList: [],
       teamA: [],
-      teamAName: '',
+      teamAName: "",
       teamB: [],
-      teamBName: '',
+      teamBName: "",
       center: 0,
-      start: false
-    }
+      started: false,
+    };
   },
   components: {
     GameRanking,
   },
   methods: {
-    increment(){
-      this.$socket.client.emit("touch", new Date().getTime())
+    increment() {
+      this.$socket.client.emit("touch", new Date().getTime());
     },
     swapScreen(event) {
-      this.$emit('swapScreen', event)
-    }
+      this.$emit("swapScreen", event);
+    },
   },
   sockets: {
-    tugStart() {
-      this.start = true
-    },
-    tugEnd() {
-
-    },
     tugInit(data) {
-      this.teamA = data.teamA.players
-      this.teamAName = data.teamA.name
-      this.teamB = data.teamB.players
-      this.teamBName = data.teamB.name
+      this.teamA = data.teamA.players;
+      this.teamAName = data.teamA.name;
+      this.teamB = data.teamB.players;
+      this.teamBName = data.teamB.name;
     },
-    tug(result){
-      this.center = result
+    tug(result) {
+      this.center = result;
     },
     rules(rules) {
-      this.rules = rules
+      this.rules = rules;
     },
     leaderBoardGame(event) {
-      this.isRankingOpen = true
-      this.rankingList = event
-    }
-  }
-}
+      this.isRankingOpen = true;
+      this.rankingList = event;
+    },
+    startGame() {
+      this.started = true;
+    },
+  },
+};
 </script>
 
 <style scoped>
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
-  width: 75%;   
+  width: 75%;
   font: inherit;
   background: rgba(255, 255, 255, 0);
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
-input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
   height: 100%;
-  background-color: rgb(99, 34, 9);  
+  background-color: rgb(211, 208, 35);
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 2em;
   height: 2em;
   border-radius: 100%;
-  background: rgb(25, 135, 84);       /* pris en compte sur Webkit only */
+  background: red; /* pris en compte sur Webkit only */
 }
 </style>

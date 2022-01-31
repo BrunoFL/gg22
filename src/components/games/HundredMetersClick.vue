@@ -34,6 +34,7 @@
         </div>
       </div>
       <button
+        :disabled="!started"
         type="button"
         class="btn btn-outline-primary w-75 m-5"
         v-on:click="increment"
@@ -63,6 +64,7 @@ export default {
       run: "",
       isRankingOpen: false,
       rankingList: [],
+      started: false,
     };
   },
   components: {
@@ -107,6 +109,9 @@ export default {
     leaderBoardGame(event) {
       this.isRankingOpen = true;
       this.rankingList = event;
+    },
+    startGame() {
+      this.started = true;
     },
   },
 };

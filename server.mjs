@@ -1,10 +1,10 @@
 const port = process.env.PORT || 3000
 import express from "express";
-import {Server} from 'socket.io'
+import { Server } from 'socket.io'
 const app = express();
 
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 
 import { createServer } from "http";
 import { GameServer } from "./server/entities/GameServer.mjs";
@@ -35,4 +35,14 @@ httpServer.listen(port, () => {
 	console.log(`Listening on port ${port}`)
 })
 
-const server = new GameServer(io)
+
+const startServer = () => {
+	try {
+		new GameServer(io)
+	} catch (e) {
+		console.error(e)
+		startServer()
+	}
+}
+
+startServer()
