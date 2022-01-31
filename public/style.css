@@ -20,7 +20,7 @@ html {
 
 body {
   background-size: 200% 200%;
-  animation: animatedBackground 200s linear infinite;
+  animation: animatedBackground 500s linear infinite;
   background-image: repeating-linear-gradient(
       249deg,
       transparent 0px,
@@ -54,7 +54,7 @@ body {
 
 @keyframes animatedBackground {
   0% {
-    background-position: 100% 100%;
+    background-position: 100% 200%;
   }
   100% {
     background-position: 0;
