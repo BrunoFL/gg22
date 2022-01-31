@@ -1,10 +1,9 @@
-import {Enclume} from './games/enclume/Enclume.mjs'
-import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
-import {GameManager} from './GameManager.mjs'
-import {HundredMetersClick} from './games/hundredmetersclicker/HundredMetersClick.mjs'
-import {ObstacleRun} from './games/ObstacleRun.mjs'
-import {TugWar} from './games/tugowar/TugWar.mjs'
-import {Goche} from './games/goche/Goche.mjs'
+import { Enclume } from './games/enclume/Enclume.mjs'
+import { UUIDGenerator } from '../utils/UUIDGenerator.mjs'
+import { GameManager } from './GameManager.mjs'
+import { HundredMetersClick } from './games/hundredmetersclicker/HundredMetersClick.mjs'
+import { TugWar } from './games/tugowar/TugWar.mjs'
+import { Goche } from './games/goche/Goche.mjs'
 
 export class Lobby {
     /**

@@ -1,16 +1,12 @@
-import {Touch} from './Touch.mjs'
-import {GameInstance} from '../GameInstance.mjs'
-import {GameResult, IndividualGameResult} from '../GameResult.mjs'
+import { Touch } from './Touch.mjs'
+import { GameInstance } from '../GameInstance.mjs'
+import { GameResult, IndividualGameResult } from '../GameResult.mjs'
 
 export class Enclume extends GameInstance {
     /**
      * @type {Lobby}
      */
     lobby
-    /**
-     * @type {number}
-     */
-    seconds
     /**
      * @type {Touch[]}
      */
@@ -30,7 +26,6 @@ export class Enclume extends GameInstance {
 
     initGame() {
         this.touchs = []
-        this.seconds = Math.floor(Math.random() * 3) + 3
     }
 
     /**
@@ -54,8 +49,34 @@ export class Enclume extends GameInstance {
      */
     startGame(endStartGameClb) {
         this.lobby.emitPlayers('startEnclume', this.seconds)
-        setTimeout(() => endStartGameClb(), this.seconds * 1000 + 2000)
-        for (const player of this.lobby.players) {
+        this.runRound(0, () => {
+            for (const player of this.lobby.players) {
+                player.socket.removeAllListeners('touch')
+            }
+            endStartGameClb()
+        })
+    }
+
+    runRound(index, endRound) {
+        const seconds = Math.floor(Math.random() * 3) + 3
+        const newIndex = index + 2
+
+        if (newIndex < this.lobby.players.length) {
+            this.listenPlayer(newIndex, seconds)
+            this.listenPlayer(newIndex + 1, seconds)
+            setTimeout(() => { this.runRound(newIndex, endRound) }, seconds * 1000 + 2000)
+        } else {
+            setTimeout(() => endRound(), 2000)
+        }
+    }
+
+    listenPlayer(index, seconds) {
+        if (index < this.lobby.players.leaderBoard) {
+            const player = this.lobby.players[index]
+            this.lobby.emitPlayers.emit('startEnclume', {
+                'player': player.encode(),
+                'seconds': seconds
+            })
             player.socket.once('touch', delta => {
                 player.socket.removeAllListeners('touch')
                 player.socket.emit('rules', delta >= 0 ? `C'était juste ! ${delta / 1000}s` : `Perdu ! de ${delta / 1000}s`)
