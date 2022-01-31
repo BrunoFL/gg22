@@ -141,8 +141,15 @@ export default {
     };
   },
   watch: {
-    playerName: function (val) {
-      this.$socket.client.emit("updateName", val);
+    playerName: function (name) {
+      const trimed = name.trim().substring(0, 8);
+      if (trimed.length > 0) {
+        this.$socket.client.emit("updateName", trimed);
+      }
+      this.playerName = trimed;
+    },
+    nameLobby: function (name) {
+      this.nameLobby = name.trim().substring(0, 12);
     },
     lobby: function (val) {
       let playerAdmin = val.players.filter(function (player) {
@@ -166,7 +173,9 @@ export default {
       this.clickGetLobbies = true;
     },
     createLobby(nameLobby) {
-      this.$socket.client.emit("createLobby", nameLobby);
+      const trimed = nameLobby.trim().substring(0, 15);
+      this.nameLobby = trimed;
+      this.$socket.client.emit("createLobby", trimed);
       this.clickJoinLobby = true;
     },
     selectLobby(lobby) {

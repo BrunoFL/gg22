@@ -1,5 +1,3 @@
-import {UUIDGenerator} from '../utils/UUIDGenerator.mjs'
-
 export class Player {
     /**
      * @type {string}
@@ -24,9 +22,9 @@ export class Player {
     isAdmin
 
     constructor(id, socket, name) {
-        this.id = UUIDGenerator.uuid()
+        this.id = id
         this.socket = socket
-        this.name = name
+        this.name = name.substring(0, 8) || socket.id.substring(0, 8)
         this.isAdmin = false
         this.resetScore()
         this.listen()

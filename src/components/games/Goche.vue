@@ -5,9 +5,9 @@
     </audio>
     <div v-if="!isRankingOpen">
       <h1>Gôche ou Droate</h1>
-      <p class="m-3" style="background-color: white; font-size: 200%">
+      <div class="m-3 alert alert-light" style="background-color: white; font-size: 200%">
         {{ rules }}
-      </p>
+      </div>
       <h2>{{ proposition.name }}</h2>
 
       <div class="row m-5">

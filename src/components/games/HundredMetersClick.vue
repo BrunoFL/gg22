@@ -5,9 +5,9 @@
     </audio>
     <div id="race" v-if="!isRankingOpen" class="row justify-content-center gap-3">
       <h1>100m clic</h1>
-      <p class="m-3" size="lg" style="background-color: white; font-size: 200%">
+      <div class="m-3 alert alert-light" style="background-color: white; font-size: 200%">
         {{ rules }}
-      </p>
+      </div>
       <div
         class="group row align-items-start"
         v-for="(player, index) of run"
