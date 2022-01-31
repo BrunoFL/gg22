@@ -9,13 +9,13 @@
           <h3>{{ getFirst(isTeamGame) }}</h3>
         </div>
         <div class="d-flex mt-5">
-          <div class="d-flex flex-row">
+          <div class="d-flex flex-row w-50">
             <div class="row">
               <img id="second" class="mx-auto" src="@/assets/img/p2.png" />
               <h3>{{ getSecond(isTeamGame) }}</h3>
             </div>
           </div>
-          <div class="d-flex flex-row-reverse mt-5">
+          <div class="d-flex flex-row-reverse mt-5 w-50">
             <div class="row">
               <img class="mx-auto" id="third" src="@/assets/img/p3.png" />
               <h3>{{ getThird() }}</h3>
@@ -34,17 +34,21 @@
         </li>
       </ul>
     </div>
+
     <div v-if="displayWinners && isTeamGame" id="displayTeamWinner">
       <h1>Gagnant</h1>
-      <div>
-        <img style="width: 17%" src="@/assets/img/p1.png" />
-        <h3>{{ getFirst(isTeamGame) }}</h3>
-      </div>
-      <div>
-        <img style="width: 15%" src="@/assets/img/p2.png" />
-        <h3>{{ getSecond(isTeamGame) }}</h3>
+      <div class="row">
+        <div class="col-lg col-sm-12">
+          <img src="@/assets/img/p1.png" style="max-width: 200px" />
+          <h3>{{ getFirst(isTeamGame) }}</h3>
+        </div>
+        <div class="col-lg col-sm-12">
+          <img src="@/assets/img/p2.png" style="max-width: 200px" />
+          <h3>{{ getSecond(isTeamGame) }}</h3>
+        </div>
       </div>
     </div>
+
     <div v-if="displayGeneral" id="displayGeneral">
       <h1>Classement général</h1>
       <ul class="mx-auto list-group" style="w-50">
@@ -150,10 +154,6 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 30%;
-}
-
 #first {
   width: 10%;
 }
