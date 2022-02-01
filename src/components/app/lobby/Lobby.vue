@@ -1,6 +1,6 @@
 <template>
   <div id="mainLobby">
-    <h1 class="display-1">DUEL 3000</h1>
+    <h1>DUEL 3000</h1>
 
     <!-- PLAYER NAME CHOICE -->
     <div id="choiceName">
@@ -22,7 +22,7 @@
     <div
       v-if="!isClicked"
       id="firstScreen"
-      class="m-5 row mx-auto justify-content-md-center"
+      class="mt-5 row mx-auto justify-content-md-center"
     >
       <div class="col col-lg-4">
         <button type="button" class="w-75 btn btn-dark btn-lg" v-on:click="initLobby()">
@@ -37,7 +37,7 @@
     </div>
 
     <!-- BLOC CREATE LOBBY-->
-    <div v-if="clickCreateLobby && !clickJoinLobby" id="createLobby" class="m-5">
+    <div v-if="clickCreateLobby && !clickJoinLobby" id="createLobby" class="mt-5 px-md-5">
       <div class="input-group">
         <span class="input-group-text">Nom de la salle</span>
         <input
@@ -59,6 +59,10 @@
 
     <!-- BLOC GET LOBBIES-->
     <div v-if="clickGetLobbies && !clickJoinLobby" id="getLobbies" class="m-5">
+      <h2 v-if="lobbies && lobbies.length === 1">1 salle disponible</h2>
+      <h2 v-if="lobbies && lobbies.length > 1">
+        {{ lobbies.length }} salles disponibles
+      </h2>
       <ul class="list-group mx-auto col-sm-12 col-md-6 col-lg-5" id="listLobbies">
         <li
           v-for="lobby of lobbies"
